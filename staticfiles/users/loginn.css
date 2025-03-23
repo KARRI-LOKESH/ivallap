@@ -1,0 +1,134 @@
+/* Apply a full-page gradient background */
+html, body {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #124d06, #0e3417);
+    animation: fadeIn 1s ease-in-out;
+    margin: 0;
+}
+
+/* Style the login container */
+form {
+    width: 350px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    opacity: 0;
+    animation: slideIn 1s ease-in-out forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Heading styling */
+h2 {
+    color: white;
+    font-size: 28px;
+    margin-bottom: 20px;
+    animation: fadeDown 1s ease-in-out;
+}
+
+/* Style input fields */
+input {
+    width: 90%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s, transform 0.3s;
+}
+
+/* Input focus animation */
+input:focus {
+    border-color: #ffea5f;
+    outline: none;
+    transform: scale(1.05);
+}
+
+/* Button styling */
+button {
+    background: #03461b;
+    color: white;
+    padding: 12px;
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+/* Button hover effect */
+button:hover {
+    background: #414207;
+    transform: scale(1.05);
+}
+
+/* Message styling */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    text-align: center;
+    animation: fadeUp 1s ease-in-out;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Slide-in animation */
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Fade down for heading */
+@keyframes fadeDown {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Fade up for messages */
+@keyframes fadeUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

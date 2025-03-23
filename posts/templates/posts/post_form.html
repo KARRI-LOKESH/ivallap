@@ -1,0 +1,16 @@
+{% extends 'posts/base.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'posts/post_form.css' %}">
+
+    <div class="container">
+        <h2>{% if object %}Edit Post{% else %}Create Post{% endif %}</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+        </form>
+        <a href="{% url 'post-list' %}">Back to Posts</a>
+    </div>
+{% endblock %}

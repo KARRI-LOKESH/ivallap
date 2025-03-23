@@ -1,0 +1,68 @@
+{% extends 'posts/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'posts/post_list.css' %}">
+    <h2>All Posts</h2>
+    {% for post in posts %}
+        <div class="post">
+            <p><strong>{{ post.user.username }}</strong> - {{ post.created_at }}</p>
+            <p>{{ post.content }}</p>
+            
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 100%; height: auto;">
+            {% endif %}
+            
+            <br>
+
+            <!-- View Post Button -->
+            <a href="{% url 'post-detail' post.id %}" class="btn btn-primary">View</a>
+
+            <!-- Edit and Delete Buttons (Only for post owner) -->
+            {% if request.user == post.user %}
+                <a href="{% url 'post-update' post.id %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'post-delete' post.id %}" class="btn btn-danger">Delete</a>
+            {% endif %}
+
+            <!-- Like Button -->
+            <form action="{% url 'like-post' post.id %}" method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit">
+                    {% if request.user in post.likes.all %}
+                        Unlike
+                    {% else %}
+                        Like
+                    {% endif %}
+                </button>
+                <span>{{ post.total_likes }}</span>
+            </form>
+
+            <!-- Save Button -->
+            <form action="{% url 'save-post' post.id %}" method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit">
+                    {% if request.user in post.saved_by.all %}
+                        Unsave
+                    {% else %}
+                        Save
+                    {% endif %}
+                </button>
+                <span>{{ post.total_saves }}</span>
+            </form>
+
+            <!-- Comment Section -->
+            <form action="{% url 'add-comment' post.id %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="content" placeholder="Add a comment" required>
+                <button type="submit">Comment</button>
+            </form>
+            <p><strong>Comments ({{ post.comments.count }})</strong></p>
+            <ul>
+                {% for comment in post.comments.all %}
+                    <li><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <hr>
+    {% endfor %}
+{% endblock %}

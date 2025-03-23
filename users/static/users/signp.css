@@ -1,0 +1,89 @@
+/* Signup Page Styles */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #0b7e2d, #3e250d);
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.container {
+    width: 350px;
+    margin: 60px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    opacity: 0;
+    animation: slideIn 1s ease-in-out forwards;
+}
+
+h2 {
+    color: #eee4e4;
+    font-size: 24px;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #0072ff;
+    outline: none;
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+}
+
+button {
+    background: #0072ff;
+    color: white;
+    padding: 12px;
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background: #005bbf;
+    transform: scale(1.05);
+}
+
+a {
+    color: #0072ff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #005bbf;
+    text-decoration: underline;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

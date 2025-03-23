@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    {% load static %}
+<link rel="stylesheet" href="{% static 'users/profile.css' %}">
+
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ user.name }}</h1>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            <script>
+                {% for message in messages %}
+                    {% if "Profile updated successfully!" in message.message %}
+                        setTimeout(function() {
+                            window.location.href = "{% url 'post-list' %}";
+                        }, 2000);
+                    {% endif %}
+                {% endfor %}
+            </script>
+        {% endif %}
+
+        <!-- Profile Picture -->
+        <div class="profile-pic">
+            {% if user.profile_pic %}
+                <img src="{{ user.profile_pic.url }}" alt="Profile Picture">
+            {% else %}
+                <img src="{% static 'users/default-avatar.png' %}" alt="Default Profile">
+            {% endif %}
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <!-- Buttons for Redirecting After Profile Update -->
+            <button type="submit" name="redirect" value="create">Save & Create Post</button>
+            <button type="submit" name="redirect" value="list">Save & View Posts</button>
+        </form>
+
+        <p><a href="{% url 'logout' %}">Logout</a></p>
+    </div>
+</body>
+</html>

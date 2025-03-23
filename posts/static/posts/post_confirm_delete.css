@@ -1,0 +1,87 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #073546;
+    margin: 0;
+    padding: 0;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Container */
+.container {
+    width: 50%;
+    margin: 50px auto;
+    background: rgb(14, 37, 60);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: slideIn 0.8s ease-in-out;
+}
+
+/* Heading */
+h2 {
+    color: #d9534f;
+    font-size: 24px;
+    margin-bottom: 15px;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Warning Text */
+p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Delete Button */
+button {
+    background: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+button:hover {
+    background: #c9302c;
+    transform: scale(1.05);
+}
+
+/* Cancel Link */
+a {
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 10px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    background: #3a8437;  /* Default background */
+    padding: 10px 20px;  /* Better spacing */
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+a:hover {
+    background: #0056b3;  /* Darker blue on hover */
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-2px);  /* Slight lift effect */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);  /* Soft shadow */
+}
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
