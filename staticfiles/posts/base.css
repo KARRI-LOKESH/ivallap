@@ -9,7 +9,7 @@ body {
 
 /* Navigation Bar */
 nav {
-    background: #007bff;
+    background: #2b0442;
     padding: 15px;
     text-align: center;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
@@ -17,7 +17,7 @@ nav {
 }
 
 nav a {
-    color: white;
+    color: rgb(225, 221, 234);
     text-decoration: none;
     font-size: 18px;
     margin: 0 15px;
@@ -26,7 +26,7 @@ nav a {
 }
 
 nav a:hover {
-    color: #ffdd57;
+    color: #cdad2d;
     transform: scale(1.1);
 }
 
@@ -41,7 +41,29 @@ nav a:hover {
     text-align: center;
     animation: fadeIn 1.2s ease-in-out;
 }
+/* Back Link */
+a {
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 10px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    background: #3a8437;  /* Default background */
+    padding: 10px 20px;  /* Better spacing */
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
 
+/* Hover Effect */
+a:hover {
+    background: #0056b3;  /* Darker blue on hover */
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-2px);  /* Slight lift effect */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);  /* Soft shadow */
+}
 
 /* Animations */
 @keyframes fadeIn {
