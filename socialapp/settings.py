@@ -24,7 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-e*85wql++i**abgi_m!+-dhffncegtgc^5#vjbkne-6n&roql@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+<<<<<<< HEAD
 DEBUG = True
+=======
+DEBUG = False
+>>>>>>> ef28d80 (web app)
 
 ALLOWED_HOSTS = ['ivallap.onrender.com','127.0.0.1','localhost']
 
@@ -50,10 +54,17 @@ EMAIL_HOST_USER = 'karrilokesh108@gmail.com'  # Replace with your email
 EMAIL_HOST_PASSWORD = 'yyhn bqgl bjcf fqjz'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+<<<<<<< HEAD
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",  # Must be above CommonMiddleware
+=======
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',  # Must be above CommonMiddleware
+>>>>>>> ef28d80 (web app)
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

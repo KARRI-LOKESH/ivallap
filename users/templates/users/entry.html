@@ -1,21 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Ivallap</title>
     <link rel="stylesheet" href="/static/users/entry.css">
+=======
+    {% load static %}  <!-- Load static files -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Ivallap</title>
+    <link rel="stylesheet" href="{% static 'users/entry.css' %}">
+>>>>>>> ef28d80 (web app)
 </head>
 <body>
     <div class="container">
         <h1>Welcome to Ivallap</h1>
         <p>Your gateway to innovation and technology.</p>
         <div class="buttons">
+<<<<<<< HEAD
             <a href="/users/signup/" class="btn">Sign Up</a>
             <a href="/users/login/" class="btn">Login</a>
         </div>
     </div>
     <canvas id="canvas"></canvas>
     <script src="/static/users/js/effects.js"></script>
+=======
+            <a href="{% url 'signup' %}" class="btn">Sign Up</a>
+            <a href="{% url 'login' %}" class="btn">Login</a>
+        </div>
+    </div>
+    <canvas id="canvas"></canvas>
+    <script src="{% static 'users/js/effects.js' %}"></script>
+>>>>>>> ef28d80 (web app)
 </body>
 </html>
