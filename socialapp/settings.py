@@ -136,6 +136,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 LOGIN_REDIRECT_URL = "/users/profile/"  # Redirect to profile page after login
 LOGOUT_REDIRECT_URL = "/" 
 LOGIN_URL = '/users/login/'  # Change this to your actual login URL
+LOGIN_REDIRECT_URL = "/dashboard/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

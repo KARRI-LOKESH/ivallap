@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Ivallap</title>
+    <link rel="stylesheet" href="{% static 'users/about.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="about-container">
+        <!-- Founder Section -->
+        <div class="founder">
+            <img src="{% static 'users/images/aaa.jpg' %}" alt="Lokesh Karri - Founder">
+            <h2>Lokesh Karri - Founder of Ivallap</h2>
+            <p>I'm Lokesh Karri, a passionate developer and AI enthusiast, building Ivallap to revolutionize social media interactions.</p>
+        </div>
+
+        <!-- About Ivallap -->
+        <div class="company-info">
+            <h1>Welcome to Ivallap</h1>
+            <p>Ivallap is a next-gen social media platform designed to connect people, share ideas, and build communities. Our goal is to make social networking more engaging, meaningful, and secure.</p>
+
+            <h2>Our Mission</h2>
+            <p>We aim to provide a seamless and innovative social media experience where users can freely express themselves, engage in discussions, and explore new ideas in a safe and inclusive environment.</p>
+
+            <h2>Features of Ivallap</h2>
+            <ul>
+                <li>🔹 Personalized feeds and AI-powered recommendations</li>
+                <li>🔹 Secure and encrypted messaging</li>
+                <li>🔹 Creative post formats with images, videos, and GIFs</li>
+                <li>🔹 Real-time interactions with comments and reactions</li>
+                <li>🔹 Community-driven discussions and group chats</li>
+                <li>🔹 Smart content moderation for a positive experience</li>
+            </ul>
+
+            <h2>Why Choose Ivallap?</h2>
+            <p>Unlike traditional social media, Ivallap prioritizes user privacy, AI-driven content discovery, and community engagement. Whether you're a creator, influencer, or casual user, Ivallap offers a space where your voice matters.</p>
+
+            <h2>Join Us Today!</h2>
+            <p>Be a part of the future of social media. Sign up now and start your journey with Ivallap.</p>
+        </div>
+    </div>
+</body>
+</html>

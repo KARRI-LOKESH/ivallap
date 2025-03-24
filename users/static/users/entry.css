@@ -1,39 +1,150 @@
+/* General Styles */
 body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background: #000;
-    color: #fff;
+    background: linear-gradient(to right, #3e87c0, #3904cba4);
+    color: #333;
     text-align: center;
-    overflow: hidden;
 }
 
+/* Navbar */
+.navbar {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(182, 15, 15);
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    display: inline;
+    margin: 0 15px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+
+/* Hero Section */
 .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
-h1 {
-    font-size: 3rem;
+.container p {
+    margin-bottom: 15px; /* Adds spacing between the paragraph and buttons */
 }
 
 .buttons {
-    margin-top: 20px;
+    margin-top:10px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 5px;
 }
 
-.btn {
-    text-decoration: none;
+.buttons .btn {
+    background: #ff6600;
     color: white;
-    background: #ff4500;
-    padding: 10px 20px;
+    padding: 12px 25px;
+    text-decoration: none;
+    font-size: 18px;
     border-radius: 5px;
     margin: 10px;
-    display: inline-block;
-    transition: background 0.3s;
 }
 
-.btn:hover {
-    background: #ff6600;
+.buttons .btn:hover {
+    background: #cc5500;
+}
+
+/* Features Section */
+.features {
+    margin-top: 0%;
+    padding: 50px 20px;
+    background: linear-gradient(to right, #376a96, #04cb32);
+}
+
+.feature-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.feature {
+    width: 300px;
+    background: linear-gradient(to right, #3e87c0, #3904cba4);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Testimonials */
+.testimonials {
+    padding: 50px;
+    background: linear-gradient(to right, #3e87c0, #3904cba4);
+}
+
+.testimonial-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.testimonial {
+    width: 300px;
+    background: linear-gradient(to right, #3e87c0, #3904cba4);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.testimonial h4 {
+    color: #ff6600;
+}
+
+/* Call to Action */
+.cta {
+    padding: 50px;
+    background: linear-gradient(to right, #3e87c0, #3904cba4);
+    color: white;
+}
+
+.cta .btn-large {
+    background: linear-gradient(to right, #3e87c0, #3904cba4);
+    color: #ff6600;
+    padding: 15px 30px;
+    font-size: 20px;
+}
+
+.cta .btn-large:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 14px;
+    margin-top: 20px;
 }

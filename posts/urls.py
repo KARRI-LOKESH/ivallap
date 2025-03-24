@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     PostListView, PostCreateView, PostDetailView, 
-    PostUpdateView, PostDeleteView, like_post, save_post, add_comment
+    PostUpdateView, PostDeleteView, like_post, save_post, add_comment,dashboard
 )
 
 urlpatterns = [
@@ -13,4 +13,5 @@ urlpatterns = [
     path('<int:post_id>/like/', like_post, name='like-post'),
     path('<int:post_id>/save/', save_post, name='save-post'),
     path('<int:post_id>/comment/', add_comment, name='add-comment'),
+    path('dashboard/', dashboard, name='dashboard'),
 ]

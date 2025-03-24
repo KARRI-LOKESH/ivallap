@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}  <!-- Load static files -->
+    {% load static %}  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Ivallap</title>
     <link rel="stylesheet" href="{% static 'users/entry.css' %}">
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">Ivallap</div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
     <div class="container">
         <h1>Welcome to Ivallap</h1>
         <p>Your gateway to innovation and technology.</p>
@@ -16,7 +27,55 @@
             <a href="{% url 'login' %}" class="btn">Login</a>
         </div>
     </div>
-    <canvas id="canvas"></canvas>
+    <section class="features">
+        <h2>Why Choose Ivallap?</h2>
+        <div class="feature-grid">
+            <div class="feature">
+                <h3>Innovative Solutions</h3>
+                <p>We bring cutting-edge technology to solve real-world problems.</p>
+            </div>
+            <div class="feature">
+                <h3>Secure & Reliable</h3>
+                <p>Our platform ensures top-notch security and reliability for users.</p>
+            </div>
+            <div class="feature">
+                <h3>Community Support</h3>
+                <p>Join a growing community of innovators and developers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <h2>What Our Users Say</h2>
+        <div class="testimonial-container">
+            <div class="testimonial">
+                <p>"Ivallap changed the way I connect with my community. The platform is smooth and intuitive!"</p>
+                <h4>- Anand Kumar</h4>
+            </div>
+            <div class="testimonial">
+                <p>"Security is my top priority, and Ivallap delivers it perfectly. Love the experience!"</p>
+                <h4>- Abhishek Balla</h4>
+            </div>
+            <div class="testimonial">
+                <p>"Being part of Ivallap's community has been amazing. Highly recommend!"</p>
+                <h4>- Sriram Chandramurthy</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta">
+        <h2>Join Ivallap Today!</h2>
+        <p>Sign up now and experience the future of social networking.</p>
+        <a href="{% url 'signup' %}" class="btn btn-large">Get Started</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Ivallap. All rights reserved.</p>
+    </footer>
+
     <script src="{% static 'users/js/effects.js' %}"></script>
 </body>
 </html>

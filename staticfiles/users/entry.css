@@ -1,22 +1,71 @@
+/* General Styling */
 body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background: #000;
-    color: #fff;
+    background: linear-gradient(to right, #0d638f, #0099cc);
+    color: white;
     text-align: center;
-    overflow: hidden;
+    animation: fadeIn 1s ease-in-out;
 }
 
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px 30px;
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    animation: slideDown 1s ease-in-out;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-links a:hover {
+    color: #ffcc00;
+    transform: scale(1.1);
+}
+
+/* Container */
 .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin-top: 100px;
+    padding: 50px 20px;
+    animation: fadeIn 1.5s ease-in-out;
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 18px;
 }
 
 .buttons {
@@ -24,16 +73,69 @@ h1 {
 }
 
 .btn {
-    text-decoration: none;
-    color: white;
-    background: #ff4500;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin: 10px;
     display: inline-block;
-    transition: background 0.3s;
+    background: #ffcc00;
+    color: #333;
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background 0.3s ease-in-out, transform 0.2s;
 }
 
 .btn:hover {
-    background: #ff6600;
+    background: #ff9900;
+    transform: scale(1.1);
+}
+
+/* Features Section */
+.features {
+    margin-top: 50px;
+    padding: 40px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    animation: slideUp 1s ease-in-out;
+}
+
+.feature-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.feature {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.feature:hover {
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    animation: fadeIn 2s ease-in-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }

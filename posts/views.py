@@ -68,3 +68,6 @@ def add_comment(request, post_id):
         if content:
             Comment.objects.create(user=request.user, post=post, content=content)
     return redirect('post-list')
+@login_required(login_url='entry')  # Redirects to entry.html if not logged in
+def dashboard(request):
+    return render(request, 'users/entry.html')

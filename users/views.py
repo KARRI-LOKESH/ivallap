@@ -140,3 +140,9 @@ def update_profile(request):
     return render(request, "users/profil.html", {"form": form})
 class EntryPageView(TemplateView):
     template_name = "users/entry.html"  # ✅ Correct path
+def home(request):
+    return render(request, "users/entry.html") 
+def about(request):
+    return render(request, "users/about.html") 
+def contact(request):
+    return render(request, "users/contact.html") 

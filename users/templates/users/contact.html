@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Ivallap</title>
+    <link rel="stylesheet" href="{% static 'users/contact.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Ivallap</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="contact-container">
+        <h1>Contact Us</h1>
+        <p>If you have any questions or concerns, feel free to reach out.</p>
+        <p><strong>Email:</strong> <a href="mailto:karrilokesh108@gmail.com">karrilokesh108@gmail.com</a></p>
+
+        <form class="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Ivallap. All rights reserved.</p>
+    </footer>
+</body>
+</html>

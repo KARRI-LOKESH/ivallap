@@ -1,31 +1,29 @@
-/* Apply a full-page gradient background */
+/* General styles */
 html, body {
     height: 100%;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #124d06, #0e3417);
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #263922, #13341b);
     animation: fadeIn 1s ease-in-out;
-    margin: 0;
 }
 
-/* Style the login container */
+/* Form container */
 form {
-    width: 350px;
-    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    padding: 25px;
     background: white;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    opacity: 0;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    text-align: center;
     animation: slideIn 1s ease-in-out forwards;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
-/* Heading styling */
+/* Heading */
 h2 {
     color: white;
     font-size: 28px;
@@ -33,102 +31,101 @@ h2 {
     animation: fadeDown 1s ease-in-out;
 }
 
-/* Style input fields */
+/* Input field */
 input {
-    width: 90%;
+    width: 95%; /* Adjusted to ensure it stays inside */
     padding: 12px;
-    margin: 10px 0;
-    border: 2px solid #ddd;
-    border-radius: 5px;
+    margin: 12px 0;
+    border: 2px solid #ccc;
+    border-radius: 6px;
     font-size: 16px;
-    transition: border-color 0.3s, transform 0.3s;
+    transition: all 0.3s;
+    box-sizing: border-box; /* Ensures padding doesn’t affect width */
 }
 
-/* Input focus animation */
+/* Input focus effect */
 input:focus {
     border-color: #ffea5f;
     outline: none;
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
-/* Button styling */
+/* Button styles */
 button {
-    background: #03461b;
+    background: #e9420b;
     color: white;
-    padding: 12px;
+    padding: 14px;
     border: none;
     width: 100%;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s, transform 0.2s;
-    margin-top: 10px;
+    font-size: 18px;
+    transition: all 0.3s;
 }
 
-/* Button hover effect */
+/* Button hover */
 button:hover {
     background: #414207;
     transform: scale(1.05);
 }
 
-/* Message styling */
+/* Messages */
 ul {
     list-style: none;
     padding: 0;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
 }
 
 li {
     color: white;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
-    text-align: center;
     animation: fadeUp 1s ease-in-out;
 }
 
-/* Fade-in animation */
+/* Animations */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-/* Slide-in animation */
 @keyframes slideIn {
-    from {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
-/* Fade down for heading */
 @keyframes fadeDown {
-    from {
-        transform: translateY(-30px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
-/* Fade up for messages */
 @keyframes fadeUp {
-    from {
-        transform: translateY(30px);
-        opacity: 0;
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    form {
+        width: 95%;
+        max-width: 350px;
+        padding: 20px;
     }
-    to {
-        transform: translateY(0);
-        opacity: 1;
+    
+    h2 {
+        font-size: 24px;
+    }
+
+    input {
+        width: 100%; /* Adjusted for small screens */
+    }
+    
+    button {
+        font-size: 16px;
+        padding: 12px;
     }
 }
