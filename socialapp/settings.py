@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-e*85wql++i**abgi_m!+-dhffncegtgc^5#vjbkne-6n&roql@
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['ivallap.onrender.com','127.0.0.1','localhost']
 
 
