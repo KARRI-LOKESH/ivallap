@@ -18,12 +18,12 @@
         <br>
 
         <!-- View Post Button -->
-        <a href="{% url 'post-detail' post.id %}" class="btn btn-primary">👁️</a>
+        <a href="{% url 'post-detail' post.id %}" class="btn btn-primary">👁️View</a>
 
         <!-- Edit and Delete Buttons (Only for post owner) -->
         {% if request.user == post.user %}
-            <a href="{% url 'post-update' post.id %}" class="btn btn-warning">✏️</a>
-            <a href="{% url 'post-delete' post.id %}" class="btn btn-danger">🗑️</a>
+            <a href="{% url 'post-update' post.id %}" class="btn btn-warning">✏️Edit</a>
+            <a href="{% url 'post-delete' post.id %}" class="btn btn-danger">🗑️Delete</a>
         {% endif %}
 
         <!-- Like Button -->
@@ -31,9 +31,9 @@
             {% csrf_token %}
             <button type="submit">
                 {% if request.user in post.likes.all %}
-                    👎
+                    👎UnLike
                 {% else %}
-                    👍
+                    👍Like
                 {% endif %}
             </button>
             <span>{{ post.total_likes }}</span>
@@ -44,9 +44,9 @@
             {% csrf_token %}
             <button type="submit">
                 {% if request.user in post.saved_by.all %}
-                    ❌
+                    ❌UnSave
                 {% else %}
-                    💾
+                    💾Save
                 {% endif %}
             </button>
             <span>{{ post.total_saves }}</span>
@@ -56,7 +56,7 @@
         <form action="{% url 'add-comment' post.id %}" method="POST">
             {% csrf_token %}
             <input type="text" name="content" placeholder="Add a comment" required>
-            <button type="submit">💬</button>
+            <button type="submit">💬Comment</button>
         </form>
 
         <p><strong>Comments ({{ post.comments.count }})</strong></p>
