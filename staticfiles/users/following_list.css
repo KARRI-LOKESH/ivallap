@@ -1,116 +1,126 @@
 /* General Styling */
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #061e4a, #1b2c0f);
+    background: linear-gradient(to right, #4CAF50, #2E8B57);
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
+    text-align: center;
     animation: fadeIn 1s ease-in-out;
 }
 
 /* Heading */
 h2 {
     color: white;
-    font-size: 26px;
+    font-size: 24px;
     margin-top: 20px;
-    animation: slideIn 1s ease-in-out;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 /* Following List */
 ul {
     list-style: none;
     padding: 0;
+    margin: 20px auto;
     width: 90%;
-    max-width: 400px;
+    max-width: 600px;
 }
 
 li {
-    background: rgba(255, 255, 255, 0.15);
+    background: white;
     padding: 15px;
-    border-radius: 8px;
     margin-bottom: 10px;
-    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     transition: transform 0.3s ease-in-out;
-    backdrop-filter: blur(10px);
-    animation: fadeUp 0.8s ease-in-out;
 }
 
 li:hover {
     transform: scale(1.05);
 }
 
-/* Profile Links */
-a {
-    color: white;
+/* Profile Link */
+li a {
     text-decoration: none;
     font-size: 18px;
     font-weight: bold;
-    transition: color 0.3s ease-in-out;
+    color: #2E8B57;
+    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
-a:hover {
-    color: #4bb3fd;
+li a:hover {
+    color: #FF6347;
+    transform: scale(1.1);
 }
 
-/* Buttons */
+/* Follow/Unfollow Button */
 button {
-    background: #007bff;
+    background: #FF6347;
     color: white;
     border: none;
-    padding: 10px 15px;
-    font-size: 16px;
-    border-radius: 6px;
+    padding: 8px 15px;
+    border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
-    transition: background 0.3s ease-in-out, transform 0.2s;
-    margin-left: 10px;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
 button:hover {
+    background: #E63946;
+    transform: scale(1.1);
+}
+
+/* Back Link */
+a.back-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #008CBA;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+a.back-btn:hover {
     background: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Additional Styling for All <a> Links */
+a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+a:hover {
+    color: #FFD700;
     transform: scale(1.05);
-}
-
-button:active {
-    transform: scale(0.95);
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideIn {
-    from { transform: translateY(-20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes fadeUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
 }
 
 /* Responsive Design */
 @media (max-width: 600px) {
     h2 {
-        font-size: 22px;
-    }
-
-    ul {
-        width: 95%;
+        font-size: 20px;
     }
 
     li {
-        font-size: 16px;
-        padding: 12px;
+        flex-direction: column;
+        text-align: center;
     }
 
     button {
-        font-size: 14px;
-        padding: 8px 12px;
+        margin-top: 10px;
     }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }

@@ -13,6 +13,7 @@ urlpatterns = [
     path("verify-otp/", verify_otp, name="verify_otp"),
     path("logout/", logout_view, name="logout"),
     path("profile/",profile_view, name="profile"),
+    path("profile/<str:username>/", views.profile_view, name="user-profile"),
     path("home/", views.home, name="home"), 
     path("about/", views.about, name="about"),
     path("base/", views.about, name="base"),

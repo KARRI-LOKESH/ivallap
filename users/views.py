@@ -196,17 +196,15 @@ def follow_unfollow(request, user_id):
         return JsonResponse({'following': is_following})  
     return redirect('profile', user_id=user_id)
 
-def search_users(request):
-    query = request.GET.get("query", "").strip()
-    users = CustomUser.objects.filter(
-        Q(username__icontains=query) | 
-        Q(email__icontains=query) |  
-        Q(name__icontains=query) |  # Searching by name field
-        Q(first_name__icontains=query) | 
-        Q(last_name__icontains=query)
-    ) if query else []
+from django.contrib.auth.models import User
 
-    return render(request, "users/search.html", {"users": users, "query": query})
+def search_users(request):
+    query = request.GET.get("q")  # Get search query from input field
+    users = User.objects.filter(username__icontains=query) if query else User.objects.none()
+    posts = Post.objects.filter(user__in=users).prefetch_related('likes', 'comments')
+
+    return render(request, "search.html", {"users": users, "posts": posts})
+
 def followers_list(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     followers = user.followers.all()
