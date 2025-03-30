@@ -1,252 +1,128 @@
-/* General Styling */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    max-width: 100%;
-    overflow-x: hidden;
-}
-
 body {
     font-family: Arial, sans-serif;
-    background-color: #1a1a2e;
-    color: white;
     margin: 0;
-    padding: 20px;
-    animation: fadeIn 1s ease-in-out;
-    width: 100%;
+    padding: 0;
+    background-color: #0d1117;
+    color: #c9d1d9;
 }
 
-/* Posts Container */
 h2 {
     text-align: center;
-    color: #f4f4f4;
-    animation: slideDown 0.8s ease-in-out;
+    color: #ffb400;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .post {
-    background: #4b64a1;
+    background: #161b22;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
     padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    animation: slideIn 0.5s ease-in-out;
+}
+
+.post p {
+    color: #8b949e;
+}
+
+img {
     border-radius: 10px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-    margin-bottom: 20px;
-    animation: slideIn 0.7s ease-in-out;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    width: 100%;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.post:hover {
-    transform: scale(1.02);
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
-}
-
-/* Post Image */
-.post img {
-    width: 100%;
+    max-width: 100%;
     height: auto;
-    max-height: 600px;
-    object-fit: contain;
-    border-radius: 10px;
-    transition: transform 0.3s ease-in-out;
+    display: block;
+    margin: 10px auto;
+    border: 2px solid #ffb400;
 }
 
-.post img:hover {
-    transform: scale(1.05);
-}
-
-/* Buttons */
 .btn {
     display: inline-block;
-    padding: 10px 16px;
-    font-size: 18px;
-    border-radius: 5px;
+    padding: 10px 15px;
+    margin: 5px 2px;
+    border-radius: 6px;
     text-decoration: none;
+    font-weight: bold;
+    text-align: center;
     transition: all 0.3s ease-in-out;
 }
 
 .btn-primary {
-    background: #0b4d94;
-    color: white;
-}
-
-.btn-primary:hover {
-    background: #0056b3;
-    transform: scale(1.1);
-}
-
-.btn-warning {
-    background: #795c08;
+    background-color: #ffb400;
     color: black;
 }
 
-.btn-warning:hover {
-    background: #6c5206;
-    transform: scale(1.1);
+.btn-warning {
+    background-color: #e63946;
+    color: white;
 }
 
 .btn-danger {
-    background: #88130f;
+    background-color: #d90429;
     color: white;
 }
 
-.btn-danger:hover {
-    background: #cd150f78;
+.btn:hover {
     transform: scale(1.1);
+    opacity: 0.85;
 }
 
-/* Like and Save Buttons */
 button {
-    background: #0d6efd;
+    background: #4895ef;
     color: white;
     border: none;
-    padding: 10px 14px;
-    font-size: 18px;
-    border-radius: 5px;
+    padding: 10px 15px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: transform 0.3s, background 0.3s;
 }
 
 button:hover {
-    background: #0a58ca;
     transform: scale(1.1);
+    background: #4361ee;
 }
 
-button:active {
-    transform: scale(0.95);
-}
-
-/* Navigation Bar */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #4b0082;
-    padding: 15px 20px;
-    border-radius: 10px;
-    flex-wrap: wrap;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-}
-
-/* Navigation Links */
-.nav-links {
-    display: flex;
-    gap: 15px;
-}
-
-.navbar a {
-    color: white;
-    background: #6a0dad;
-    padding: 10px 20px;
-    text-decoration: none;
-    font-size: 18px;
-    border-radius: 5px;
-    transition: background 0.3s ease-in-out, transform 0.2s;
-}
-
-/* Hover Effect */
-.navbar a:hover {
-    background: #8a2be2;
-    transform: scale(1.1);
-}
-
-/* Comment Section */
 input[type="text"] {
-    width: 100%;
-    max-width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border 0.3s ease-in-out, transform 0.2s;
-    white-space: nowrap;
-}
-
-input[type="text"]:focus {
-    border-color: #007bff;
-    transform: scale(1.02);
-    outline: none;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-ul li {
-    background: #1f4068;
+    width: calc(100% - 20px);
     padding: 12px;
-    margin: 6px 0;
-    border-radius: 5px;
-    transition: transform 0.3s ease-in-out;
+    border: 1px solid #ffb400;
+    border-radius: 6px;
+    margin-top: 10px;
+    background: #161b22;
+    color: white;
+    display: block;
+    box-sizing: border-box;
 }
 
-ul li:hover {
-    transform: scale(1.02);
-}
-
-/* Responsive Fixes */
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        text-align: center;
-        padding: 10px;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        gap: 8px;
-        width: 100%;
-    }
-
-    .nav-links a {
-        display: block;
-        width: 100%;
-        padding: 12px;
-    }
-
-    .post {
-        width: 95%;
-        padding: 10px;
-    }
-
-    .post img {
-        width: 100%;
-        height: auto;
-        max-height: 400px;
-    }
-
-    input[type="text"] {
-        width: 95%;
-        font-size: 14px;
-    }
-
-    button {
-        width: 100%;
-        font-size: 16px;
-        padding: 12px;
-    }
-}
-
-/* Animations */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideIn {
-    from { transform: translateY(-20px); opacity: 0; }
+    from { transform: translateY(20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
 
-@keyframes slideDown {
-    from { transform: translateY(-10px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+@media (max-width: 768px) {
+    .post {
+        max-width: 90%;
+        padding: 15px;
+    }
+    input[type="text"] {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn, button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    h2 {
+        font-size: 22px;
+    }
+    input[type="text"] {
+        font-size: 14px;
+        padding: 10px;
+    }
 }
