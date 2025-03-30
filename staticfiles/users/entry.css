@@ -1,141 +1,150 @@
-/* General Styling */
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to right, #0d638f, #0099cc);
-    color: white;
+    background: linear-gradient(to right, #3e87c0, #3904cba4);
+    color: #333;
     text-align: center;
-    animation: fadeIn 1s ease-in-out;
 }
 
-/* Navbar Styling */
+/* Navbar */
 .navbar {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 0;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
-    background: rgba(0, 0, 0, 0.7);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    animation: slideDown 1s ease-in-out;
+    padding: 10px 50px;
 }
 
 .logo {
     font-size: 24px;
     font-weight: bold;
+    color: rgb(182, 15, 15);
 }
 
 .nav-links {
     list-style: none;
-    display: flex;
-    gap: 15px;
     padding: 0;
     margin: 0;
 }
 
 .nav-links li {
     display: inline;
+    margin: 0 15px;
 }
 
-.nav-links a {
-    color: white;
+.nav-links li a {
     text-decoration: none;
+    color: white;
     font-size: 18px;
-    transition: color 0.3s ease-in-out;
 }
 
-.nav-links a:hover {
-    color: #ffcc00;
-    transform: scale(1.1);
-}
-
-/* Container */
+/* Hero Section */
 .container {
-    margin-top: 100px;
-    padding: 50px 20px;
-    animation: fadeIn 1.5s ease-in-out;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
-h1 {
-    font-size: 36px;
-    margin-bottom: 10px;
-}
-
-p {
-    font-size: 18px;
+.container p {
+    margin-bottom: 15px; /* Adds spacing between the paragraph and buttons */
 }
 
 .buttons {
-    margin-top: 20px;
+    margin-top:10px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 5px;
 }
 
-.btn {
-    display: inline-block;
-    background: #ffcc00;
-    color: #333;
-    padding: 12px 20px;
-    border-radius: 5px;
+.buttons .btn {
+    background: #ff6600;
+    color: white;
+    padding: 12px 25px;
     text-decoration: none;
     font-size: 18px;
-    transition: background 0.3s ease-in-out, transform 0.2s;
+    border-radius: 5px;
+    margin: 10px;
 }
 
-.btn:hover {
-    background: #ff9900;
-    transform: scale(1.1);
+.buttons .btn:hover {
+    background: #cc5500;
 }
 
 /* Features Section */
 .features {
-    margin-top: 50px;
-    padding: 40px 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    animation: slideUp 1s ease-in-out;
+    margin-top: 0%;
+    padding: 50px 20px;
+    background: linear-gradient(to right, #376a96, #04cb32);
 }
 
 .feature-grid {
     display: flex;
     justify-content: center;
     gap: 30px;
-    margin-top: 20px;
+    flex-wrap: wrap;
 }
 
 .feature {
-    background: rgba(255, 255, 255, 0.2);
+    width: 300px;
+    background: linear-gradient(to right, #3e87c0, #3904cba4);
     padding: 20px;
     border-radius: 10px;
-    width: 250px;
-    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.feature:hover {
-    transform: scale(1.05);
+/* Testimonials */
+.testimonials {
+    padding: 50px;
+    background: linear-gradient(to right, #3e87c0, #3904cba4);
+}
+
+.testimonial-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.testimonial {
+    width: 300px;
+    background: linear-gradient(to right, #3e87c0, #3904cba4);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.testimonial h4 {
+    color: #ff6600;
+}
+
+/* Call to Action */
+.cta {
+    padding: 50px;
+    background: linear-gradient(to right, #3e87c0, #3904cba4);
+    color: white;
+}
+
+.cta .btn-large {
+    background: linear-gradient(to right, #3e87c0, #3904cba4);
+    color: #ff6600;
+    padding: 15px 30px;
+    font-size: 20px;
+}
+
+.cta .btn-large:hover {
+    background: rgba(255, 255, 255, 0.8);
 }
 
 /* Footer */
 footer {
-    margin-top: 40px;
     padding: 20px;
     background: rgba(0, 0, 0, 0.8);
-    animation: fadeIn 2s ease-in-out;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideDown {
-    from { transform: translateY(-50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes slideUp {
-    from { transform: translateY(50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    color: white;
+    font-size: 14px;
+    margin-top: 20px;
 }

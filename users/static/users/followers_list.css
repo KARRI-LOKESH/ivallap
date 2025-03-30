@@ -1,0 +1,126 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #4CAF50, #2E8B57);
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Heading */
+h2 {
+    color: #333;
+    font-size: 24px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Followers List */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #f9f9f9;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.3s ease-in-out;
+}
+
+li:hover {
+    transform: scale(1.05);
+}
+
+/* Profile Link */
+li a {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: #2E8B57;
+    transition: color 0.3s ease-in-out;
+}
+
+li a:hover {
+    color: #FF6347;
+}
+
+/* Follow & Unfollow Buttons */
+button {
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.follow-btn {
+    background: #008CBA;
+    color: white;
+}
+
+.unfollow-btn {
+    background: #FF6347;
+    color: white;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+/* Back Button */
+.back-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #555;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.back-btn:hover {
+    background: #333;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    h2 {
+        font-size: 20px;
+    }
+
+    li {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    button {
+        margin-top: 10px;
+    }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

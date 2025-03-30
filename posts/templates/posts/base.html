@@ -1,3 +1,4 @@
+<!-- base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,11 +13,16 @@
     <nav>
         <a href="{% url 'post-list' %}">Home</a>
         <a href="{% url 'post-create' %}">Create Post</a>
-        <a href="{% url 'logout' %}">Logout</a>
         <a href="{% url 'dashboard' %}">Dashboard</a>
-
+        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'logout' %}">Logout</a>
+        
+        <!-- Search Form -->
+        <form action="{% url 'search-users' %}" method="GET" class="search-form">
+            <input type="text" name="query" placeholder="Search users...">
+            <button type="submit">Search</button>
+        </form>
     </nav>
-
     <div class="container">
         {% block content %}{% endblock %}
     </div>

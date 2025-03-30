@@ -22,18 +22,44 @@
     <section class="contact-container">
         <h1>Contact Us</h1>
         <p>If you have any questions or concerns, feel free to reach out.</p>
+        <p>We are always here to assist you with any inquiries you might have regarding our services, collaborations, or support.</p>
         <p><strong>Email:</strong> <a href="mailto:karrilokesh108@gmail.com">karrilokesh108@gmail.com</a></p>
+        <p><strong>Phone:</strong> +91 98765 43210</p>
+        <p><strong>Address:</strong> 123, Tech Street, Innovation City, India</p>
+        
+        <h2>Frequently Asked Questions</h2>
+        <p><strong>Q: How can I contact support?</strong></p>
+        <p>A: You can reach out to us via email or phone for any support-related queries.</p>
+        <p><strong>Q: Do you offer customer support 24/7?</strong></p>
+        <p>A: Our support team is available from 9 AM to 6 PM IST, Monday to Saturday.</p>
+        
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p class="message">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
 
-        <form class="contact-form">
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <textarea placeholder="Your Message" required></textarea>
+        <form class="contact-form" method="post" action="">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <input type="text" name="subject" placeholder="Subject" required>
+            <textarea name="message" placeholder="Your Message" required></textarea>
             <button type="submit">Send Message</button>
         </form>
     </section>
 
     <footer>
         <p>&copy; 2025 Ivallap. All rights reserved.</p>
+        <p>Follow us on:</p>
+        <ul>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">LinkedIn</a></li>
+            <li><a href="#">LinkedIn</a></li>
+        </ul>
     </footer>
 </body>
 </html>

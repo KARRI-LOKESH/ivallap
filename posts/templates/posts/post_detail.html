@@ -5,12 +5,32 @@
     <link rel="stylesheet" href="{% static 'posts/post_detail.css' %}">
 
     <div class="container">
-        <h2>Post by {{ post.user.name }}</h2>
+        <h2>Post by {{ post.user.username }}</h2>
         <p>{{ post.content }}</p>
         {% if post.image %}
             <img src="{{ post.image.url }}" alt="Post Image">
         {% endif %}
         <p>Created at: {{ post.created_at }}</p>
         <a href="{% url 'post-list' %}">Back to Posts</a>
+
+        <hr>
+
+        <!-- Comment Section -->
+        <h3>Comments ({{ comments|length }})</h3>
+        {% for comment in comments %}
+        <p>Comment: {{ comment.content }}</p>
+        <p>User: {{ comment.user }}</p>
+        {% empty %}
+            <p>No comments found.</p>
+        {% endfor %}
+
+
+        <!-- Add Comment Form -->
+        <form method="post" action="{% url 'add-comment' post.id %}">
+            {% csrf_token %}
+            <textarea name="content" placeholder="Write a comment..." required></textarea>
+            <button type="submit">Add Comment</button>
+        </form>
+
     </div>
 {% endblock %}

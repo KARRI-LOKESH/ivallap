@@ -1,0 +1,148 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    color: white;
+    text-align: center;
+}
+
+/* Navigation Bar */
+header {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    transition: color 0.3s ease-in-out;
+}
+
+nav ul li a:hover {
+    color: #f4a261;
+}
+
+/* About Section */
+.about-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px 20px 50px;
+}
+
+/* Founder Section */
+.founder {
+    text-align: center;
+    margin-bottom: 30px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.founder img {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+.founder img:hover {
+    transform: scale(1.1);
+}
+
+.founder h2 {
+    margin-top: 15px;
+    font-size: 26px;
+    font-weight: bold;
+    color: #f4a261;
+}
+
+/* Company Info */
+.company-info {
+    max-width: 800px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+    animation: slideUp 1.5s ease-in-out;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-top: 20px;
+    color: #f4a261;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    font-size: 18px;
+    padding: 5px 0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .company-info {
+        padding: 20px;
+    }
+
+    .founder img {
+        width: 140px;
+        height: 140px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    p, ul li {
+        font-size: 16px;
+    }
+}

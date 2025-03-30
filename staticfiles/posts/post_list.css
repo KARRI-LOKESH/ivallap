@@ -23,6 +23,9 @@ h2 {
     margin-bottom: 20px;
     animation: slideIn 0.7s ease-in-out;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .post:hover {
@@ -33,9 +36,9 @@ h2 {
 /* Post Image */
 .post img {
     width: 100%;
-    height: auto;  /* Ensures the image scales properly */
-    max-height: 500px; /* Adjust the height limit */
-    object-fit: contain; /* Prevents cropping */
+    height: auto;
+    max-height: 600px;
+    object-fit: contain;
     border-radius: 10px;
     transition: transform 0.3s ease-in-out;
 }
@@ -43,11 +46,12 @@ h2 {
 .post img:hover {
     transform: scale(1.05);
 }
+
 /* Buttons */
 .btn {
     display: inline-block;
-    padding: 8px 14px;
-    font-size: 16px;
+    padding: 10px 16px;
+    font-size: 18px;
     border-radius: 5px;
     text-decoration: none;
     transition: all 0.3s ease-in-out;
@@ -88,8 +92,8 @@ button {
     background: #0d6efd;
     color: white;
     border: none;
-    padding: 8px 12px;
-    font-size: 16px;
+    padding: 10px 14px;
+    font-size: 18px;
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
@@ -103,21 +107,33 @@ button:hover {
 button:active {
     transform: scale(0.95);
 }
+
 /* Navigation Bar */
 .navbar {
     display: flex;
-    justify-content: center;
-    background-color: #4b0082; /* Dark purple background */
-    padding: 15px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4b0082;
+    padding: 15px 20px;
     border-radius: 10px;
 }
 
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
 /* Navigation Links */
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
 .navbar a {
     color: white;
-    background: #6a0dad; /* Medium purple */
+    background: #6a0dad;
     padding: 10px 20px;
-    margin: 0 10px; /* Adds spacing (gap) between links */
     text-decoration: none;
     font-size: 18px;
     border-radius: 5px;
@@ -126,15 +142,14 @@ button:active {
 
 /* Hover Effect */
 .navbar a:hover {
-    background: #8a2be2; /* Brighter purple */
+    background: #8a2be2;
     transform: scale(1.1);
 }
 
-
 /* Comment Section */
 input[type="text"] {
-    width: 80%;
-    padding: 8px;
+    width: 90%;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
@@ -154,8 +169,8 @@ ul {
 
 ul li {
     background: #1f4068;
-    padding: 10px;
-    margin: 5px 0;
+    padding: 12px;
+    margin: 6px 0;
     border-radius: 5px;
     transition: transform 0.3s ease-in-out;
 }
@@ -163,6 +178,49 @@ ul li {
 ul li:hover {
     transform: scale(1.02);
 }
+
+@media (max-width: 480px) {
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 12px;
+    }
+
+    .post {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .post img {
+        width: 100%;
+        height: auto;
+        max-height: 400px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    button {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px;
+    }
+}
+
 
 /* Animations */
 @keyframes fadeIn {

@@ -15,12 +15,12 @@ body {
 .container {
     width: 90%;
     max-width: 500px;
-    background: rgba(132, 120, 120, 0.15);
+    background: rgba(255, 255, 255, 0.1);
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     text-align: center;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(10px);
     animation: slideIn 0.8s ease-in-out;
 }
 
@@ -73,6 +73,7 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 form p {
@@ -88,10 +89,10 @@ input, textarea, select {
     border: 2px solid #ccc;
     border-radius: 6px;
     font-size: 16px;
-    transition: all 0.3s ease-in-out;
     background: rgba(255, 255, 255, 0.2);
-    color: #0a0a0a;
+    color: #fff;
     box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
 }
 
 input:focus, textarea:focus, select:focus {
@@ -138,6 +139,37 @@ p a {
 p a:hover {
     background: #15385d;
     transform: scale(1.1);
+}
+
+/* Follow & Unfollow Buttons */
+.follow-btn, .unfollow-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-weight: bold;
+    width: 100%;
+    max-width: 200px;
+    display: inline-block;
+    text-align: center;
+}
+
+.unfollow-btn {
+    background: #dc3545;
+}
+
+.follow-btn:hover {
+    background: #218838;
+    transform: scale(1.05);
+}
+
+.unfollow-btn:hover {
+    background: #c82333;
+    transform: scale(1.05);
 }
 
 /* Animations */

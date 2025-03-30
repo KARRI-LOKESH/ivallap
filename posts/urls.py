@@ -1,7 +1,9 @@
 from django.urls import path
+from django.views.decorators.csrf import csrf_exempt
 from .views import (
     PostListView, PostCreateView, PostDetailView, 
-    PostUpdateView, PostDeleteView, like_post, save_post, add_comment,dashboard
+    PostUpdateView, PostDeleteView, like_post, 
+    save_post, add_comment, delete_comment, dashboard
 )
 
 urlpatterns = [
@@ -12,6 +14,7 @@ urlpatterns = [
     path('<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('<int:post_id>/like/', like_post, name='like-post'),
     path('<int:post_id>/save/', save_post, name='save-post'),
-    path('<int:post_id>/comment/', add_comment, name='add-comment'),
+    path("comments/<int:comment_id>/delete/", delete_comment, name="comment-delete"),
+    path("posts/<int:post_id>/comment/", add_comment, name="add-comment"),
     path('dashboard/', dashboard, name='dashboard'),
 ]

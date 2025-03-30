@@ -26,7 +26,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=20)
     email = models.EmailField(unique=True)
     age = models.IntegerField()
-    phone = models.CharField(max_length=15, null=True)
+    phone= models.CharField(max_length=15, unique=True, null=True, blank=True)
     otp = models.CharField(max_length=6, null=True, blank=True)
     profile_pic = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
     username = models.CharField(max_length=30, unique=True, null=True, blank=True)
@@ -39,7 +39,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     github = models.URLField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-
+    
+    firebase_uid = models.CharField(max_length=50, blank=True, null=True)  
+    followers = models.ManyToManyField('self', symmetrical=False, related_name='following', blank=True)
     objects = CustomUserManager()
 
     USERNAME_FIELD = "email"

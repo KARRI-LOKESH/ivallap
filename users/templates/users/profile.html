@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     {% load static %}
-<link rel="stylesheet" href="{% static 'users/profile.css' %}">
-
+    <link rel="stylesheet" href="{% static 'users/profile.css' %}">
 </head>
 <body>
     <div class="container">
@@ -38,6 +37,22 @@
             {% endif %}
         </div>
 
+        <p>
+            <a href="{% url 'followers-list' user.id %}">Followers: {{ user.followers.count }}</a> |
+            <a href="{% url 'following-list' user.id %}">Following: {{ user.following.count }}</a>
+        </p>
+        <!-- Follow/Unfollow Button -->
+        {% if request.user != user %}
+            <form action="{% url 'follow-user' user.id %}" method="POST">
+                {% csrf_token %}
+                {% if is_following %}
+                    <button type="submit">Unfollow</button>
+                {% else %}
+                    <button type="submit">Follow</button>
+                {% endif %}
+            </form>
+        {% endif %}
+
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
@@ -46,7 +61,10 @@
             <button type="submit" name="redirect" value="create">Save & Create Post</button>
             <button type="submit" name="redirect" value="list">Save & View Posts</button>
         </form>
-
+        
+        <!-- My Posts Button -->
+        <p><a href="{% url 'my-posts' %}" class="btn">My Posts</a></p>
+        
         <p><a href="{% url 'logout' %}">Logout</a></p>
     </div>
 </body>

@@ -179,34 +179,48 @@ ul li:hover {
     transform: scale(1.02);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
-    .post {
-        width: 95%;
-        padding: 15px;
-    }
+@media (max-width: 480px) {
     .navbar {
         flex-direction: column;
-        align-items: center;
         text-align: center;
         padding: 10px;
     }
+
     .nav-links {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
         width: 100%;
     }
-    .navbar a {
+
+    .nav-links a {
         display: block;
         width: 100%;
+        padding: 12px;
     }
+
+    .post {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .post img {
+        width: 100%;
+        height: auto;
+        max-height: 400px;
+    }
+
     input[type="text"] {
         width: 100%;
+        font-size: 14px;
+    }
+
+    button {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px;
     }
 }
+
 
 /* Animations */
 @keyframes fadeIn {
