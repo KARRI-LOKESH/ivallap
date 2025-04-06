@@ -1,6 +1,6 @@
 {% for user in users %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'posts/search.css' %}">
+<link rel="stylesheet" href="{% static 'users/search.css' %}">
     <div class="user-profile">
         <!-- Profile Picture -->
         {% if user.profile.image %}
@@ -45,7 +45,7 @@
                             </li>
                         {% endfor %}
                     </ul>
-                    <form action="{% url 'comment-post' post.id %}" method="POST">
+                    <form action="{% url 'add-comment' post.id %}" method="POST">
                         {% csrf_token %}
                         <input type="text" name="comment" placeholder="Add a comment..." required>
                         <button type="submit">Comment</button>

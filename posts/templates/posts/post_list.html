@@ -7,7 +7,7 @@
 <h2>All Posts</h2>
 
 {% for post in posts %}
-    <div class="post">
+    <div class="post" data-post-id="{{ post.id }}">
         <p><strong>{{ post.user.username }}</strong> - {{ post.created_at }}</p>
         <p>{{ post.content }}</p>
         
@@ -29,14 +29,14 @@
         <!-- Like Button -->
         <form action="{% url 'like-post' post.id %}" method="POST" style="display: inline;">
             {% csrf_token %}
-            <button type="submit">
+            <button class="like-btn" data-post-id="{{ post.id }}">
                 {% if request.user in post.likes.all %}
                     👎UnLike
                 {% else %}
                     👍Like
                 {% endif %}
             </button>
-            <span>{{ post.total_likes }}</span>
+            <span id="like-count-{{ post.id }}">{{ post.total_likes }}</span>
         </form>
 
         <!-- Save Button -->
@@ -81,6 +81,21 @@
         {% else %}
             <p>No comments yet. Be the first to comment!</p>
         {% endif %}
+
+        <!-- Share Button -->
+        <button class="share-btn" data-post-url="{{ request.build_absolute_uri|slice:':-1' }}{% url 'post-detail' post.id %}">🔗 Share</button>      
+
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|slice:':-1' }}{% url 'post-detail' post.id %}" target="_blank">
+            📘 Share on Facebook
+        </a>
+
+        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|slice:':-1' }}{% url 'post-detail' post.id %}&text=Check%20this%20post!" target="_blank">
+            🐦 Share on Twitter
+        </a>
+
+        <a href="https://api.whatsapp.com/send?text={{ request.build_absolute_uri|slice:':-1' }}{% url 'post-detail' post.id %}" target="_blank">
+            📲 Share on WhatsApp
+        </a>
 
     </div>
     <hr>

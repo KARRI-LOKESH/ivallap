@@ -61,18 +61,23 @@ def like_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if request.user in post.likes.all():
         post.likes.remove(request.user)
+        liked = False
     else:
         post.likes.add(request.user)
-    return redirect('post-list')
+        liked = True
 
+    return JsonResponse({'liked': liked, 'total_likes': post.likes.count()})
 @login_required
 def save_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if request.user in post.saved_by.all():
         post.saved_by.remove(request.user)
+        saved = False
     else:
         post.saved_by.add(request.user)
-    return redirect('post-list')
+        saved = True
+
+    return JsonResponse({"saved": saved, "total_saves": post.saved_by.count()})
 
 @login_required
 def add_comment(request, post_id):
