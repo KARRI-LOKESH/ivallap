@@ -7,20 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Share Button Function
-    document.querySelectorAll(".share-btn").forEach(button => {
-        button.addEventListener("click", function (event) {
-            event.stopPropagation();
-            let postUrl = this.dataset.postUrl;
-            navigator.clipboard.writeText(postUrl)
-                .then(() => alert("Post link copied!"))
-                .catch(err => console.error("Failed to copy:", err));
-        });
-    });
-
-    // Double Tap & Double Click Like Feature
     document.querySelectorAll(".post").forEach(post => {
         let lastTap = 0;
+        let timeout;
         let postId = post.dataset.postId;
 
         // Double Click for Desktop
@@ -30,29 +19,33 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Double Tap for Mobile
+        // **Improved Double Tap for Mobile**
         post.addEventListener("touchend", function (event) {
             if (!isInteractiveElement(event.target)) {
                 let currentTime = new Date().getTime();
                 let tapLength = currentTime - lastTap;
 
                 if (tapLength < 300 && tapLength > 0) {
+                    clearTimeout(timeout); // Clear single tap timeout
                     likePost(postId);
-                    lastTap = 0; // Reset to avoid multiple triggers
+                    lastTap = 0;
                 } else {
                     lastTap = currentTime;
+                    timeout = setTimeout(() => {
+                        lastTap = 0;
+                    }, 300); // Reset if no second tap happens
                 }
             }
         });
     });
 
     function likePost(postId) {
-        fetch(`/posts/like/${postId}/`, {  // Ensure the correct URL format
-            method: "POST",  // Using POST instead of GET for better API practice
+        fetch(`/posts/like/${postId}/`, {
+            method: "POST",
             headers: {
                 "X-Requested-With": "XMLHttpRequest",
                 "Content-Type": "application/json",
-                "X-CSRFToken": getCSRFToken(), // CSRF token for security
+                "X-CSRFToken": getCSRFToken(),
             },
             credentials: "same-origin",
         })
@@ -65,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let likeButton = document.querySelector(`.like-btn[data-post-id="${postId}"]`);
             if (likeButton) {
-                likeButton.innerHTML = data.liked ? "👎UnLike" : "👍Like";
+                likeButton.innerHTML = data.liked ? "👎 UnLike" : "👍 Like";
             }
         })
         .catch(error => console.error("Error:", error));
