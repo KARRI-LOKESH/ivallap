@@ -56,20 +56,32 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         return Post.objects.filter(user=self.request.user)
 
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from .models import Post  # Ensure Post model is imported
+
 @login_required
 def like_post(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    if request.user in post.likes.all():
-        post.likes.remove(request.user)
-        liked = False
-    else:
-        post.likes.add(request.user)
-        liked = True
+    if request.method == "POST":
+        post = get_object_or_404(Post, id=post_id)
+        
+        if request.user in post.likes.all():
+            post.likes.remove(request.user)
+            liked = False
+        else:
+            post.likes.add(request.user)
+            liked = True
 
-    return JsonResponse({'liked': liked, 'total_likes': post.likes.count()})
+        return JsonResponse({"liked": liked, "total_likes": post.likes.count()})
+
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
+
 @login_required
 def save_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+
     if request.user in post.saved_by.all():
         post.saved_by.remove(request.user)
         saved = False
@@ -77,8 +89,10 @@ def save_post(request, post_id):
         post.saved_by.add(request.user)
         saved = True
 
-    return JsonResponse({"saved": saved, "total_saves": post.saved_by.count()})
-
+    return JsonResponse({
+        "total_saves": post.saved_by.count(),
+        "saved": saved
+    })
 @login_required
 def add_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)

@@ -12,9 +12,9 @@ urlpatterns = [
     path('<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
     path('<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
-    path('like/<int:post_id>/', like_post, name='like-post'),
+    path('like/<int:post_id>/', like_post, name="like-post"),
     path('<int:post_id>/save/', save_post, name='save-post'),
-    path("comments/<int:comment_id>/delete/", delete_comment, name="comment-delete"),
-    path("posts/<int:post_id>/comment/", add_comment, name="add-comment"),
+    path('comments/<int:comment_id>/delete/', delete_comment, name="comment-delete"),
+    path('posts/<int:post_id>/comment/', add_comment, name="add-comment"),
     path('dashboard/', dashboard, name='dashboard'),
 ]
