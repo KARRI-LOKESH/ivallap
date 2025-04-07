@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 let currentTime = new Date().getTime();
                 let tapLength = currentTime - lastTap;
 
-                if (tapLength < 300 && tapLength > 0) {
+                if (tapLength < 200 && tapLength > 0) {
                     clearTimeout(timeout); // Clear single tap timeout
                     likePost(postId);
                     lastTap = 0;
