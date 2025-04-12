@@ -1,0 +1,21 @@
+{% extends "posts/base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'posts/inbox.css' %}">
+<h2>Your Messages</h2>
+
+<h3>Received Messages</h3>
+<ul>
+    {% for message in messages_received %}
+        <li><strong>{{ message.sender.name }}:</strong> {{ message.content }} ({{ message.timestamp }})</li>
+    {% endfor %}
+</ul>
+
+<h3>Sent Messages</h3>
+<ul>
+    {% for message in messages_sent %}
+        <li><strong>To {{ message.receiver.name }}:</strong> {{ message.content }} ({{ message.timestamp }})</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

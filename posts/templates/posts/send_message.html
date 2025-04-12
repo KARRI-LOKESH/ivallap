@@ -1,0 +1,19 @@
+{% extends "posts/base.html" %}
+
+{% block content %}
+    <h2>Messages</h2>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>
+                    <strong>From:</strong> {{ message.sender.username }} <br>
+                    <strong>Message:</strong> {{ message.content }} <br>
+                    <strong>Sent at:</strong> {{ message.timestamp }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No messages yet.</p>
+    {% endif %}
+{% endblock %}

@@ -6,7 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Post, Comment
 from django.utils.timezone import localtime
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse # Ensure Post model is imported
+
 
 class PostListView(ListView):
     model = Post
@@ -16,7 +17,7 @@ class PostListView(ListView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['content', 'image']
+    fields = ['content', 'image','video']
     template_name = 'posts/post_form.html'
     success_url = reverse_lazy('post-list')
 
@@ -41,7 +42,7 @@ class PostDetailView(DetailView):
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ['content', 'image']
+    fields = ['content', 'image','video']
     template_name = 'posts/post_form.html'
     success_url = reverse_lazy('post-list')
 
@@ -55,11 +56,6 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return Post.objects.filter(user=self.request.user)
-
-from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-from .models import Post  # Ensure Post model is imported
 
 @login_required
 def like_post(request, post_id):
@@ -109,6 +105,8 @@ def add_comment(request, post_id):
 @login_required(login_url='entry')  # Redirects to entry.html if not logged in
 def dashboard(request):
     return render(request, 'users/entry.html')
+def send_message(request):
+    return render(request, 'posts/send_message.html')
 @login_required
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)

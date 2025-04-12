@@ -1,23 +1,24 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser
+from .models import CustomUser, Message
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ["email", "name", "age", "phone"]
+        fields = [
+            'name', 'email', 'age', 'phone', 'profile_pic', 'username', 'bio',
+            'first_name', 'last_name', 'gender', 'location', 'linkedin', 'github'
+        ]
 
-# Custom Form for Updating User Profile
-class CustomUserForm(forms.ModelForm):
-    class Meta:
-        model = CustomUser
-        fields = ["username", "email", "bio", "profile_pic"]
 class UserProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ["name", "age", "phone", "gender", "location", "bio", "profile_pic", "linkedin", "github"]
-        widgets = {
-            "bio": forms.Textarea(attrs={"rows": 3}),
-            "linkedin": forms.URLInput(attrs={"placeholder": "LinkedIn Profile URL"}),
-            "github": forms.URLInput(attrs={"placeholder": "GitHub Profile URL"}),
-        }
+        fields = [
+            'profile_pic', 'bio', 'first_name', 'last_name', 'gender', 
+            'location', 'linkedin', 'github'
+        ]
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['receiver', 'content']

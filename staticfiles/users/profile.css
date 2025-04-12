@@ -1,6 +1,6 @@
 /* General Styling */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #061e4a, #1b2c0f);
     margin: 0;
     padding: 0;
@@ -9,27 +9,29 @@ body {
     align-items: center;
     min-height: 100vh;
     animation: fadeIn 1s ease-in-out;
+    overflow-x: hidden;
 }
 
 /* Container */
 .container {
     width: 90%;
     max-width: 500px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.12);
     padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     text-align: center;
-    backdrop-filter: blur(10px);
-    animation: slideIn 0.8s ease-in-out;
+    backdrop-filter: blur(12px);
+    animation: slideIn 0.8s ease-out;
+    transition: all 0.3s ease-in-out;
 }
 
 /* Heading */
 h1 {
     color: #fff;
-    font-size: 28px;
-    margin-bottom: 15px;
-    animation: fadeDown 1.2s ease-in-out;
+    font-size: 30px;
+    margin-bottom: 20px;
+    animation: fadeDown 1s ease-in-out;
 }
 
 /* Messages */
@@ -41,18 +43,18 @@ h1 {
 .messages li {
     background: #1a8533;
     color: white;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 8px;
     font-size: 16px;
-    animation: fadeIn 1.5s ease-in-out;
+    animation: fadeIn 1.2s ease-in-out;
 }
 
 /* Profile Picture */
 .profile-pic {
     display: flex;
     justify-content: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .profile-pic img {
@@ -60,7 +62,7 @@ h1 {
     height: 100px;
     border-radius: 50%;
     border: 3px solid #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease-in-out;
 }
 
@@ -72,47 +74,40 @@ h1 {
 form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 15px;
     width: 100%;
-}
-
-form p {
-    width: 100%;
-    text-align: left;
 }
 
 /* Input Fields */
 input, textarea, select {
     width: 100%;
     padding: 12px;
-    margin-bottom: 15px;
-    border: 2px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.25);
     color: #fff;
-    box-sizing: border-box;
     transition: all 0.3s ease-in-out;
+    box-shadow: inset 0 0 5px rgba(255,255,255,0.2);
 }
 
 input:focus, textarea:focus, select:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-    transform: scale(1.02);
+    border: 1px solid #007bff;
+    box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
+    outline: none;
 }
 
-/* Buttons */
+/* Button */
 button {
     background: #007bff;
     color: white;
-    border: none;
     padding: 14px;
-    font-size: 18px;
-    border-radius: 6px;
+    border: none;
+    font-size: 17px;
+    border-radius: 8px;
     cursor: pointer;
-    width: 100%;
-    transition: background 0.3s ease-in-out, transform 0.2s;
     font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
 }
 
 button:hover {
@@ -120,18 +115,18 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* Logout Link */
+/* Back / Logout Link */
 p {
     margin-top: 20px;
 }
 
 p a {
+    background: #007bff;
     color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
     text-decoration: none;
     font-weight: bold;
-    background: #007bff;
-    padding: 10px 15px;
-    border-radius: 6px;
     transition: all 0.3s ease-in-out;
     display: inline-block;
 }
@@ -143,19 +138,19 @@ p a:hover {
 
 /* Follow & Unfollow Buttons */
 .follow-btn, .unfollow-btn {
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 12px 18px;
-    font-size: 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    padding: 12px;
+    font-size: 15px;
     font-weight: bold;
+    border: none;
+    border-radius: 6px;
     width: 100%;
     max-width: 200px;
-    display: inline-block;
-    text-align: center;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.follow-btn {
+    background: #28a745;
 }
 
 .unfollow-btn {
@@ -179,7 +174,7 @@ p a:hover {
 }
 
 @keyframes slideIn {
-    from { transform: translateY(-20px); opacity: 0; }
+    from { transform: translateY(30px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
 
@@ -188,7 +183,7 @@ p a:hover {
     to { transform: translateY(0); opacity: 1; }
 }
 
-/* Responsive Styling */
+/* Responsive Design */
 @media (max-width: 768px) {
     .container {
         width: 95%;
@@ -199,18 +194,26 @@ p a:hover {
         font-size: 24px;
     }
 
-    input, textarea, select {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    button {
-        font-size: 16px;
-        padding: 12px;
-    }
-
     .profile-pic img {
         width: 80px;
         height: 80px;
+    }
+
+    input, textarea, select {
+        font-size: 14px;
+    }
+
+    button, .follow-btn, .unfollow-btn {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 22px;
+    }
+
+    .container {
+        padding: 15px;
     }
 }

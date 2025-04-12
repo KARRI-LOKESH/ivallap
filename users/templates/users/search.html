@@ -1,12 +1,14 @@
-{% for user in users %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'users/search.css' %}">
+
+{% if users %}
+    {% for user in users %}
     <div class="user-profile">
-        <!-- Profile Picture -->
-        {% if user.profile.image %}
-            <img src="{{ user.profile.image.url }}" alt="{{ user.username }}" class="profile-pic">
+        <!-- Profile Picture Fix -->
+        {% if user.profile and user.profile.image %}
+            <img src="{{ user.profile.profile_pic.url }}?{{ user.profile.updated_at|date:'U' }}" alt="{{ user.username }}" class="profile-pic">
         {% else %}
-            <img src="/static/images/default-profile.png" alt="Default Profile" class="profile-pic">
+            <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile" class="profile-pic">
         {% endif %}
 
         <!-- User Details -->
@@ -15,45 +17,66 @@
         </h2>
         <p>Followers: {{ user.followers.count }}</p>
         <p>Following: {{ user.following.count }}</p>
-        {% if user.profile.bio %}
+        {% if user.profile and user.profile.bio %}
             <p>Bio: {{ user.profile.bio }}</p>
         {% endif %}
 
+        <!-- Follow Button -->
+        {% if request.user != user %}
+            <form action="{% url 'follow-user' user.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit">
+                    {% if user in request.user.following.all %}
+                        Unfollow
+                    {% else %}
+                        Follow
+                    {% endif %}
+                </button>
+            </form>
+        {% endif %}
+
         <h3>Posts by {{ user.username }}</h3>
-        
-        {% for post in posts %}
-            {% if post.user == user %}
-                <div class="post">
-                    <p>{{ post.content }}</p>
-                    <small>Posted on {{ post.created_at }}</small>
-                    
-                    <!-- Likes -->
-                    <p>Likes: {{ post.likes.count }}</p>
-                    <form action="{% url 'like-post' post.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit">Like</button>
-                    </form>
-                    
-                    <!-- Comments -->
-                    <h4>Comments:</h4>
-                    <ul>
-                        {% for comment in post.comments.all %}
-                            <li>
-                                <a href="{% url 'user-profile' comment.user.username %}">
-                                    {{ comment.user.username }}
-                                </a>: {{ comment.text }} ({{ comment.created_at }})
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <form action="{% url 'add-comment' post.id %}" method="POST">
-                        {% csrf_token %}
-                        <input type="text" name="comment" placeholder="Add a comment..." required>
-                        <button type="submit">Comment</button>
-                    </form>
-                </div>
-            {% endif %}
-        {% endfor %}
+
+        {% if posts %}
+            {% for post in posts %}
+                {% if post.user == user %}
+                    <div class="post">
+                        <p>{{ post.content }}</p>
+                        <small>Posted on {{ post.created_at }}</small>
+
+                        <!-- Likes -->
+                        <p>Likes: {{ post.likes.count }}</p>
+                        <form action="{% url 'like-post' post.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit">Like</button>
+                        </form>
+
+                        <!-- Comments -->
+                        <h4>Comments:</h4>
+                        <ul>
+                            {% for comment in post.comments.all %}
+                                <li>
+                                    <a href="{% url 'user-profile' comment.user.username %}">
+                                        {{ comment.user.username }}
+                                    </a>: {{ comment.text }} ({{ comment.created_at }})
+                                </li>
+                            {% empty %}
+                                <li>No comments yet.</li>
+                            {% endfor %}
+                        </ul>
+                        <form action="{% url 'add-comment' post.id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="comment" placeholder="Add a comment..." required>
+                            <button type="submit">Comment</button>
+                        </form>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>No posts found.</p>
+        {% endif %}
     </div>
-{% empty %}
+    {% endfor %}
+{% else %}
     <p>No users found.</p>
-{% endfor %}
+{% endif %}

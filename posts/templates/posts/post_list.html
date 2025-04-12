@@ -14,6 +14,12 @@
         {% if post.image %}
             <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 100%; height: auto;">
         {% endif %}
+        {% if post.video %}
+        <video width="400" controls>
+            <source src="{{ post.video.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    {% endif %}
         
         <br>
 

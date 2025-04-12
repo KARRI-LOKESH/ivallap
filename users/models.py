@@ -8,7 +8,8 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError("Users must have an email address")
         email = self.normalize_email(email)
-        user = self.model(email=email, name=name, age=age, phone=phone)
+        username = email.split("@")[0]  # Generate username from email if empty
+        user = self.model(email=email, name=name, age=age, phone=phone, username=username)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -28,7 +29,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     age = models.IntegerField()
     phone= models.CharField(max_length=15, unique=True, null=True, blank=True)
     otp = models.CharField(max_length=6, null=True, blank=True)
-    profile_pic = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+    profile_pic = models.ImageField(upload_to='profile_pics/', null=True, blank=True, default="profile_pics/default-profile.png")
     username = models.CharField(max_length=30, unique=True, null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
     first_name = models.CharField(max_length=30, null=True, blank=True)
@@ -54,3 +55,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+class Message(models.Model):
+    sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="sent_messages")
+    receiver = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="received_messages")
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"From {self.sender} to {self.receiver}"

@@ -28,30 +28,31 @@
             </script>
         {% endif %}
 
-        <!-- Profile Picture -->
+        <!-- Profile Picture Fix -->
         <div class="profile-pic">
             {% if user.profile_pic %}
-                <img src="{{ user.profile_pic.url }}" alt="Profile Picture">
+                <img src="{{ user_profile.profile_pic.url }}" alt="Profile Picture">
             {% else %}
-                <img src="{% static 'users/default-avatar.png' %}" alt="Default Profile">
+                <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile">
             {% endif %}
-        </div>
+        </div>   
 
         <p>
             <a href="{% url 'followers-list' user.id %}">Followers: {{ user.followers.count }}</a> |
             <a href="{% url 'following-list' user.id %}">Following: {{ user.following.count }}</a>
         </p>
-        <!-- Follow/Unfollow Button -->
-        {% if request.user != user %}
-            <form action="{% url 'follow-user' user.id %}" method="POST">
-                {% csrf_token %}
-                {% if is_following %}
-                    <button type="submit">Unfollow</button>
-                {% else %}
-                    <button type="submit">Follow</button>
-                {% endif %}
-            </form>
-        {% endif %}
+        {% if request.user != user_profile %}
+    <form id="followForm" action="{% url 'follow-user' user_profile.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" id="followButton">
+            {% if is_following %}
+                Unfollow
+            {% else %}
+                Follow
+            {% endif %}
+        </button>
+    </form>
+{% endif %}
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}

@@ -4,13 +4,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
-from .models import CustomUser
+from .models import CustomUser,Message
+from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from posts.models import Post 
+from django.http import HttpResponse
 from django.views.generic import TemplateView
-from .forms import CustomUserCreationForm,UserProfileUpdateForm
-from django.db.models import Q 
+from users.forms import CustomUserCreationForm,UserProfileUpdateForm,MessageForm
+from django.db.models import Q
 # User Signup View
 def signup_view(request):
     if request.method == "POST":
@@ -82,32 +84,47 @@ def verify_otp(request):
     return render(request, "users/verify_otp.html")
 
 # Profile View (After Login)
+User = get_user_model()
+
+User = get_user_model()
+
 @login_required
-def profile_view(request):
-    user = request.user
-    followers_count = user.followers.count()  # Count of followers
-    following_count = user.following.count()  # Count of following
-    posts = Post.objects.filter(user=user)  # Fetch user's posts
+def profile_view(request, username=None):
+    if not username:
+        return redirect("user-profile", username=request.user.username)
+
+    user_profile = get_object_or_404(User, username=username)
+
+    followers_count = user_profile.followers.count()
+    following_count = user_profile.following.count()
+    posts = Post.objects.filter(user=user_profile)
+
+    # Check if the logged-in user is following this profile
+    is_following = request.user.following.filter(id=user_profile.id).exists()
 
     if request.method == "POST":
-        form = UserProfileUpdateForm(request.POST, request.FILES, instance=user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Profile updated successfully!")
-            return redirect("profile")  
+        if request.user == user_profile:
+            form = UserProfileUpdateForm(request.POST, request.FILES, instance=user_profile)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Profile updated successfully!")
+                return redirect("user-profile", username=user_profile.username)
+            else:
+                messages.error(request, "Please correct the errors below.")
         else:
-            messages.error(request, "Please correct the errors below.")
+            messages.error(request, "You can only edit your own profile.")
+            return redirect("user-profile", username=request.user.username)
     else:
-        form = UserProfileUpdateForm(instance=user)
+        form = UserProfileUpdateForm(instance=user_profile)
 
     return render(request, "users/profile.html", {
         "form": form,
         "followers_count": followers_count,
         "following_count": following_count,
         "posts": posts,
-        "user_profile": user,
+        "user_profile": user_profile,
+        "is_following": is_following,  # Pass is_following to the template
     })
-
 # Logout View
 def logout_view(request):
     logout(request)
@@ -184,27 +201,32 @@ def my_posts(request):
     return render(request, 'users/my_posts.html', {'posts': user_posts})
 
 
-def follow_unfollow(request, user_id):  
-    user_to_follow = get_object_or_404(CustomUser, id=user_id)  
-    if request.user != user_to_follow:  
-        if request.user.following.filter(id=user_id).exists():  
-            request.user.following.remove(user_to_follow)  
-            is_following = False  
-        else:  
-            request.user.following.add(user_to_follow)  
-            is_following = True  
-        return JsonResponse({'following': is_following})  
-    return redirect('profile', user_id=user_id)
-
-from django.contrib.auth.models import User
+@login_required
+def follow_unfollow(request, user_id):
+    user_to_follow = get_object_or_404(CustomUser, id=user_id)
+    
+    if request.user != user_to_follow:
+        if request.user.following.filter(id=user_id).exists():
+            request.user.following.remove(user_to_follow)
+            messages.success(request, f"You unfollowed {user_to_follow.username}.")
+        else:
+            request.user.following.add(user_to_follow)
+            messages.success(request, f"You are now following {user_to_follow.username}.")
+    
+    return redirect("user-profile", username=user_to_follow.username)
+User = get_user_model()
 
 def search_users(request):
-    query = request.GET.get("q")  # Get search query from input field
-    users = User.objects.filter(username__icontains=query) if query else User.objects.none()
-    posts = Post.objects.filter(user__in=users).prefetch_related('likes', 'comments')
+    query = request.GET.get("query", "").strip()
+    users = User.objects.filter(username__icontains=query) if query else []
 
-    return render(request, "search.html", {"users": users, "posts": posts})
+    # Fetch posts of the searched users
+    posts = Post.objects.filter(user__in=users).select_related("user")
 
+    return render(request, "users/search.html", {
+        "users": users,
+        "posts": posts,
+    })
 def followers_list(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     followers = user.followers.all()
@@ -214,3 +236,25 @@ def following_list(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     following = user.following.all()
     return render(request, 'users/following_list.html', {'user': user, 'following': following})
+
+@login_required
+def send_message(request, receiver_id):
+    receiver = get_object_or_404(CustomUser, id=receiver_id)
+    
+    if request.method == "POST":
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.receiver = receiver
+            message.save()
+            messages.success(request, "Message sent successfully!")
+            return redirect("posts:inbox")  # Redirect to the inbox or chat page
+    else:
+        form = MessageForm()
+
+    return render(request, "posts/send_message.html", {"form": form, "receiver": receiver})
+@login_required
+def inbox(request):
+    messages = Message.objects.filter(receiver=request.user).order_by('-timestamp')
+    return render(request, "posts/inbox.html", {"messages": messages})

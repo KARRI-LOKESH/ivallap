@@ -5,7 +5,7 @@ from .views import (
     PostUpdateView, PostDeleteView, like_post, 
     save_post, add_comment, delete_comment, dashboard
 )
-
+from users.views import send_message, inbox
 urlpatterns = [
     path('', PostListView.as_view(), name='post-list'),
     path('create/', PostCreateView.as_view(), name='post-create'),
@@ -17,4 +17,6 @@ urlpatterns = [
     path('comments/<int:comment_id>/delete/', delete_comment, name="comment-delete"),
     path('posts/<int:post_id>/comment/', add_comment, name="add-comment"),
     path('dashboard/', dashboard, name='dashboard'),
+    path("send/<int:receiver_id>/", send_message, name="send-message"),
+    path("inbox/", inbox, name="inbox"),
 ]

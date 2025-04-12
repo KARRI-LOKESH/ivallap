@@ -14,9 +14,21 @@
         <div class="post-gallery">
             {% for post in posts %}
                 <div class="post-item" id="post-{{ post.id }}">
+                    
+                    <!-- Display Image -->
                     {% if post.image %}
                         <img src="{{ post.image.url }}" alt="Post Image">
                     {% endif %}
+
+                    <!-- Display Video -->
+                    {% if post.video %}
+                        <video width="400" controls>
+                            <source src="{{ post.video.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    {% endif %}
+
+                    <!-- Post Content -->
                     <p>{{ post.content }}</p>
 
                     <!-- Likes & Comments Count -->
@@ -38,7 +50,7 @@
                             <div class="comment" id="comment-{{ comment.id }}">
                                 <p><strong>{{ comment.user.username|default:"Unknown User" }}</strong>: {{ comment.content }}</p>
                                 
-                                <!-- Delete Comment Form -->
+                                <!-- Delete Comment -->
                                 <form action="{% url 'comment-delete' comment.id %}" method="post" style="display: inline;">
                                     {% csrf_token %}
                                     <button type="submit" class="btn delete-comment-btn" onclick="return confirm('Delete this comment?')">🗑</button>
@@ -55,7 +67,6 @@
                         <input type="text" name="content" placeholder="Write a comment..." required>
                         <button type="submit" class="btn">Post</button>
                     </form>
-
                 </div>
             {% empty %}
                 <p>No posts yet.</p>

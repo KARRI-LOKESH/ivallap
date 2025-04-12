@@ -9,7 +9,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to="post_images/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    
+    video = models.FileField(upload_to="posts/videos/", blank=True, null=True)
     # Many-to-Many relationships
     likes = models.ManyToManyField(User, related_name="liked_posts", blank=True)
     saved_by = models.ManyToManyField(User, related_name="saved_posts", blank=True)
@@ -41,3 +41,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment {self.id} by {self.user.name} on Post {self.post.id} - {self.created_at.strftime('%Y-%m-%d %H:%M')}"
+

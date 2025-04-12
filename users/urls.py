@@ -12,8 +12,8 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='users/login.html'), name='login'),
     path("verify-otp/", verify_otp, name="verify_otp"),
     path("logout/", logout_view, name="logout"),
-    path("profile/",profile_view, name="profile"),
-    path("profile/<str:username>/", views.profile_view, name="user-profile"),
+    path("profile/", profile_view, name="profile"), 
+    path('profile/<str:username>/', profile_view, name='user-profile'),
     path("home/", views.home, name="home"), 
     path("about/", views.about, name="about"),
     path("base/", views.about, name="base"),
@@ -22,5 +22,5 @@ urlpatterns = [
     path('search/', search_users, name='search-users'),
     path('followers/<int:user_id>/', followers_list, name='followers-list'),
     path('following/<int:user_id>/', following_list, name='following-list'),
-    path('users/follow/<int:user_id>/', views.follow_unfollow, name='follow-user')  
+    path('follow/<int:user_id>/', follow_unfollow, name='follow-user'),
 ]
