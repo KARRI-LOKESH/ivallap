@@ -1,17 +1,23 @@
+/* Base Styling */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #0d1117;
     color: #c9d1d9;
+    line-height: 1.6;
 }
 
+/* Headings */
 h2 {
     text-align: center;
     color: #ffb400;
     animation: fadeIn 1s ease-in-out;
+    font-size: 28px;
+    margin: 20px 10px;
 }
 
+/* Post Container */
 .post {
     background: #161b22;
     border-radius: 12px;
@@ -20,32 +26,40 @@ h2 {
     margin: 20px auto;
     max-width: 600px;
     animation: slideIn 0.5s ease-in-out;
+    box-sizing: border-box;
 }
 
+/* Paragraph Styling */
 .post p {
     color: #8b949e;
+    font-size: 16px;
 }
 
+/* Media Styling */
+video,
 img {
-    border-radius: 10px;
     max-width: 100%;
     height: auto;
     display: block;
     margin: 10px auto;
+    border-radius: 10px;
     border: 2px solid #ffb400;
 }
 
+/* Button Styling */
 .btn {
     display: inline-block;
     padding: 10px 15px;
-    margin: 5px 2px;
+    margin: 5px 4px;
     border-radius: 6px;
     text-decoration: none;
     font-weight: bold;
     text-align: center;
     transition: all 0.3s ease-in-out;
+    font-size: 16px;
 }
 
+/* Specific Button Colors */
 .btn-primary {
     background-color: #ffb400;
     color: black;
@@ -66,6 +80,7 @@ img {
     opacity: 0.85;
 }
 
+/* Standard Button Tag */
 button {
     background: #4895ef;
     color: white;
@@ -74,6 +89,7 @@ button {
     border-radius: 6px;
     cursor: pointer;
     transition: transform 0.3s, background 0.3s;
+    font-size: 16px;
 }
 
 button:hover {
@@ -81,18 +97,20 @@ button:hover {
     background: #4361ee;
 }
 
+/* Input Fields */
 input[type="text"] {
-    width: calc(100% - 20px);
+    width: 100%;
     padding: 12px;
     border: 1px solid #ffb400;
     border-radius: 6px;
     margin-top: 10px;
     background: #161b22;
     color: white;
-    display: block;
     box-sizing: border-box;
+    font-size: 16px;
 }
 
+/* Animations */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -103,11 +121,17 @@ input[type="text"] {
     to { transform: translateY(0); opacity: 1; }
 }
 
+/* Responsive Breakpoints */
 @media (max-width: 768px) {
     .post {
         max-width: 90%;
         padding: 15px;
     }
+
+    h2 {
+        font-size: 24px;
+    }
+
     input[type="text"] {
         width: 100%;
     }
@@ -118,11 +142,17 @@ input[type="text"] {
         padding: 8px 12px;
         font-size: 14px;
     }
+
     h2 {
-        font-size: 22px;
+        font-size: 20px;
     }
+
     input[type="text"] {
         font-size: 14px;
         padding: 10px;
+    }
+
+    .post p {
+        font-size: 14px;
     }
 }

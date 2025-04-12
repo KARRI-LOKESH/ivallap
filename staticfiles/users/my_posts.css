@@ -7,13 +7,13 @@ body {
     animation: fadeIn 1s ease-in-out;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
 }
 
 /* Container Styling */
 .container {
-    width: 80%;
+    width: 90%;
     max-width: 900px;
     background: rgb(20, 5, 31);
     padding: 20px;
@@ -22,6 +22,17 @@ body {
     text-align: center;
     animation: slideIn 0.8s ease-in-out;
     margin-top: 80px;
+    box-sizing: border-box;
+}
+
+/* Video Styling - Responsive */
+video {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px auto;
+    border-radius: 10px;
+    border: 2px solid #ffb400;
 }
 
 /* Heading */
@@ -99,9 +110,39 @@ h1 {
     .container {
         width: 95%;
         padding: 15px;
+        margin-top: 60px;
     }
+
     .post-gallery {
         grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .post-item p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    .btn {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+
+    .post-item p {
+        font-size: 13px;
     }
 }
 
