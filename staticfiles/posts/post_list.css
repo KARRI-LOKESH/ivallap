@@ -25,6 +25,7 @@ h2 {
     padding: 20px;
     margin: 20px auto;
     max-width: 600px;
+    width: 100%;
     animation: slideIn 0.5s ease-in-out;
     box-sizing: border-box;
 }
@@ -121,22 +122,19 @@ input[type="text"] {
     to { transform: translateY(0); opacity: 1; }
 }
 
-/* Responsive Breakpoints */
+/* Tablets and Small Laptops */
 @media (max-width: 768px) {
     .post {
-        max-width: 90%;
+        max-width: 95%;
         padding: 15px;
     }
 
     h2 {
         font-size: 24px;
     }
-
-    input[type="text"] {
-        width: 100%;
-    }
 }
 
+/* Smartphones */
 @media (max-width: 480px) {
     .btn, button {
         padding: 8px 12px;
@@ -154,5 +152,36 @@ input[type="text"] {
 
     .post p {
         font-size: 14px;
+    }
+}
+
+/* Ultra Small Devices (Fixed Width for small mobiles) */
+@media (max-width: 380px) {
+    body {
+        width: 100vw;
+        overflow-x: hidden;
+    }
+
+    .post {
+        width: 95vw;
+        margin: 10px auto;
+        padding: 12px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    .btn, button {
+        padding: 7px 10px;
+        font-size: 13px;
+    }
+
+    input[type="text"] {
+        font-size: 13px;
+    }
+
+    .post p {
+        font-size: 13px;
     }
 }
