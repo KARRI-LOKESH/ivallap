@@ -9,10 +9,12 @@ body {
 /* User Profile Container */
 .user-profile {
     max-width: 600px;
+    width: 100%;
     margin: 20px auto;
     background: rgb(208, 123, 12);
     padding: 20px;
     border-radius: 10px;
+    box-sizing: border-box;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     animation: fadeIn 0.8s ease-in-out;
 }
@@ -51,6 +53,8 @@ p {
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     animation: slideUp 0.6s ease-in-out;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 /* Post Text */
@@ -106,6 +110,7 @@ input[type="text"] {
     border-radius: 5px;
     border: 1px solid #ccc;
     transition: 0.3s;
+    box-sizing: border-box;
 }
 
 input[type="text"]:focus {
@@ -117,7 +122,12 @@ input[type="text"]:focus {
 @media (max-width: 768px) {
     .user-profile {
         max-width: 95%;
-        padding: 15px;
+        padding: 16px;
+    }
+
+    .post {
+        width: 100%;
+        padding: 14px;
     }
 
     .profile-pic {
@@ -135,6 +145,60 @@ input[type="text"]:focus {
 
     button {
         width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-profile {
+        max-width: 98vw;
+        padding: 14px;
+    }
+
+    .post {
+        width: 98vw;
+        padding: 12px;
+    }
+
+    h2 {
+        font-size: 17px;
+    }
+
+    p {
+        font-size: 12px;
+    }
+
+    button {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    input[type="text"] {
+        font-size: 13px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 360px) {
+    .user-profile, .post {
+        width: 99vw;
+        padding: 12px;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    p, .post p {
+        font-size: 12px;
+    }
+
+    button {
+        font-size: 12px;
+        padding: 7px 10px;
+    }
+
+    input[type="text"] {
+        font-size: 12px;
     }
 }
 
