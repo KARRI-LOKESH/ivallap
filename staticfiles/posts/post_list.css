@@ -1,13 +1,11 @@
 /* Base Styling */
-html, body {
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #0d1117;
     color: #c9d1d9;
     line-height: 1.6;
-    max-width: 100%;
-    overflow-x: hidden;
 }
 
 /* Headings */
@@ -153,7 +151,7 @@ input[type="text"] {
     }
 
     .post {
-        width: 100%;
+        width: 95vw;
     }
 
     .post p {
@@ -161,29 +159,61 @@ input[type="text"] {
     }
 }
 
-/* Ultra Small Devices */
+/* Ultra Small Devices (≤380px) */
 @media (max-width: 380px) {
+    body {
+        width: 100vw;
+        overflow-x: hidden;
+    }
+
     .post {
-        width: 99%;
+        width: 94vw;
         margin: 10px auto;
         padding: 14px;
     }
 
     h2 {
-        font-size: 19px;
+        font-size: 18px;
+        margin: 15px 8px;
     }
 
     .btn, button {
-        padding: 8px 12px;
-        font-size: 14px;
+        padding: 7px 10px;
+        font-size: 13px;
     }
 
     input[type="text"] {
-        font-size: 14px;
-        padding: 11px;
+        font-size: 13px;
+        padding: 10px;
     }
 
     .post p {
-        font-size: 14px;
+        font-size: 13px;
+    }
+}
+
+/* Micro Devices (≤320px) */
+@media (max-width: 320px) {
+    .post {
+        padding: 12px;
+        width: 92vw;
+    }
+
+    h2 {
+        font-size: 17px;
+    }
+
+    .btn, button {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+
+    input[type="text"] {
+        font-size: 12px;
+        padding: 9px;
+    }
+
+    .post p {
+        font-size: 12px;
     }
 }
