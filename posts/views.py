@@ -14,16 +14,23 @@ class PostListView(ListView):
     template_name = 'posts/post_list.html'
     context_object_name = 'posts'
     ordering = ['-created_at']
-
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['content', 'image','video']
+    fields = ['content', 'image', 'video']
     template_name = 'posts/post_form.html'
     success_url = reverse_lazy('post-list')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user  
+        image = form.cleaned_data.get('image')
+        video = form.cleaned_data.get('video')
+
+        if image and video:
+            form.add_error('video', "You can't upload both an image and a video in the same post.")
+            return self.form_invalid(form)
+
+        form.instance.user = self.request.user
         return super().form_valid(form)
+
 
 class PostDetailView(DetailView):
     model = Post

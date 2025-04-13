@@ -121,11 +121,10 @@ input[type="text"] {
     from { transform: translateY(20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
-
 /* Tablets and Small Laptops */
 @media (max-width: 768px) {
     .post {
-        max-width: 95%;
+        max-width: 98%; /* Increased from 95% */
         padding: 15px;
     }
 
@@ -150,12 +149,16 @@ input[type="text"] {
         padding: 10px;
     }
 
+    .post {
+        width: 98vw; /* Slightly increased from 100% */
+    }
+
     .post p {
         font-size: 14px;
     }
 }
 
-/* Ultra Small Devices (Fixed Width for small mobiles) */
+/* Ultra Small Devices (Adjusted Width for Very Small Mobiles) */
 @media (max-width: 380px) {
     body {
         width: 100vw;
@@ -163,25 +166,26 @@ input[type="text"] {
     }
 
     .post {
-        width: 95vw;
+        width: 99vw; /* Increased from 98vw */
         margin: 10px auto;
-        padding: 12px;
+        padding: 14px;
     }
 
     h2 {
-        font-size: 18px;
+        font-size: 19px;
     }
 
     .btn, button {
-        padding: 7px 10px;
-        font-size: 13px;
+        padding: 8px 12px;
+        font-size: 14px;
     }
 
     input[type="text"] {
-        font-size: 13px;
+        font-size: 14px;
+        padding: 11px;
     }
 
     .post p {
-        font-size: 13px;
+        font-size: 14px;
     }
 }
