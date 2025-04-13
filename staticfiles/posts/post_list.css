@@ -1,11 +1,13 @@
 /* Base Styling */
-body {
+html, body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #0d1117;
     color: #c9d1d9;
     line-height: 1.6;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 /* Headings */
@@ -121,10 +123,11 @@ input[type="text"] {
     from { transform: translateY(20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
+
 /* Tablets and Small Laptops */
 @media (max-width: 768px) {
     .post {
-        max-width: 98%; /* Increased from 95% */
+        max-width: 98%;
         padding: 15px;
     }
 
@@ -150,7 +153,7 @@ input[type="text"] {
     }
 
     .post {
-        width: 100vw; /* Slightly increased from 100% */
+        width: 100%;
     }
 
     .post p {
@@ -158,15 +161,10 @@ input[type="text"] {
     }
 }
 
-/* Ultra Small Devices (Adjusted Width for Very Small Mobiles) */
+/* Ultra Small Devices */
 @media (max-width: 380px) {
-    body {
-        width: 100vw;
-        overflow-x: hidden;
-    }
-
     .post {
-        width: 99vw; /* Increased from 98vw */
+        width: 99%;
         margin: 10px auto;
         padding: 14px;
     }
