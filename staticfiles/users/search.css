@@ -6,11 +6,17 @@ body {
     background-color: #30dd80;
 }
 
+/* Wrapper */
+.wrapper {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
 /* User Profile Container */
 .user-profile {
-    max-width: 600px;
     width: 100%;
-    margin: 20px auto;
     background: rgb(208, 123, 12);
     padding: 20px;
     border-radius: 10px;
@@ -34,14 +40,14 @@ body {
 h2 {
     text-align: center;
     font-size: 20px;
-    color: #1b1a1a;
+    color: #fff;
     margin-top: 10px;
 }
 
 /* User Stats */
 p {
     text-align: center;
-    color: #0d0c0c;
+    color: #f0f0f0;
     font-size: 14px;
 }
 
@@ -53,8 +59,8 @@ p {
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     animation: slideUp 0.6s ease-in-out;
-    box-sizing: border-box;
     width: 100%;
+    box-sizing: border-box;
 }
 
 /* Post Text */
@@ -68,13 +74,13 @@ button {
     background: #007bff;
     color: white;
     border: none;
-    padding: 8px 12px;
+    padding: 10px;
     font-size: 14px;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
     transition: all 0.3s ease-in-out;
-    display: block;
-    margin: 10px auto;
 }
 
 button:hover {
@@ -91,6 +97,7 @@ h4 {
 ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 li {
@@ -105,12 +112,12 @@ li {
 /* Comment Input */
 input[type="text"] {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     font-size: 14px;
-    border-radius: 5px;
+    border-radius: 6px;
     border: 1px solid #ccc;
-    transition: 0.3s;
     box-sizing: border-box;
+    margin-top: 10px;
 }
 
 input[type="text"]:focus {
@@ -118,87 +125,39 @@ input[type="text"]:focus {
     outline: none;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .user-profile {
-        max-width: 95%;
-        padding: 16px;
+/* Responsive Fix for Small Screens */
+@media (max-width: 480px) {
+    body {
+        padding: 0;
     }
 
+    .wrapper {
+        padding: 8px;
+    }
+
+    .user-profile,
     .post {
         width: 100%;
-        padding: 14px;
-    }
-
-    .profile-pic {
-        width: 70px;
-        height: 70px;
+        padding: 12px;
     }
 
     h2 {
         font-size: 18px;
     }
 
-    p {
+    p,
+    .post p {
         font-size: 13px;
     }
 
     button {
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .user-profile {
-        max-width: 98vw;
-        padding: 14px;
-    }
-
-    .post {
-        width: 98vw;
-        padding: 12px;
-    }
-
-    h2 {
-        font-size: 17px;
-    }
-
-    p {
-        font-size: 12px;
-    }
-
-    button {
-        padding: 8px 10px;
         font-size: 13px;
+        padding: 9px;
     }
 
     input[type="text"] {
         font-size: 13px;
         padding: 8px;
-    }
-}
-
-@media (max-width: 360px) {
-    .user-profile, .post {
-        width: 99vw;
-        padding: 12px;
-    }
-
-    h2 {
-        font-size: 16px;
-    }
-
-    p, .post p {
-        font-size: 12px;
-    }
-
-    button {
-        font-size: 12px;
-        padding: 7px 10px;
-    }
-
-    input[type="text"] {
-        font-size: 12px;
     }
 }
 

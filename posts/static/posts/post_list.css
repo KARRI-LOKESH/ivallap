@@ -150,7 +150,7 @@ input[type="text"] {
     }
 
     .post {
-        width: 98vw; /* Slightly increased from 100% */
+        width: 100vw; /* Slightly increased from 100% */
     }
 
     .post p {
