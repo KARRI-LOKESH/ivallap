@@ -104,18 +104,46 @@ a:hover {
 }
 
 /* Responsive Design */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     h2 {
-        font-size: 20px;
+        font-size: 22px; /* Slightly larger font for tablets */
     }
 
     li {
         flex-direction: column;
         text-align: center;
+        padding: 18px;
     }
 
     button {
         margin-top: 10px;
+    }
+
+    .container {
+        width: 95%; /* Full width on smaller devices */
+        padding: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    h2 {
+        font-size: 20px; /* Adjusted font size for mobile screens */
+    }
+
+    li {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px; /* Adjusted padding for mobile */
+    }
+
+    button {
+        font-size: 16px;
+        padding: 10px 20px; /* Slightly larger buttons for easier tapping */
+    }
+
+    .back-btn {
+        font-size: 14px;
+        padding: 12px 20px; /* Increased padding for mobile */
     }
 }
 

@@ -19,4 +19,5 @@ urlpatterns = [
     path('dashboard/', dashboard, name='dashboard'),
     path("send/<int:receiver_id>/", send_message, name="send-message"),
     path("inbox/", inbox, name="inbox"),
+    path('posts/<int:id>/', PostDetailView.as_view(), name='post-detail'),
 ]

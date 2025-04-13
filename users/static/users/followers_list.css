@@ -104,18 +104,51 @@ button:hover {
 }
 
 /* Responsive Design */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     h2 {
-        font-size: 20px;
+        font-size: 22px; /* Slightly larger font on tablet size */
     }
 
     li {
         flex-direction: column;
         text-align: center;
+        padding: 18px; /* Increased padding to make content easier to read */
     }
 
     button {
-        margin-top: 10px;
+        padding: 12px 20px; /* Larger buttons on smaller screens */
+    }
+
+    .back-btn {
+        padding: 12px 24px;
+        font-size: 16px; /* Slightly larger font for easier tap on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 20px; /* Adjusted heading size */
+    }
+
+    .container {
+        width: 95%;
+        padding: 15px; /* Reduced padding for smaller devices */
+    }
+
+    li {
+        flex-direction: column;
+        text-align: center;
+        padding: 12px; /* Reduced padding for mobile */
+    }
+
+    button {
+        padding: 12px 18px;
+        font-size: 16px; /* Increased font size for readability */
+    }
+
+    .back-btn {
+        padding: 12px 20px;
+        font-size: 14px; /* Adjusted font size for back button */
     }
 }
 
