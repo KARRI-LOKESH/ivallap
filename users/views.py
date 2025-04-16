@@ -20,12 +20,15 @@ def signup_view(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
+
+            if not user.username:
+                user.username = user.email.split("@")[0] + str(random.randint(1000, 9999))
+
             user.save()
             messages.success(request, "Account created successfully! Please log in.")
             return redirect("login")
         else:
             messages.error(request, "Error in sign-up form. Please check the fields.")
-
     else:
         form = CustomUserCreationForm()
 
@@ -84,16 +87,17 @@ def verify_otp(request):
 
     return render(request, "users/verify_otp.html")
 
-# Profile View (After Login)
-User = get_user_model()
+
 
 User = get_user_model()
 
 @login_required
 def profile_view(request, username=None):
     if not username:
-        return redirect("user-profile", username=request.user.username)
-
+        if request.user.is_authenticated and request.user.username:
+            return redirect("user-profile", username=request.user.username)
+        else:
+            return redirect("login")
     user_profile = get_object_or_404(User, username=username)
 
     followers_count = user_profile.followers.count()

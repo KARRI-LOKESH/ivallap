@@ -1,11 +1,12 @@
 {% extends 'posts/base.html' %}
-
+{% load static %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'posts/inbox.css' %}">
 <h2>Inbox</h2>
 <ul>
     {% for msg in messages %}
     <li>
-        <strong>{{ msg.sender.username }}:</strong> {{ msg.content }}<br>
+        <strong>{{ msg.sender.username }} ➝ {{ msg.receiver.username }}:</strong> {{ msg.content }}<br>
         <small>{{ msg.timestamp }}</small><br>
 
         <!-- Reply link -->

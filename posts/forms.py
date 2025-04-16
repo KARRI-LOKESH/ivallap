@@ -6,8 +6,7 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = [
-            'name', 'email', 'age', 'phone', 'profile_pic', 'username', 'bio',
-            'first_name', 'last_name', 'gender', 'location', 'linkedin', 'github'
+            'name', 'email', 'age', 'phone', 'username','gender', 
         ]
 
 class UserProfileUpdateForm(forms.ModelForm):

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',  # For handling static files in production
     'users',
     'posts',
+    'channels',
 ]
 
 # Custom user model
@@ -85,6 +86,16 @@ TEMPLATES = [
 # WSGI Application
 WSGI_APPLICATION = 'socialapp.wsgi.application'
 
+ASGI_APPLICATION = 'socialapp.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6380)],
+        },
+    },
+}
 # Database (Uses SQLite for local development, PostgreSQL for production)
 DATABASES = {
     'default': {

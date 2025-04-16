@@ -1,10 +1,11 @@
 from django.urls import path
-from django.views.decorators.csrf import csrf_exempt
 from .views import (
     PostListView, PostCreateView, PostDetailView, 
     PostUpdateView, PostDeleteView, like_post, 
-    save_post, add_comment, delete_comment, dashboard,send_message,inbox
+    save_post, add_comment, delete_comment, 
+    dashboard, send_message, inbox, chat_room
 )
+
 urlpatterns = [
     path('', PostListView.as_view(), name='post-list'),
     path('create/', PostCreateView.as_view(), name='post-create'),
@@ -17,5 +18,7 @@ urlpatterns = [
     path('dashboard/', dashboard, name='dashboard'),
     path('send/<int:receiver_id>/', send_message, name='send-message'),
     path('inbox/', inbox, name='inbox'),
-    path('posts/posts/<int:pk>/', PostDetailView.as_view(), name='post-detail')  # ❌ wrong or duplicate
+    path('posts/posts/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
+    path('chat/<int:user_id>/', chat_room, name='chat-room'),
+
 ]
