@@ -28,7 +28,6 @@
 }
 
 /* Input and TextArea Fields */
-/* Input and TextArea Fields */
 .message-form-container input[type="text"],
 .message-form-container input[type="email"],
 .message-form-container textarea,
@@ -40,8 +39,8 @@
     color: white;
     font-size: 16px;
     resize: vertical;
-    width: calc(100% - 24px); /* Adjust width to ensure padding does not cause overflow */
-    box-sizing: border-box; /* Ensure padding is included in the width calculation */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Submit Button */
@@ -55,6 +54,8 @@
     font-size: 16px;
     cursor: pointer;
     transition: background 0.3s, transform 0.2s;
+    margin-top: 10px; /* Reduced the margin to reduce extra space */
+    align-self: flex-start; /* Align the button to the left */
 }
 
 .message-form-container button:hover {
@@ -81,21 +82,106 @@
     transform: scale(1.05);
 }
 
+/* Search Bar */
+.search-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.search-form input[type="text"] {
+    padding: 10px;
+    width: 100%; /* Full width to avoid overflow */
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ffb400;
+    background-color: #0d1117;
+    color: white;
+    box-sizing: border-box;
+}
+
+.search-form button {
+    background-color: #ffb400;
+    color: #0d1117;
+    padding: 12px 15px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-left: 10px;
+    flex-shrink: 0;
+}
+
+.search-form button:hover {
+    background-color: #e63946;
+    transform: scale(1.05);
+}
+
 /* Responsive Styling */
+@media (max-width: 768px) {
+    .message-form-container {
+        padding: 20px;
+        margin: 15px auto;
+    }
+
+    .message-form-container h2 {
+        font-size: 22px;
+    }
+
+    .message-form-container input,
+    .message-form-container textarea,
+    .message-form-container button {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    /* Search bar layout for mobile */
+    .search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-form input[type="text"] {
+        width: 100%; /* Full width for mobile */
+        margin-bottom: 10px;
+    }
+
+    .search-form button {
+        width: 100%; /* Full width for mobile */
+        margin-left: 0;
+    }
+}
+
 @media (max-width: 480px) {
     .message-form-container {
-        padding: 18px;
+        padding: 15px;
+        margin: 10px auto;
     }
 
     .message-form-container h2 {
         font-size: 20px;
     }
 
-    .message-form-container button,
     .message-form-container input,
-    .message-form-container textarea {
-        font-size: 14px;
+    .message-form-container textarea,
+    .message-form-container button {
+        font-size: 13px;
         padding: 10px;
+    }
+
+    /* Adjust search form for smaller screens */
+    .search-form input[type="text"] {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .search-form button {
+        padding: 10px;
+        font-size: 14px;
     }
 }
 
