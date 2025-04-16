@@ -5,39 +5,41 @@
     <link rel="stylesheet" href="{% static 'posts/post_detail.css' %}">
 
     <div class="container">
-        <h2>Post by {{ post.user.username }}</h2>
+        <h2>Post by <a href="{% url 'user-profile' post.user.username %}" class="username-link">{{ post.user.username }}</a></h2>
         <p>{{ post.content }}</p>
+        
         {% if post.image %}
-            <img src="{{ post.image.url }}" alt="Post Image">
-            
+            <img src="{{ post.image.url }}" alt="Post Image" class="post-image">
         {% endif %}
+        
         {% if post.video %}
-        <video width="400" controls>
-            <source src="{{ post.video.url }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    {% endif %}
+            <video class="post-video" controls>
+                <source src="{{ post.video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        {% endif %}
+        
         <p>Created at: {{ post.created_at }}</p>
-        <a href="{% url 'post-list' %}">Back to Posts</a>
+        <a href="{% url 'post-list' %}" class="back-button">Back to Posts</a>
 
         <hr>
 
         <!-- Comment Section -->
         <h3>Comments ({{ comments|length }})</h3>
         {% for comment in comments %}
-        <p>Comment: {{ comment.content }}</p>
-        <p>User: {{ comment.user }}</p>
+            <div class="comment">
+                <p><strong>Comment:</strong> {{ comment.content }}</p>
+                <p><strong>User:</strong> <a href="{% url 'user-profile' comment.user.username %}" class="username-link">{{ comment.user }}</a></p>
+            </div>
         {% empty %}
             <p>No comments found.</p>
         {% endfor %}
 
-
         <!-- Add Comment Form -->
-        <form method="post" action="{% url 'add-comment' post.id %}">
+        <form method="post" action="{% url 'add-comment' post.id %}" class="add-comment-form">
             {% csrf_token %}
             <textarea name="content" placeholder="Write a comment..." required></textarea>
-            <button type="submit">Add Comment</button>
+            <button type="submit" class="btn">Add Comment</button>
         </form>
-
     </div>
 {% endblock %}

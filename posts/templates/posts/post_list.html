@@ -8,7 +8,14 @@
 
 {% for post in posts %}
     <div class="post" data-post-id="{{ post.id }}">
-        <p><strong>{{ post.user.username }}</strong> - {{ post.created_at }}</p>
+        <p>
+            <strong>
+              <a href="{% url 'user-profile' post.user.username %}" class="username-link">
+                {{ post.user.username }}
+              </a>
+            </strong>
+            - {{ post.created_at }}
+          </p>
         <p>{{ post.content }}</p>
         
         {% if post.image %}

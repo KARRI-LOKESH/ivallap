@@ -13,12 +13,12 @@
                 
                 <!-- Display Image -->
                 {% if post.image %}
-                    <img src="{{ post.image.url }}" alt="Post Image">
+                    <img src="{{ post.image.url }}" alt="Post Image" class="post-image">
                 {% endif %}
 
                 <!-- Display Video -->
                 {% if post.video %}
-                    <video controls>
+                    <video controls class="post-video">
                         <source src="{{ post.video.url }}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -28,7 +28,7 @@
                 <p>{{ post.content }}</p>
 
                 <!-- Likes & Comments Count -->
-                <p>
+                <p class="post-stats">
                     ❤️ {{ post.likes.count }} Likes |
                     💬 {{ post.comments.count }} Comments
                 </p>
@@ -44,8 +44,13 @@
                     <h3>Comments</h3>
                     {% for comment in post.comments.all %}
                         <div class="comment" id="comment-{{ comment.id }}">
-                            <p><strong>{{ comment.user.username|default:"Unknown User" }}</strong>: {{ comment.content }}</p>
-                            
+                            <p>
+                                <strong>
+                                    <a href="{% url 'user-profile' comment.user.username %}" class="username-link">
+                                    {{ comment.user.username|default:"Unknown User" }}
+                                    </a>
+                                </strong>: {{ comment.content }}
+                            </p>
                             <!-- Delete Comment -->
                             <form action="{% url 'comment-delete' comment.id %}" method="post" style="display: inline;">
                                 {% csrf_token %}
@@ -58,7 +63,7 @@
                 </div>
 
                 <!-- Add Comment Form -->
-                <form action="{% url 'add-comment' post.id %}" method="post">
+                <form action="{% url 'add-comment' post.id %}" method="post" class="add-comment-form">
                     {% csrf_token %}
                     <input type="text" name="content" placeholder="Write a comment..." required>
                     <button type="submit" class="btn">Post</button>
@@ -71,4 +76,5 @@
 
     <a href="{% url 'profile' %}" class="btn">Back to Profile</a>
 </div>
+
 {% endblock %}

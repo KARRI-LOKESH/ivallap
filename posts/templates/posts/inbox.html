@@ -5,16 +5,23 @@
 <h2>Inbox</h2>
 <ul>
     {% for msg in messages %}
-    <li>
-        <strong>{{ msg.sender.username }} ➝ {{ msg.receiver.username }}:</strong> {{ msg.content }}<br>
-        <small>{{ msg.timestamp }}</small><br>
-
-        <!-- Reply link -->
-        <a href="{% url 'send-message' msg.sender.id %}">Reply</a>
+    <li class="message-row">
+        <div class="message-content">
+            <strong>
+                <a href="{% url 'user-profile' msg.sender.username %}" class="username-link">{{ msg.sender.username }}</a>
+                ➝
+                <a href="{% url 'user-profile' msg.receiver.username %}" class="username-link">{{ msg.receiver.username }}</a>:
+            </strong>
+            {{ msg.content }}<br>
+            <small>{{ msg.timestamp }}</small>
+        </div>
+        <div class="message-reply">
+            <a href="{% url 'send-message' msg.sender.id %}" class="reply-button">Reply</a>
+        </div>
     </li>
     <hr>
     {% empty %}
-    <li>No messages</li>
+    <li class="no-messages">No messages</li>
     {% endfor %}
 </ul>
 {% endblock %}

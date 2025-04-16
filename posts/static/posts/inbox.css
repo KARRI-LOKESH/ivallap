@@ -140,6 +140,52 @@ nav a:hover {
 .search-form button:hover {
     background-color: #1a0230;
 }
+.message-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .message-content {
+    flex: 1;
+    text-align: center; /* or use left if you want */
+  }
+  
+  .message-reply {
+    flex-shrink: 0;
+  }
+  
+  .reply-button {
+    background-color: #2b0442;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+  
+  .reply-button:hover {
+    background-color: #cdad2d;
+    color: #0d0d0d;
+  }
+  .username-link {
+    color: #2b0442;
+    text-decoration: none;
+    font-weight: bold;
+    background: none;
+    transition: color 0.3s ease;
+}
+
+ .username-link:hover {
+    color: #cdad2d;
+    background: none;
+    text-decoration: underline;
+ }
 
 /* Animations */
 @keyframes fadeIn {

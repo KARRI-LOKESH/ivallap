@@ -6,31 +6,6 @@ body {
     background: #994ff3;
 }
 
-/* Navbar */
-nav {
-    background-color: #333;
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    padding: 10px 0;
-    z-index: 1000; /* Ensure the navbar is above other elements */
-}
-
-nav a {
-    color: white;
-    padding: 14px 20px;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
-}
-
-nav a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
 /* Container */
 .container {
     width: 90%;
@@ -42,7 +17,15 @@ nav a:hover {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
     animation: fadeIn 0.6s ease-in-out;
 }
-
+/* Post Video */
+video {
+    width: 100%;
+    height: auto; 
+    border-radius: 10px;
+    display: block;
+    margin: 8px 0;
+    animation: fadeIn 0.8s ease-in-out;
+}
 /* Heading */
 h2 {
     text-align: center;
@@ -72,12 +55,6 @@ p {
 h3 {
     font-size: 16px;
     margin-top: 15px;
-}
-
-/* Comment Box */
-#comments-section {
-    display: none;
-    animation: slideUp 0.4s ease-in-out;
 }
 
 /* Single Comment */
@@ -116,6 +93,20 @@ form {
     margin-top: 15px;
     text-align: center;
 }
+.username-link {
+    color: #ffb400;
+    text-decoration: none;
+    font-weight: bold;
+    background: none;
+    transition: color 0.3s ease;
+}
+
+.username-link:hover {
+    color: #e63946;
+    background: none;
+    text-decoration: underline;
+}
+
 
 textarea {
     width: 100%;
@@ -137,27 +128,28 @@ textarea:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 70px; /* Added space above search bar to avoid navbar overlap */
-    margin-bottom: 20px; /* Ensure proper space at the bottom */
+    margin: 30px 0;
 }
 
 .search-form input {
-    padding: 8px;
-    width: 80%;
+    padding: 10px;
+    width: 75%;
     font-size: 14px;
-    border-radius: 4px;
+    border-radius: 5px;
     border: 1px solid #ccc;
+    margin-right: 10px;
 }
 
 .search-form button {
-    padding: 8px;
+    padding: 10px;
     font-size: 14px;
-    border-radius: 4px;
+    border-radius: 5px;
     border: none;
     background-color: #007bff;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: 20%;
 }
 
 .search-form button:hover {
@@ -165,38 +157,10 @@ textarea:focus {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-    .search-form {
-        flex-direction: column;
-        align-items: stretch;
-        margin-top: 80px; /* Increased margin for smaller screens */
-    }
-    .search-form input {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-    .search-form button {
-        width: 100%;
-    }
-
-    nav {
-        padding: 15px;
-    }
-
-    nav a {
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    .container {
-        padding: 12px;
-    }
-}
-
-@media (max-width: 480px) {
+@media (max-width: 600px) {
     .container {
         width: 95%;
-        padding: 10px;
+        padding: 12px;
     }
 
     h2 {
@@ -207,13 +171,29 @@ textarea:focus {
         font-size: 13px;
     }
 
-    button, textarea {
+    button {
+        width: 100%;
+    }
+
+    textarea {
         font-size: 13px;
         padding: 8px;
     }
 
-    nav a {
-        font-size: 12px;
+    /* Responsive Search Bar */
+    .search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-form input,
+    .search-form button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .search-form button {
+        margin-top: 10px;
     }
 }
 
