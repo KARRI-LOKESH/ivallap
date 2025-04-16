@@ -1,0 +1,106 @@
+/* Container */
+.message-form-container {
+    max-width: 600px;
+    width: 100%;
+    margin: 50px auto;
+    padding: 25px;
+    background-color: #161b22;
+    color: #c9d1d9;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.08);
+    box-sizing: border-box;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Heading */
+.message-form-container h2 {
+    text-align: center;
+    color: #ffb400;
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+
+/* Form Structure */
+.message-form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Input and TextArea Fields */
+/* Input and TextArea Fields */
+.message-form-container input[type="text"],
+.message-form-container input[type="email"],
+.message-form-container textarea,
+.message-form-container select {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ffb400;
+    background-color: #0d1117;
+    color: white;
+    font-size: 16px;
+    resize: vertical;
+    width: calc(100% - 24px); /* Adjust width to ensure padding does not cause overflow */
+    box-sizing: border-box; /* Ensure padding is included in the width calculation */
+}
+
+/* Submit Button */
+.message-form-container button {
+    background-color: #ffb400;
+    color: #0d1117;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.message-form-container button:hover {
+    background-color: #e63946;
+    transform: scale(1.05);
+    color: white;
+}
+
+/* Back Link */
+.message-form-container p a {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #4895ef;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.message-form-container p a:hover {
+    background-color: #4361ee;
+    transform: scale(1.05);
+}
+
+/* Responsive Styling */
+@media (max-width: 480px) {
+    .message-form-container {
+        padding: 18px;
+    }
+
+    .message-form-container h2 {
+        font-size: 20px;
+    }
+
+    .message-form-container button,
+    .message-form-container input,
+    .message-form-container textarea {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

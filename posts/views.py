@@ -3,11 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Post, Comment
+from .models import Post, Comment,Message
+from users.models import CustomUser
+from posts.forms import MessageForm
 from django.utils.timezone import localtime
 import json
 from django.http import JsonResponse # Ensure Post model is imported
-
+from django.contrib.auth import get_user_model
 
 class PostListView(ListView):
     model = Post
@@ -130,3 +132,25 @@ def delete_comment(request, comment_id):
 
     return redirect('post-list')
 
+
+User = get_user_model()
+
+@login_required
+def send_message(request, receiver_id):
+    receiver = get_object_or_404(User, id=receiver_id)
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.receiver = receiver
+            message.save()
+            return redirect('inbox')
+    else:
+        form = MessageForm()
+    return render(request, 'posts/send_message.html', {'form': form, 'receiver': receiver})
+
+@login_required
+def inbox(request):
+    received_messages = Message.objects.filter(receiver=request.user).order_by('-timestamp')
+    return render(request, 'posts/inbox.html', {'messages': received_messages})

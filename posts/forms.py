@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser, Message
-
+from users.models import CustomUser
+from posts.models import Message
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser

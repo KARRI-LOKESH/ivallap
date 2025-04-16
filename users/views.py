@@ -4,14 +4,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
-from .models import CustomUser,Message
+from .models import CustomUser
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
+from django.contrib import messages as django_messages
 from django.shortcuts import redirect
 from posts.models import Post 
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from users.forms import CustomUserCreationForm,UserProfileUpdateForm,MessageForm
+from posts.forms import CustomUserCreationForm,UserProfileUpdateForm,MessageForm
 from django.db.models import Q
 # User Signup View
 def signup_view(request):
@@ -237,24 +238,4 @@ def following_list(request, user_id):
     following = user.following.all()
     return render(request, 'users/following_list.html', {'user': user, 'following': following})
 
-@login_required
-def send_message(request, receiver_id):
-    receiver = get_object_or_404(CustomUser, id=receiver_id)
-    
-    if request.method == "POST":
-        form = MessageForm(request.POST)
-        if form.is_valid():
-            message = form.save(commit=False)
-            message.sender = request.user
-            message.receiver = receiver
-            message.save()
-            messages.success(request, "Message sent successfully!")
-            return redirect("posts:inbox")  # Redirect to the inbox or chat page
-    else:
-        form = MessageForm()
 
-    return render(request, "posts/send_message.html", {"form": form, "receiver": receiver})
-@login_required
-def inbox(request):
-    messages = Message.objects.filter(receiver=request.user).order_by('-timestamp')
-    return render(request, "posts/inbox.html", {"messages": messages})

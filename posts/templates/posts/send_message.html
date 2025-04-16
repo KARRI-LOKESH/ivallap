@@ -1,19 +1,16 @@
-{% extends "posts/base.html" %}
-
+{% extends 'posts/base.html' %}
+{% load static %}
 {% block content %}
-    <h2>Messages</h2>
+<link rel="stylesheet" href="{% static 'posts/send_message.css' %}">
+<div class="message-form-container">
+    <h2>Send Message to {{ receiver.username }}</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
 
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>
-                    <strong>From:</strong> {{ message.sender.username }} <br>
-                    <strong>Message:</strong> {{ message.content }} <br>
-                    <strong>Sent at:</strong> {{ message.timestamp }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No messages yet.</p>
-    {% endif %}
+    <p><a href="{% url 'inbox' %}">Back to Inbox</a></p>
+</div>
 {% endblock %}

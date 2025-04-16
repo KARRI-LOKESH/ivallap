@@ -16,7 +16,9 @@
         <a href="{% url 'dashboard' %}">Dashboard</a>
         <a href="{% url 'profile' %}">Profile</a>
         <a href="{% url 'logout' %}">Logout</a>
-        <a href="{% url 'inbox' %}">Inbox</a> 
+        {% if request.user.is_authenticated and request.user.id %}
+        <a href="{% url 'inbox' %}">Inbox</a>
+        {% endif %}
 
         <!-- Search Form -->
         <form action="{% url 'search-users' %}" method="GET" class="search-form">
