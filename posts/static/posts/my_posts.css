@@ -1,0 +1,190 @@
+/* Base Styling */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f7fa;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 1rem;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #2b7a78;
+    margin-bottom: 2rem;
+}
+
+/* Post Gallery */
+.post-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Post Item */
+.post-item {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 0.8s ease;
+}
+
+.post-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Media Styling */
+img, video {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    transition: opacity 0.5s ease;
+}
+
+video {
+    background: #000;
+}
+
+/* Content */
+.post-item p {
+    margin: 0.5rem 0;
+}
+
+/* Actions */
+.post-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+.edit-btn {
+    background: #3fb950;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #329f44;
+}
+
+.delete-btn, .delete-comment-btn {
+    background: #e63946;
+    color: white;
+}
+
+.delete-btn:hover, .delete-comment-btn:hover {
+    background: #c82333;
+}
+
+/* Comment Section */
+.comments-section {
+    margin-top: 1rem;
+    border-top: 1px solid #ddd;
+    padding-top: 1rem;
+}
+
+.comment {
+    background: #f0f2f5;
+    padding: 0.5rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+/* Comment Form & Responsive Fix */
+/* Form Styling */
+/* Form Container */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+/* Input Field */
+form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+/* Submit Button */
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #005fa3;
+}
+
+
+/* Back Button */
+a.btn {
+    background: #556cd6;
+    color: white;
+    display: inline-block;
+    margin-top: 2rem;
+}
+
+a.btn:hover {
+    background: #3d4db7;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 1rem;
+    }
+
+    form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    form input[type="text"],
+    form button {
+        width: 100%;
+    }
+
+    .post-actions {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}

@@ -203,7 +203,7 @@ def contact_view(request):
 @login_required
 def my_posts(request):
     user_posts = Post.objects.filter(user=request.user)
-    return render(request, 'users/my_posts.html', {'posts': user_posts})
+    return render(request, 'posts/my_posts.html', {'posts': user_posts})
 
 
 @login_required
