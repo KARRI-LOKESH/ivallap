@@ -13,18 +13,20 @@ h2 {
     font-size: 2rem;
     color: #333;
 }
-
+p{
+    color: white;
+}
 /* Post card */
 .post {
-    background-color: #ffffff;
+    background-color: #1f1d1d;
     padding: 20px;
     margin: 20px auto;
     border-radius: 15px;
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
     width: 90%;
-    max-width: 650px;
+    max-width: 700px;
     box-sizing: border-box;
-    border: 1px solid #d9b619;
+    border: 1px solid #e0e0e0;
     transition: transform 0.2s ease;
     text-align: center; /* Center content */
 }
@@ -36,7 +38,7 @@ h2 {
 /* Remove underlines from links like 'view' and 'edit' */
 .post a {
     text-decoration: none;
-    color: #007bff;
+    color: #e9eef4;
 }
 
 .post a:hover {
@@ -46,7 +48,7 @@ h2 {
 
 .username-link,
 .created-at {
-    color: rgb(36, 35, 35);
+    color: rgb(19, 18, 18);
     font-weight: bold;
 }
 
@@ -76,16 +78,16 @@ button[id^="toggle-btn-"],
 }
 
 .btn-primary {
-    background-color: #007bff;
+    background-color: #5b7c07;
     color: #fff;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #f8c90f;
 }
 
 .btn-warning {
-    background-color: #ffc107;
+    background-color: #c45d18;
     color: #fff;
 }
 
@@ -178,30 +180,33 @@ hr {
 @media (max-width: 768px) {
     .post {
         padding: 15px;
+        width: 90%; /* Ensure the post is still a good width */
+        max-width: 90%; /* Allow it to take up more width on smaller screens */
     }
 
     h2 {
         font-size: 1.6rem;
     }
 
+    /* Buttons in a row and smaller font */
+    .post .post-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
     .btn,
     .like-btn,
     button[type="submit"],
     button[id^="toggle-btn-"] {
-        font-size: 13px;
-        padding: 8px 12px;
+        font-size: 12px;
+        padding: 6px 10px;
     }
 
     form input[type="text"] {
         width: 65%;
-    }
-
-    /* Align view, edit, delete buttons in a row */
-    .post .post-actions {
-        display: flex;
-        justify-content: space-evenly;
-        flex-wrap: wrap;  /* Allow wrapping to next line if needed */
-        gap: 8px;
     }
 }
 
@@ -221,21 +226,27 @@ hr {
         margin-bottom: 10px;
     }
 
+    /* Button container: make buttons align in one row */
+    .post .post-actions {
+        display: flex;
+        justify-content: space-between; /* Buttons side by side */
+        align-items: center;
+        gap: 8px;
+        flex-wrap: nowrap; /* Don't wrap the buttons */
+    }
+
+    /* Buttons: reduce font-size and padding for mobile */
     .btn,
     .like-btn,
     button[type="submit"],
     button[id^="toggle-btn-"],
     .share-btn {
-        display: block;
-        width: 100%;
-        margin-bottom: 8px;
+        font-size: 12px;
+        padding: 6px 10px;
+        width: auto;
     }
 
-    /* Align buttons (view, edit, delete) vertically if needed */
-    .post .post-actions {
-        display: flex;
-        flex-direction: column; /* Stack actions vertically */
-        gap: 10px;
-        align-items: center;
+    .post .post-actions a {
+        flex: 1 1 auto; /* Ensure buttons are equally spaced */
     }
 }
