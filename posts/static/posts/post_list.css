@@ -13,9 +13,11 @@ h2 {
     font-size: 2rem;
     color: #333;
 }
-p{
+
+p {
     color: white;
 }
+
 /* Post card */
 .post {
     background-color: #1f1d1d;
@@ -180,8 +182,10 @@ hr {
 @media (max-width: 768px) {
     .post {
         padding: 15px;
-        width: 90%; /* Ensure the post is still a good width */
-        max-width: 90%; /* Allow it to take up more width on smaller screens */
+        width: 90%;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     h2 {
@@ -216,9 +220,11 @@ hr {
     }
 
     .post {
-        width: 100%;
+        width: 95%; /* Increase width for better mobile view */
         padding: 15px 10px;
-        margin: 10px 0; /* Reduce margin between posts */
+        margin: 10px 0;
+        margin-left: auto; /* Center align the post */
+        margin-right: auto; /* Center align the post */
     }
 
     form input[type="text"] {
@@ -229,10 +235,10 @@ hr {
     /* Button container: make buttons align in one row */
     .post .post-actions {
         display: flex;
-        justify-content: space-between; /* Buttons side by side */
+        justify-content: space-between;
         align-items: center;
         gap: 8px;
-        flex-wrap: nowrap; /* Don't wrap the buttons */
+        flex-wrap: nowrap;
     }
 
     /* Buttons: reduce font-size and padding for mobile */
