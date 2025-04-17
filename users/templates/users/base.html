@@ -1,24 +1,41 @@
+<!-- users/templates/users/base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Social App{% endblock %}</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>{% block title %}Ivallap{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'users/base.css' %}">
+
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <header>
-        <h1>My Social App</h1>
-        <nav>
-            <a href="{% url 'post-list' %}">Home</a> |
-            <a href="{% url 'search-users' %}">Search</a> |
-            <a href="{% url 'profile' %}">My Profile</a> |
-            <a href="{% url 'logout' %}">Logout</a>
-        </nav>
-    </header>
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">Ivallap</div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Ivallap. All rights reserved.</p>
+        <p>Follow us on:</p>
+        <ul>
+            <li><a href="https://www.facebook.com/share/1HydnbA4Su/">Facebook</a></li>
+            <li><a href="https://x.com/karr77135?t=SHBrHUpcZOm6oEfVeLgUDA&s=09">Twitter</a></li>
+            <li><a href="https://www.linkedin.com/in/lokesh-karri-06532427a">LinkedIn</a></li>
+            <li><a href="https://www.instagram.com/karri_lokesh_1">Instagram</a></li>
+        </ul>
+    </footer>
+
+    <script src="{% static 'users/js/effects.js' %}"></script>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

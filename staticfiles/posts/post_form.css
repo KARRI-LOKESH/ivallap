@@ -1,155 +1,112 @@
-/* General Styling */
+/* General reset for better box sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #a9a3b7, #2d74bb);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    animation: fadeIn 1s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    overflow-x: hidden;
+    background: #f9f9f9;
 }
 
-/* Navigation Bar */
-nav {
-    background: #2b0442;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-}
-
-nav a {
-    color: rgb(225, 221, 234);
-    text-decoration: none;
-    font-size: 18px;
-    margin: 0 15px;
-    font-weight: bold;
-    transition: color 0.3s ease-in-out, transform 0.2s;
-    display: inline-block;
-}
-
-nav a:hover {
-    color: #cdad2d;
-    transform: scale(1.1);
-}
-
-/* Container */
 .container {
-    width: 90%;
-    max-width: 400px;
-    margin: 120px auto 40px;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    animation: fadeIn 1.2s ease-in-out;
-    backdrop-filter: blur(10px);
-    transform: translateY(10px);
-    box-sizing: border-box;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: rgb(114, 176, 183);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow-x: hidden; /* prevents children from going out */
+    width: 90%; /* responsive width */
 }
 
-/* Form Styling */
-form {
+h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.formy {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 1rem;
     width: 100%;
 }
 
-form p {
+.formy input[type="text"],
+.formy input[type="file"],
+.formy textarea,
+.formy select {
     width: 100%;
-    text-align: left;
-}
-
-input, textarea, select {
-    width: calc(100% - 20px);
     max-width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: all 0.3s ease-in-out;
-    box-sizing: border-box;
-}
-
-input:focus, textarea:focus, select:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-    outline: none;
-}
-
-button {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 12px 15px;
-    font-size: 18px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    transition: background 0.3s ease-in-out, transform 0.2s;
-}
-
-button:hover {
-    background: #0056b3;
-    transform: scale(1.05);
-}
-
-/* Back Link */
-a.back-link {
-    display: inline-block;
-    margin-top: 20px;
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    text-decoration: none;
-    background: #3a8437;
-    padding: 10px 20px;
+    padding: 0.75rem;
     border-radius: 8px;
-    transition: all 0.3s ease-in-out;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
-a.back-link:hover {
-    background: #0056b3;
-    color: #fff;
+.formy button[type="submit"] {
+    padding: 0.75rem;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.formy button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.errorlist {
+    color: red;
+    list-style: none;
+    padding-left: 0;
+    font-size: 0.95rem;
+}
+
+/* Link style */
+a {
+    display: inline-block;
+    margin-top: 1rem;
+    text-align: center;
+    color: #eb216b;
     text-decoration: none;
-    transform: translateY(-2px);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: none;
 }
 
 /* Responsive Design */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .container {
-        width: 95%;
-        padding: 15px;
+        margin: 1rem;
+        padding: 1rem;
     }
-    nav {
-        padding: 10px;
-    }
-    nav a {
-        font-size: 16px;
-        margin: 5px;
-    }
-    input, textarea, select {
-        width: 100%;
-    }
-    button {
-        font-size: 16px;
-        padding: 10px;
+
+    h2 {
+        font-size: 1.5rem;
     }
 }
 
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+@media (max-width: 480px) {
+    .formy button[type="submit"] {
+        font-size: 0.95rem;
+        padding: 0.65rem;
+    }
+
+    .formy input,
+    .formy textarea {
+        font-size: 0.95rem;
+    }
 }

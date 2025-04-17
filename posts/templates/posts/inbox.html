@@ -1,7 +1,10 @@
 {% extends 'posts/base.html' %}
 {% load static %}
+
 {% block content %}
 <link rel="stylesheet" href="{% static 'posts/inbox.css' %}">
+{% block extra_css %}
+{% endblock %}
 <h2>Inbox</h2>
 <ul>
     {% for msg in messages %}

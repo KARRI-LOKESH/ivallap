@@ -2,8 +2,9 @@
 {% load static %}
 
 {% block content %}
-    <link rel="stylesheet" href="{% static 'posts/post_detail.css' %}">
-
+<link rel="stylesheet" href="{% static 'posts/post_detail.css' %}">
+{% block extra_css %}
+{% endblock %}
     <div class="container">
         <h2>Post by <a href="{% url 'user-profile' post.user.username %}" class="username-link">{{ post.user.username }}</a></h2>
         <p>{{ post.content }}</p>

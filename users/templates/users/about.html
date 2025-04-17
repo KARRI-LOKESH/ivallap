@@ -1,79 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Ivallap</title>
-    <link rel="stylesheet" href="{% static 'users/about.css' %}">
-</head>
-<body>
-    <header>
-        <nav>
-            <div class="logo">Ivallap</div>
-            <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'about' %}">About</a></li>
-                <li><a href="{% url 'contact' %}">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+{% extends 'users/base.html' %}
 
-    <div class="about-container">
-        <div class="founder">
-            <img src="{% static 'users/images/aaa.jpg' %}" alt="Lokesh Karri - Founder">
-            <h2>Lokesh Karri - CEO & Founder of Ivallap</h2>
-            <p>I'm Lokesh Karri, a passionate developer and AI enthusiast, building Ivallap to revolutionize social media interactions.</p>
-        </div>
+{% block title %}About - Ivallap{% endblock %}
 
-        <div class="company-info">
-            <h1>Welcome to Ivallap</h1>
-            <p>Ivallap is a next-gen social media platform designed to connect people, share ideas, and build communities.</p>
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'users/about.css' %}">
+{% endblock %}
 
-            <h2>Our Vision</h2>
-            <p>To bridge the gap between technology and human interaction by fostering a digital space that encourages innovation, collaboration, and security.</p>
-
-            <h2>Core Values</h2>
-            <ul>
-                <li>🔹 Integrity and transparency</li>
-                <li>🔹 User privacy and security</li>
-                <li>🔹 AI-driven personalization</li>
-                <li>🔹 Freedom of expression</li>
-                <li>🔹 Continuous innovation</li>
-            </ul>
-
-            <h2>Meet Our Team</h2>
-            <p>We are a group of developers, designers, and visionaries working together to redefine social networking.</p>
-
-            <h2>How We Started</h2>
-            <p>Founded in 2025, Ivallap began as a small project and has grown into a full-fledged social media platform.</p>
-
-            <h2>Our Community</h2>
-            <p>Join thousands of users who share content, engage in discussions, and build meaningful connections every day.</p>
-
-            <h2>What We Offer</h2>
-            <ul>
-                <li>✅ AI-powered content recommendations</li>
-                <li>✅ Secure messaging and encrypted conversations</li>
-                <li>✅ User-friendly and intuitive interface</li>
-                <li>✅ Real-time interactions with comments and reactions</li>
-                <li>✅ Community-driven discussions and engagement</li>
-            </ul>
-
-            <h2>Join Us Today!</h2>
-            <p>Be a part of the future of social media. Sign up now and start your journey with Ivallap.</p>
-        </div>
+{% block content %}
+<div class="about-container">
+    <div class="card founder">
+        <img src="{% static 'users/images/aaa.jpg' %}" alt="Lokesh Karri - Founder">
+        <h2>Lokesh Karri - CEO & Founder of Ivallap</h2>
+        <p>I'm Lokesh Karri, a passionate developer and AI enthusiast, building Ivallap to revolutionize social media interactions.</p>
     </div>
 
-    <footer>
-        <p>&copy; 2025 Ivallap. All rights reserved.</p>
-        <p>Follow us on:</p>
+    <div class="card company-info">
+        <h1>Welcome to Ivallap</h1>
+        <p>Ivallap is a next-gen social media platform designed to connect people, share ideas, and build communities.</p>
+
+        <h2>Our Vision</h2>
+        <p>To bridge the gap between technology and human interaction by fostering a digital space that encourages innovation, collaboration, and security.</p>
+
+        <h2>Core Values</h2>
         <ul>
-            <li><a href="https://www.facebook.com/share/1HydnbA4Su/">Facebook</a></li>
-            <li><a href="https://x.com/karr77135?t=SHBrHUpcZOm6oEfVeLgUDA&s=09">Twitter</a></li>
-            <li><a href="https://www.linkedin.com/in/lokesh-karri-06532427a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">LinkedIn</a></li>
-            <li><a href="https://www.instagram.com/karri_lokesh_1?igsh=cWoweTllMDFpZHNp">Instagram</a></li>
+            <li>🔹 Integrity and transparency</li>
+            <li>🔹 User privacy and security</li>
+            <li>🔹 AI-driven personalization</li>
+            <li>🔹 Freedom of expression</li>
+            <li>🔹 Continuous innovation</li>
         </ul>
-    </footer>
-</body>  
-</html>
+
+        <h2>Meet Our Team</h2>
+        <p>We are a group of developers, designers, and visionaries working together to redefine social networking.</p>
+
+        <h2>How We Started</h2>
+        <p>Founded in 2025, Ivallap began as a small project and has grown into a full-fledged social media platform.</p>
+
+        <h2>Our Community</h2>
+        <p>Join thousands of users who share content, engage in discussions, and build meaningful connections every day.</p>
+
+        <h2>What We Offer</h2>
+        <ul>
+            <li>✅ AI-powered content recommendations</li>
+            <li>✅ Secure messaging and encrypted conversations</li>
+            <li>✅ User-friendly and intuitive interface</li>
+            <li>✅ Real-time interactions with comments and reactions</li>
+            <li>✅ Community-driven discussions and engagement</li>
+        </ul>
+
+        <h2>Join Us Today!</h2>
+        <p>Be a part of the future of social media. Sign up now and start your journey with Ivallap.</p>
+    </div>
+</div>
+{% endblock %}

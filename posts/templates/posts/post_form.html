@@ -2,11 +2,12 @@
 {% load static %}
 
 {% block content %}
-    <link rel="stylesheet" href="{% static 'posts/post_form.css' %}">
-
+<link rel="stylesheet" href="{% static 'posts/post_form.css' %}">
+{% block extra_css %}
+{% endblock %}
     <div class="container">
         <h2>{% if object %}Edit Post{% else %}Create Post{% endif %}</h2>
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" class="formy">
             {% csrf_token %}
             {{ form.as_p }}
             {% if form.non_field_errors %}

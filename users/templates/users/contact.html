@@ -1,65 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Ivallap</title>
-    <link rel="stylesheet" href="{% static 'users/contact.css' %}">
-</head>
-<body>
-    <header class="navbar">
-        <div class="logo">Ivallap</div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'about' %}">About</a></li>
-                <li><a href="{% url 'contact' %}">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+{% extends 'users/base.html' %}
+{% block title %}Contact - Ivallap{% endblock %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'users/contact.css' %}">
+{% endblock %}
+{% block content %}
+<section class="contact-container">
+    <h1>Contact Us</h1>
+    <p>If you have any questions or concerns...</p>
 
-    <section class="contact-container">
-        <h1>Contact Us</h1>
-        <p>If you have any questions or concerns, feel free to reach out.</p>
-        <p>We are always here to assist you with any inquiries you might have regarding our services, collaborations, or support.</p>
-        <p><strong>Email:</strong> <a href="mailto:karrilokesh108@gmail.com">karrilokesh108@gmail.com</a></p>
-        <p><strong>Phone:</strong> +91 79935 49539</p>
-        <p><strong>Address:</strong> PDV, Tech Street, Innovation City, India</p>
-        
-        <h2>Frequently Asked Questions</h2>
-        <p><strong>Q: How can I contact support?</strong></p>
-        <p>A: You can reach out to us via email or phone for any support-related queries.</p>
-        <p><strong>Q: Do you offer customer support 24/7?</strong></p>
-        <p>A: Our support team is available from 9 AM to 6 PM IST, Monday to Saturday.</p>
-        
-        {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                    <p class="message">{{ message }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
+    <p><strong>Email:</strong> <a href="mailto:karrilokesh108@gmail.com">karrilokesh108@gmail.com</a></p>
+    <p><strong>Phone:</strong> +91 79935 49539</p>
+    <p><strong>Address:</strong> PDV, Tech Street, Innovation City, India</p>
 
-        <form class="contact-form" method="post" action="">
-            {% csrf_token %}
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <input type="text" name="subject" placeholder="Subject" required>
-            <textarea name="message" placeholder="Your Message" required></textarea>
-            <button type="submit">Send Message</button>
-        </form>
-    </section>
+    <h2>Frequently Asked Questions</h2>
+    <p><strong>Q: How can I contact support?</strong></p>
+    <p>A: You can reach out to us via email or phone...</p>
 
-    <footer>
-        <p>&copy; 2025 Ivallap. All rights reserved.</p>
-        <p>Follow us on:</p>
-        <ul>
-            <li><a href="https://www.facebook.com/share/1HydnbA4Su/">Facebook</a></li>
-            <li><a href="https://x.com/karr77135?t=SHBrHUpcZOm6oEfVeLgUDA&s=09">Twitter</a></li>
-            <li><a href="https://www.linkedin.com/in/lokesh-karri-06532427a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">LinkedIn</a></li>
-            <li><a href="https://www.instagram.com/karri_lokesh_1?igsh=cWoweTllMDFpZHNp">Instagram</a></li>
-        </ul>
-    </footer>
-</body>
-</html>
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form class="contact-form" method="post" action="">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="text" name="subject" placeholder="Subject" required>
+        <textarea name="message" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</section>
+{% endblock %}

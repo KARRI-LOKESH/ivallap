@@ -1,11 +1,15 @@
 {% extends 'posts/base.html' %}
 {% load static %}
+
 {% block content %}
+<link rel="stylesheet" href="{% static 'posts/send_message.css' %}">
+{% block extra_css %}
+{% endblock %}
 <link rel="stylesheet" href="{% static 'posts/send_message.css' %}">
 <div class="message-form-container">
     <h2>Send Message to {{ receiver.username }}</h2>
     
-    <form method="post">
+    <form method="post" class="fom">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Send</button>

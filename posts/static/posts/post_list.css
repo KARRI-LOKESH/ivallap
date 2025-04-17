@@ -110,9 +110,11 @@ input[type="text"] {
     box-sizing: border-box;
     font-size: 16px;
 }
+
+/* Username Link */
 .username-link {
     color: #ffb400;
-    background: none; /* removes any background */
+    background: none;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
@@ -120,10 +122,9 @@ input[type="text"] {
 
 .username-link:hover {
     color: #e63946;
-    background: none; /* ensures no background on hover */
+    background: none;
     text-decoration: underline;
 }
-
 
 /* Animations */
 @keyframes fadeIn {
