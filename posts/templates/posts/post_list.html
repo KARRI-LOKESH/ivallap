@@ -65,7 +65,7 @@
             </button>
             <span>{{ post.total_saves }}</span>
         </form>
-        <button class="share-btn"
+        <button class="share-btn" class="sh"
         data-title="Check this post"
         data-text="{{ post.content|truncatechars:100 }}"
         data-url="{{ request.build_absolute_uri|slice:':-1' }}{% url 'post-detail' post.id %}">

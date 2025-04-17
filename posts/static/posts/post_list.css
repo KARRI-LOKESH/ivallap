@@ -1,234 +1,241 @@
-/* Base Styling */
+/* Base styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f2f5f9;
     margin: 0;
     padding: 0;
-    background-color: #0d1117;
-    color: #c9d1d9;
-    line-height: 1.6;
 }
 
-/* Headings */
+/* Page title */
 h2 {
     text-align: center;
-    color: #ffb400;
-    animation: fadeIn 1s ease-in-out;
-    font-size: 28px;
-    margin: 20px 10px;
+    margin-top: 25px;
+    font-size: 2rem;
+    color: #333;
 }
 
-/* Post Container */
+/* Post card */
 .post {
-    background: #161b22;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+    background-color: #ffffff;
     padding: 20px;
     margin: 20px auto;
-    max-width: 600px;
-    width: 100%;
-    animation: slideIn 0.5s ease-in-out;
+    border-radius: 15px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
+    width: 90%;
+    max-width: 650px;
     box-sizing: border-box;
+    border: 1px solid #d9b619;
+    transition: transform 0.2s ease;
+    text-align: center; /* Center content */
 }
 
-/* Paragraph Styling */
-.post p {
-    color: #8b949e;
-    font-size: 16px;
+.post:hover {
+    transform: translateY(-3px);
 }
 
-/* Media Styling */
-video,
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 10px auto;
-    border-radius: 10px;
-    border: 2px solid #ffb400;
-}
-
-/* Button Styling */
-.btn {
-    display: inline-block;
-    padding: 10px 15px;
-    margin: 5px 4px;
-    border-radius: 6px;
+/* Remove underlines from links like 'view' and 'edit' */
+.post a {
     text-decoration: none;
-    font-weight: bold;
-    text-align: center;
-    transition: all 0.3s ease-in-out;
-    font-size: 16px;
+    color: #007bff;
 }
 
-/* Specific Button Colors */
+.post a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+.username-link,
+.created-at {
+    color: rgb(36, 35, 35);
+    font-weight: bold;
+}
+
+/* Post content (text, image, video) */
+.post img,
+.post video {
+    width: 100%;
+    height: auto;
+    margin-top: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Buttons */
+.btn,
+.like-btn,
+button[type="submit"],
+button[id^="toggle-btn-"],
+.share-btn {
+    padding: 8px 14px;
+    margin: 6px 4px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border: none;
+}
+
 .btn-primary {
-    background-color: #ffb400;
-    color: black;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
 }
 
 .btn-warning {
-    background-color: #e63946;
-    color: white;
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
 }
 
 .btn-danger {
-    background-color: #d90429;
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.like-btn {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.like-btn:hover {
+    background-color: #218838;
+}
+
+button[type="submit"] {
+    background-color: #17a2b8;
+    color: #fff;
+}
+
+button[type="submit"]:hover {
+    background-color: #138496;
+}
+
+.share-btn {
+    background-color: #6f42c1;
+    color: #fff;
+}
+
+.share-btn:hover {
+    background-color: #5a32a3;
+}
+
+button[id^="toggle-btn-"] {
+    background-color: #6c757d;
     color: white;
 }
 
-.btn:hover {
-    transform: scale(1.1);
-    opacity: 0.85;
+button[id^="toggle-btn-"]:hover {
+    background-color: #5a6268;
 }
 
-/* Standard Button Tag */
-button {
-    background: #4895ef;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: transform 0.3s, background 0.3s;
-    font-size: 16px;
-}
-
-button:hover {
-    transform: scale(1.1);
-    background: #4361ee;
-}
-
-/* Input Fields */
-input[type="text"] {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ffb400;
-    border-radius: 6px;
+/* Comment form */
+form input[type="text"] {
+    width: 70%;
+    padding: 10px;
     margin-top: 10px;
-    background: #161b22;
-    color: white;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     box-sizing: border-box;
-    font-size: 16px;
 }
 
-/* Username Link */
-.username-link {
-    color: #ffb400;
-    background: none;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
+form button[type="submit"] {
+    padding: 10px 15px;
 }
 
-.username-link:hover {
-    color: #e63946;
-    background: none;
-    text-decoration: underline;
+/* Comment section */
+ul {
+    margin-top: 10px;
+    padding-left: 20px;
+    list-style: disc;
 }
 
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+ul li {
+    background: #f8f9fa;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
 }
 
-@keyframes slideIn {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+hr {
+    margin: 30px auto;
+    width: 90%;
+    border: 1px solid #ccc;
 }
 
-/* Tablets and Small Laptops */
+/* Responsive tweaks */
 @media (max-width: 768px) {
     .post {
-        max-width: 98%;
         padding: 15px;
     }
 
     h2 {
-        font-size: 24px;
+        font-size: 1.6rem;
     }
-}
 
-/* Smartphones */
-@media (max-width: 480px) {
-    .btn, button {
+    .btn,
+    .like-btn,
+    button[type="submit"],
+    button[id^="toggle-btn-"] {
+        font-size: 13px;
         padding: 8px 12px;
-        font-size: 14px;
     }
 
-    h2 {
-        font-size: 20px;
+    form input[type="text"] {
+        width: 65%;
     }
 
-    input[type="text"] {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    .post {
-        width: 95vw;
-    }
-
-    .post p {
-        font-size: 14px;
+    /* Align view, edit, delete buttons in a row */
+    .post .post-actions {
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;  /* Allow wrapping to next line if needed */
+        gap: 8px;
     }
 }
 
-/* Ultra Small Devices (≤380px) */
-@media (max-width: 380px) {
-    body {
-        width: 100vw;
-        overflow-x: hidden;
+@media (max-width: 480px) {
+    h2 {
+        font-size: 1.4rem;
     }
 
     .post {
-        width: 94vw;
-        margin: 10px auto;
-        padding: 14px;
+        width: 100%;
+        padding: 15px 10px;
+        margin: 10px 0; /* Reduce margin between posts */
     }
 
-    h2 {
-        font-size: 18px;
-        margin: 15px 8px;
+    form input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
     }
 
-    .btn, button {
-        padding: 7px 10px;
-        font-size: 13px;
+    .btn,
+    .like-btn,
+    button[type="submit"],
+    button[id^="toggle-btn-"],
+    .share-btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 8px;
     }
 
-    input[type="text"] {
-        font-size: 13px;
-        padding: 10px;
-    }
-
-    .post p {
-        font-size: 13px;
-    }
-}
-
-/* Micro Devices (≤320px) */
-@media (max-width: 320px) {
-    .post {
-        padding: 12px;
-        width: 92vw;
-    }
-
-    h2 {
-        font-size: 17px;
-    }
-
-    .btn, button {
-        padding: 6px 8px;
-        font-size: 12px;
-    }
-
-    input[type="text"] {
-        font-size: 12px;
-        padding: 9px;
-    }
-
-    .post p {
-        font-size: 12px;
+    /* Align buttons (view, edit, delete) vertically if needed */
+    .post .post-actions {
+        display: flex;
+        flex-direction: column; /* Stack actions vertically */
+        gap: 10px;
+        align-items: center;
     }
 }
