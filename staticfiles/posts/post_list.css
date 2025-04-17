@@ -142,6 +142,11 @@ button[id^="toggle-btn-"]:hover {
     background-color: #5a6268;
 }
 
+/* Like Count */
+.like-count {
+    color: white; /* Change like count text color to white */
+}
+
 /* Comment form */
 form input[type="text"] {
     width: 70%;
@@ -182,8 +187,8 @@ hr {
 @media (max-width: 768px) {
     .post {
         padding: 15px;
-        width: 90%;
-        max-width: 90%;
+        width: 95%; /* Increase the width for better visibility */
+        max-width: 95%;
         margin-left: auto;
         margin-right: auto;
     }
@@ -196,7 +201,7 @@ hr {
     .post .post-actions {
         display: flex;
         justify-content: space-between;
-        gap: 10px;
+        gap: 15px;
         flex-wrap: wrap;
         align-items: center;
     }
@@ -205,8 +210,8 @@ hr {
     .like-btn,
     button[type="submit"],
     button[id^="toggle-btn-"] {
-        font-size: 12px;
-        padding: 6px 10px;
+        font-size: 14px;
+        padding: 8px 16px;
     }
 
     form input[type="text"] {
@@ -220,12 +225,18 @@ hr {
     }
 
     .post {
-        width: 95%; /* Increase width for better mobile view */
+        width: 100%; /* Use full width for mobile */
         padding: 15px 10px;
-        margin: 10px 0;
-        margin-left: auto; /* Center align the post */
-        margin-right: auto; /* Center align the post */
+        margin: 15px 0;
+        margin-left: auto;
+        margin-right: auto;
     }
+
+    /* Adjust Like Count */
+     #like-count-{{ post.id }} {
+        color: white; /* Set the like count text color to white */
+    }
+    
 
     form input[type="text"] {
         width: 100%;
@@ -237,7 +248,7 @@ hr {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 8px;
+        gap: 12px;
         flex-wrap: nowrap;
     }
 
@@ -247,8 +258,8 @@ hr {
     button[type="submit"],
     button[id^="toggle-btn-"],
     .share-btn {
-        font-size: 12px;
-        padding: 6px 10px;
+        font-size: 13px;
+        padding: 8px 12px;
         width: auto;
     }
 

@@ -50,7 +50,7 @@
                     👍Like
                 {% endif %}
             </button>
-            <span id="like-count-{{ post.id }}">{{ post.total_likes }}</span>
+            <span id="like-count-{{ post.id }}" style="color: white;">{{ post.total_likes }}</span>
         </form>
 
         <!-- Save Button -->
@@ -63,7 +63,7 @@
                     💾Save
                 {% endif %}
             </button>
-            <span>{{ post.total_saves }}</span>
+            <span style="color: white;">{{ post.total_saves }}</span>
         </form>
         <button class="share-btn" class="sh"
         data-title="Check this post"
