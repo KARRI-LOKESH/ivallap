@@ -219,7 +219,7 @@ hr {
         gap: 14px;
         padding: 10px 0;
         margin-top: 14px;
-        margin-bottom: 18px;
+        margin-bottom: 20px;
     }
 
     .btn,
@@ -254,7 +254,7 @@ hr {
         justify-content: center;
         gap: 12px;
         margin-top: 14px;
-        margin-bottom: 16px;
+        margin-bottom: 24px; /* Extra space between buttons and below content */
         padding: 10px 0;
     }
 
@@ -274,11 +274,15 @@ hr {
         max-width: 100%;
     }
 
-    #like-count-{{ post.id }} {
-        color: white;
-    }
-
     form input[type="text"] {
         width: 100%;
+    }
+
+    form,
+    ul,
+    .share-btn,
+    .like-btn,
+    button[id^="toggle-btn-"] {
+        margin-top: 12px;
     }
 }

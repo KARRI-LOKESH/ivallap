@@ -1,207 +1,130 @@
-/* Base Styles */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    background-color: #f4f7fc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f1f4f9;
 }
 
 .container {
-    width: 90%;
-    max-width: 1200px; /* Set max-width to constrain the container */
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-h2 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
+    max-width: 800px;
+    margin: auto;
+    padding: 30px 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     text-align: center;
-    color: #333; /* Dark color for better readability */
 }
 
-/* Link Style */
+h2, h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
 .username-link {
-    text-decoration: none;
     color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .username-link:hover {
     text-decoration: underline;
 }
 
-/* Adjust post image and video */
-.post-image, .post-video {
-    width: 100%;
-    height: auto;
-    margin-top: 20px;
-    display: block;
+p {
+    font-size: 1rem;
+    color: #333;
+    margin: 10px 0;
 }
 
-/* Back Button */
-a.back-button {
+.post-image,
+.post-video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin: 15px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
     display: inline-block;
-    padding: 12px 20px;
+    margin-top: 20px;
+    padding: 12px 24px;
     background-color: #007bff;
     color: white;
     text-decoration: none;
-    border-radius: 5px;
-    margin-top: 20px;
-    text-align: center; /* Center the text */
-    width: 100%;
-    max-width: 250px; /* Max width of the button */
-    margin-left: auto; /* Center the button */
-    margin-right: auto; /* Center the button */
-    box-sizing: border-box;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-a.back-button:hover {
+.back-button:hover {
     background-color: #0056b3;
+    transform: scale(1.05);
 }
 
-/* Comment Section */
+hr {
+    margin: 30px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+/* Comments Section */
 .comment {
-    margin-bottom: 30px;
+    background-color: #f9fafc;
     padding: 15px;
-    background-color: #fff;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Added shadow for better visibility */
-}
-
-.comment p {
-    margin: 10px 0;
-    font-size: 1rem;
-    line-height: 1.5;
-}
-
-.comment strong {
-    font-weight: bold;
+    margin: 10px auto;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    text-align: left;
 }
 
 .add-comment-form {
-    margin-top: 30px;
+    margin-top: 20px;
+    text-align: center;
 }
 
-textarea {
+.add-comment-form textarea {
     width: 100%;
-    height: 100px;
+    max-width: 100%;
     padding: 12px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    resize: vertical;
-    box-sizing: border-box;
-    margin-top: 15px;
     font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    resize: vertical;
 }
 
-button.btn {
+.btn {
+    padding: 10px 20px;
+    font-size: 1rem;
     background-color: #28a745;
     color: white;
-    padding: 12px 20px;
     border: none;
-    border-radius: 5px;
-    margin-top: 10px;
+    border-radius: 6px;
     cursor: pointer;
-    width: 100%;
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block; /* Center the button */
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-button.btn:hover {
+.btn:hover {
     background-color: #218838;
+    transform: scale(1.05);
 }
 
-/* Responsive Styles */
-@media screen and (max-width: 768px) {
-    h2 {
-        font-size: 1.3rem;
-    }
-
+/* Mobile responsiveness */
+@media (max-width: 600px) {
     .container {
-        width: 95%;
+        padding: 20px 10px;
     }
 
-    .post-image, .post-video {
-        max-width: 100%;
+    h2, h3 {
+        font-size: 1.4rem;
     }
 
-    .comment p {
-        font-size: 0.95rem;
-    }
-
-    textarea {
-        font-size: 0.95rem;
-    }
-
-    button, .back-button {
-        font-size: 0.95rem;
-        padding: 10px 15px;
-    }
-
-    /* Adjust Add Comment Button */
-    button.btn {
-        width: auto;
-        max-width: 220px; /* Limit the button width */
-    }
-
-    /* Center the button on smaller screens */
+    .btn,
     .back-button {
-        width: auto;
-        max-width: 220px; /* Max width for the button */
-    }
-}
-
-@media screen and (max-width: 480px) {
-    h2 {
-        font-size: 1.1rem;
+        width: 100%;
+        padding: 12px;
     }
 
-    .container {
-        width: 98%;
-    }
-
-    .post-image, .post-video {
-        max-width: 100%;
-    }
-
-    .comment p {
-        font-size: 0.85rem;
-    }
-
-    textarea {
-        font-size: 0.85rem;
-    }
-
-    button, .back-button {
-        font-size: 0.9rem;
-        padding: 8px 12px;
-    }
-
-    /* Center the button even on smaller screens */
-    .back-button {
-        width: 100%; /* Make the button full width on small screens */
-        max-width: 220px; /* Max width for the button */
-    }
-
-    .add-comment-form {
-        margin-top: 20px; /* Reduce margin for mobile view */
-    }
-}
-
-/* Large Screen (desktop) Fix */
-@media screen and (min-width: 1200px) {
-    .container {
-        width: 80%; /* Constrain width even more on very large screens */
-        max-width: 1200px; /* Ensure content doesn't go wider than 1200px */
-    }
-
-    .post-image, .post-video {
-        max-width: 80%; /* Limit the video and image width on large screens */
+    .add-comment-form textarea {
+        font-size: 0.95rem;
     }
 }

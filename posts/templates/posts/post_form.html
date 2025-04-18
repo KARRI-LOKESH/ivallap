@@ -3,48 +3,43 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'posts/post_form.css' %}">
-{% block extra_css %}
-{% endblock %}
-    <div class="container">
-        <h2>{% if object %}Edit Post{% else %}Create Post{% endif %}</h2>
-        <form method="post" enctype="multipart/form-data" class="formy">
-            {% csrf_token %}
-            {{ form.as_p }}
-            {% if form.non_field_errors %}
+{% block extra_css %}{% endblock %}
+
+<div class="container">
+    <h2>{% if object %}Edit Post{% else %}Create Post{% endif %}</h2>
+
+    <form method="post" enctype="multipart/form-data" class="formy">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {% if form.non_field_errors %}
             <ul class="errorlist">
                 {% for error in form.non_field_errors %}
                     <li>{{ error }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
-    <button type="submit">save</button>
 
-        </form>
-        <a href="{% url 'post-list' %}">Back to Posts</a>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const imageInput = document.querySelector('#id_image');
-                const videoInput = document.querySelector('#id_video');
-        
-                if (imageInput && videoInput) {
-                    imageInput.addEventListener('change', () => {
-                        if (imageInput.files.length > 0) {
-                            videoInput.disabled = true;
-                        } else {
-                            videoInput.disabled = false;
-                        }
-                    });
-        
-                    videoInput.addEventListener('change', () => {
-                        if (videoInput.files.length > 0) {
-                            imageInput.disabled = true;
-                        } else {
-                            imageInput.disabled = false;
-                        }
-                    });
-                }
-            });
-        </script>
-        
-    </div>
+        <button type="submit">Save</button>
+
+        <a href="{% url 'post-list' %}" class="back-link">Back to Posts</a>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageInput = document.querySelector('#id_image');
+            const videoInput = document.querySelector('#id_video');
+
+            if (imageInput && videoInput) {
+                imageInput.addEventListener('change', () => {
+                    videoInput.disabled = imageInput.files.length > 0;
+                });
+
+                videoInput.addEventListener('change', () => {
+                    imageInput.disabled = videoInput.files.length > 0;
+                });
+            }
+        });
+    </script>
+</div>
 {% endblock %}
