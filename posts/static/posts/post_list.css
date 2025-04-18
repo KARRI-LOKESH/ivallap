@@ -25,8 +25,8 @@ p {
     margin: 20px auto;
     border-radius: 15px;
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
-    width: 95%;
-    max-width: 900px;
+    width: 90%;
+    max-width: 700px;
     box-sizing: border-box;
     border: 1px solid #e0e0e0;
     transition: transform 0.2s ease;
@@ -54,7 +54,7 @@ p {
     font-weight: bold;
 }
 
-/* Post content */
+/* Post content (text, image, video) */
 .post img,
 .post video {
     width: 100%;
@@ -70,8 +70,8 @@ p {
 button[type="submit"],
 button[id^="toggle-btn-"],
 .share-btn {
-    padding: 8px 14px;
-    margin: 6px 4px;
+    padding: 10px 14px;
+    margin: 6px;
     border-radius: 8px;
     font-size: 14px;
     cursor: pointer;
@@ -79,6 +79,7 @@ button[id^="toggle-btn-"],
     border: none;
 }
 
+/* Button colors */
 .btn-primary {
     background-color: #5b7c07;
     color: #fff;
@@ -183,21 +184,15 @@ hr {
     border: 1px solid #ccc;
 }
 
-/* Group buttons in rows */
+/* Button container with spacing */
 .post .post-actions {
-    margin-top: 20px;
-}
-
-.post .action-group-1,
-.post .action-group-2 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-}
-
-.post .action-group-1 {
+    gap: 14px;
+    margin-top: 16px;
     margin-bottom: 12px;
+    padding: 10px 0;
 }
 
 /* Responsive tweaks */
@@ -214,61 +209,72 @@ hr {
         font-size: 1.6rem;
     }
 
+    .post .post-actions {
+        justify-content: center;
+        gap: 14px;
+        margin-top: 12px;
+        margin-bottom: 12px;
+        padding: 8px 0;
+    }
+
+    .btn,
+    .like-btn,
+    button[type="submit"],
+    button[id^="toggle-btn-"],
+    .share-btn {
+        font-size: 14px;
+        padding: 9px 13px;
+        margin: 6px;
+    }
+
     form input[type="text"] {
         width: 65%;
     }
 }
 
 @media (max-width: 480px) {
-    body, html {
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow-x: hidden;
-    }
-
     h2 {
         font-size: 1.4rem;
-        margin: 15px 0;
     }
 
     .post {
-        width: 100% !important;
-        padding: 15px 10px !important;
-        margin: 0 !important;
-        border-radius: 0 !important;
-        box-sizing: border-box !important;
-        border-left: none !important;
-        border-right: none !important;
+        width: 100%;
+        padding: 15px 10px;
+        margin: 15px 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #like-count-{{ post.id }} {
+        color: white;
+    }
+
+    form input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
     }
 
     .post .post-actions {
-        margin-top: 20px;
-    }
-
-    .post .action-group-1,
-    .post .action-group-2 {
-        display: flex;
+        flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 10px;
-    }
-
-    .post .action-group-1 {
-        margin-bottom: 12px;
+        gap: 12px;
+        margin-top: 12px;
+        margin-bottom: 15px;
+        padding: 8px 0;
     }
 
     .btn,
     .like-btn,
-    .share-btn,
     button[type="submit"],
-    button[id^="toggle-btn-"] {
-        font-size: 14px;
-        padding: 10px 12px;
-        width: auto !important;
+    button[id^="toggle-btn-"],
+    .share-btn {
+        font-size: 13px;
+        padding: 10px 14px;
+        margin: 6px;
     }
 
-    form input[type="text"] {
-        width: 100% !important;
-        margin-bottom: 10px;
+    .post .post-actions a {
+        flex: 1 1 auto;
     }
 }
