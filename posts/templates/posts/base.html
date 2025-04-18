@@ -7,11 +7,17 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'posts/base.css' %}">
     <script src="{% static 'posts/posts.js' %}" defer></script>
-    
+
     <!-- Font Awesome CDN for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Bottom Navbar -->
     <nav>
         <a href="{% url 'post-list' %}"><i class="fas fa-home"></i></a>
         <a href="{% url 'post-create' %}"><i class="fas fa-plus-square"></i></a>
@@ -21,24 +27,18 @@
         {% if request.user.is_authenticated and request.user.id %}
         <a href="{% url 'inbox' %}"><i class="fas fa-envelope"></i></a>
         {% endif %}
-
-        <!-- Search Button -->
         <button type="button" id="search-toggle-button"><i class="fas fa-search"></i></button>
-
-        <!-- Search Form (Initially hidden) -->
-        <form action="{% url 'search-users' %}" method="GET" class="search-form" id="search-form" style="display: none;">
-            <input type="text" name="query" placeholder="Search users...">
-            <button type="submit"><i class="fas fa-search"></i></button>
-        </form>
     </nav>
 
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
+    <!-- Search Form -->
+    <form action="{% url 'search-users' %}" method="GET" class="search-form" id="search-form" style="display: none;">
+        <input type="text" name="query" placeholder="Search users...">
+        <button type="submit"><i class="fas fa-search"></i></button>
+    </form>
 
     <script>
         // Toggle search form visibility on button click
-        document.getElementById('search-toggle-button').addEventListener('click', function() {
+        document.getElementById('search-toggle-button').addEventListener('click', function () {
             const searchForm = document.getElementById('search-form');
             if (searchForm.style.display === 'none' || searchForm.style.display === '') {
                 searchForm.style.display = 'flex';

@@ -32,13 +32,16 @@
         <br>
 
         <!-- View Post Button -->
-        <a href="{% url 'post-detail' post.id %}" class="btn btn-primary">👁️View</a>
+        <!-- Actions: View, Edit, Delete -->
+<div class="post-actions">
+    <a href="{% url 'post-detail' post.id %}" class="btn btn-primary">👁️View</a>
 
-        <!-- Edit and Delete Buttons (Only for post owner) -->
-        {% if request.user == post.user %}
-            <a href="{% url 'post-update' post.id %}" class="btn btn-warning">✏️Edit</a>
-            <a href="{% url 'post-delete' post.id %}" class="btn btn-danger">🗑️Delete</a>
-        {% endif %}
+    {% if request.user == post.user %}
+        <a href="{% url 'post-update' post.id %}" class="btn btn-warning">✏️Edit</a>
+        <a href="{% url 'post-delete' post.id %}" class="btn btn-danger">🗑️Delete</a>
+    {% endif %}
+</div>
+
 
         <!-- Like Button -->
         <form action="{% url 'like-post' post.id %}" method="POST" style="display: inline;">
