@@ -10,6 +10,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f5f6fa;
   color: #333;
+  padding-top: 70px; /* To ensure the content doesn't overlap with the navbar */
 }
 
 /* Nav styling */
@@ -18,6 +19,11 @@ nav {
   border-bottom: 2px solid #ddd;
   padding: 20px 20px;
   min-height: 70px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Ensures the navbar stays on top of other content */
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
