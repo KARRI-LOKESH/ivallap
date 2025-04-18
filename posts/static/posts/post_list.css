@@ -54,7 +54,7 @@ p {
     font-weight: bold;
 }
 
-/* Post content (text, image, video) */
+/* Post content */
 .post img,
 .post video {
     width: 100%;
@@ -183,6 +183,23 @@ hr {
     border: 1px solid #ccc;
 }
 
+/* Group buttons in rows */
+.post .post-actions {
+    margin-top: 20px;
+}
+
+.post .action-group-1,
+.post .action-group-2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.post .action-group-1 {
+    margin-bottom: 12px;
+}
+
 /* Responsive tweaks */
 @media (max-width: 768px) {
     .post {
@@ -197,28 +214,11 @@ hr {
         font-size: 1.6rem;
     }
 
-    .post .post-actions {
-        display: flex;
-        justify-content: space-between;
-        gap: 15px;
-        flex-wrap: wrap;
-        align-items: center;
-    }
-
-    .btn,
-    .like-btn,
-    button[type="submit"],
-    button[id^="toggle-btn-"] {
-        font-size: 14px;
-        padding: 8px 16px;
-    }
-
     form input[type="text"] {
         width: 65%;
     }
 }
 
-/* Smaller screens */
 @media (max-width: 480px) {
     body, html {
         margin: 0 !important;
@@ -241,20 +241,20 @@ hr {
         border-right: none !important;
     }
 
-    .like-count {
-        color: white;
-    }
-
-    form input[type="text"] {
-        width: 100% !important;
-        margin-bottom: 10px;
-    }
-
     .post .post-actions {
+        margin-top: 20px;
+    }
+
+    .post .action-group-1,
+    .post .action-group-2 {
         display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 10px;
-        margin-top: 10px;
+    }
+
+    .post .action-group-1 {
+        margin-bottom: 12px;
     }
 
     .btn,
@@ -263,11 +263,12 @@ hr {
     button[type="submit"],
     button[id^="toggle-btn-"] {
         font-size: 14px;
-        padding: 10px;
-        width: 100% !important;
+        padding: 10px 12px;
+        width: auto !important;
     }
 
-    .post .post-actions a {
-        flex: 1 1 100%;
+    form input[type="text"] {
+        width: 100% !important;
+        margin-bottom: 10px;
     }
 }
