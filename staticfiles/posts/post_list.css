@@ -25,12 +25,12 @@ p {
     margin: 20px auto;
     border-radius: 15px;
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
-    width: 95%; /* Increase the width for better visibility */
-    max-width: 900px; /* Increased max-width for larger screens */
+    width: 95%;
+    max-width: 900px;
     box-sizing: border-box;
     border: 1px solid #e0e0e0;
     transition: transform 0.2s ease;
-    text-align: center; /* Center content */
+    text-align: center;
 }
 
 .post:hover {
@@ -144,7 +144,7 @@ button[id^="toggle-btn-"]:hover {
 
 /* Like Count */
 .like-count {
-    color: white; /* Change like count text color to white */
+    color: white;
 }
 
 /* Comment form */
@@ -187,7 +187,7 @@ hr {
 @media (max-width: 768px) {
     .post {
         padding: 15px;
-        width: 95%; /* Increase the width for better visibility */
+        width: 95%;
         max-width: 95%;
         margin-left: auto;
         margin-right: auto;
@@ -197,7 +197,6 @@ hr {
         font-size: 1.6rem;
     }
 
-    /* Buttons in a row and smaller font */
     .post .post-actions {
         display: flex;
         justify-content: space-between;
@@ -219,50 +218,56 @@ hr {
     }
 }
 
+/* Smaller screens */
 @media (max-width: 480px) {
+    body, html {
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden;
+    }
+
     h2 {
         font-size: 1.4rem;
+        margin: 15px 0;
     }
 
     .post {
-        width: 100%; /* Use full width for mobile */
-        padding: 15px 10px;
-        margin: 15px 0;
-        margin-left: auto;
-        margin-right: auto;
+        width: 100% !important;
+        padding: 15px 10px !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        box-sizing: border-box !important;
+        border-left: none !important;
+        border-right: none !important;
     }
 
-    /* Adjust Like Count */
-    #like-count-{{ post.id }} {
-        color: white; /* Set the like count text color to white */
+    .like-count {
+        color: white;
     }
-    
+
     form input[type="text"] {
-        width: 100%;
+        width: 100% !important;
         margin-bottom: 10px;
     }
 
-    /* Button container: make buttons align in one row */
     .post .post-actions {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-        flex-wrap: nowrap;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
     }
 
-    /* Buttons: reduce font-size and padding for mobile */
     .btn,
     .like-btn,
+    .share-btn,
     button[type="submit"],
-    button[id^="toggle-btn-"],
-    .share-btn {
-        font-size: 13px;
-        padding: 8px 12px;
-        width: auto;
+    button[id^="toggle-btn-"] {
+        font-size: 14px;
+        padding: 10px;
+        width: 100% !important;
     }
 
     .post .post-actions a {
-        flex: 1 1 auto; /* Ensure buttons are equally spaced */
+        flex: 1 1 100%;
     }
 }
