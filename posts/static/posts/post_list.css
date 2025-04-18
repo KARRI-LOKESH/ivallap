@@ -33,12 +33,11 @@ p {
     text-align: center;
 }
 
-/* Hover effect */
 .post:hover {
     transform: translateY(-3px);
 }
 
-/* Remove underlines from post links */
+/* Remove underlines from links like 'view' and 'edit' */
 .post a {
     text-decoration: none;
     color: #e9eef4;
@@ -55,7 +54,7 @@ p {
     font-weight: bold;
 }
 
-/* Post media */
+/* Post content (text, image, video) */
 .post img,
 .post video {
     width: 100%;
@@ -72,7 +71,7 @@ button[type="submit"],
 button[id^="toggle-btn-"],
 .share-btn {
     padding: 10px 14px;
-    margin: 8px;
+    margin: 6px;
     border-radius: 8px;
     font-size: 14px;
     cursor: pointer;
@@ -164,7 +163,7 @@ form button[type="submit"] {
     padding: 10px 15px;
 }
 
-/* Comment list */
+/* Comment section */
 ul {
     margin-top: 10px;
     padding-left: 20px;
@@ -185,31 +184,70 @@ hr {
     border: 1px solid #ccc;
 }
 
-/* Actions (view, edit, delete, like, etc.) */
+/* Button container with spacing */
 .post .post-actions {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    padding: 8px 0;
+    gap: 14px;
+    margin-top: 30px; /* Increased gap between post and buttons */
+    margin-bottom: 12px;
+    padding: 10px 0;
 }
 
-/* Ensure buttons do not overlap with content */
-.post a.btn {
-    margin-top: 10px; /* Add space between content and buttons */
-}
 
-/* Mobile View Tweaks */
+/* Responsive tweaks */
 @media (max-width: 768px) {
     .post {
+        padding: 15px;
         width: 95%;
-        padding: 18px;
+        max-width: 95%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     h2 {
         font-size: 1.6rem;
+    }
+
+    .post .post-actions {
+        justify-content: center;
+        gap: 14px;
+        margin-top: 12px;
+        margin-bottom: 12px;
+        padding: 8px 0;
+    }
+
+    .btn,
+    .like-btn,
+    button[type="submit"],
+    button[id^="toggle-btn-"],
+    .share-btn {
+        font-size: 14px;
+        padding: 9px 13px;
+        margin: 6px;
+    }
+
+    form input[type="text"] {
+        width: 65%;
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    .post {
+        width: 100%;
+        padding: 15px 10px;
+        margin: 15px 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #like-count-{{ post.id }} {
+        color: white;
     }
 
     form input[type="text"] {
@@ -221,46 +259,10 @@ hr {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 14px;
-        padding: 10px 0;
-        margin-top: 14px;
-        margin-bottom: 20px;
-    }
-
-    .btn,
-    .like-btn,
-    button[type="submit"],
-    button[id^="toggle-btn-"],
-    .share-btn {
-        font-size: 13.5px;
-        padding: 10px 14px;
-        margin: 6px;
-    }
-
-    .post .post-actions a {
-        flex: 1 1 45%;
-        max-width: 45%;
-    }
-}
-
-@media (max-width: 480px) {
-    h2 {
-        font-size: 1.4rem;
-    }
-
-    .post {
-        width: 100%;
-        padding: 15px 12px;
-        margin: 15px 0;
-    }
-
-    .post .post-actions {
-        flex-wrap: wrap;
-        justify-content: center;
         gap: 12px;
-        margin-top: 14px;
-        margin-bottom: 24px; /* Extra space between buttons and below content */
-        padding: 10px 0;
+        margin-top: 12px;
+        margin-bottom: 15px;
+        padding: 8px 0;
     }
 
     .btn,
@@ -269,25 +271,11 @@ hr {
     button[id^="toggle-btn-"],
     .share-btn {
         font-size: 13px;
-        padding: 9px 12px;
+        padding: 10px 14px;
         margin: 6px;
-        min-width: 100px;
     }
 
     .post .post-actions a {
-        flex: 1 1 100%;
-        max-width: 100%;
-    }
-
-    form input[type="text"] {
-        width: 100%;
-    }
-
-    form,
-    ul,
-    .share-btn,
-    .like-btn,
-    button[id^="toggle-btn-"] {
-        margin-top: 12px;
+        flex: 1 1 auto;
     }
 }
