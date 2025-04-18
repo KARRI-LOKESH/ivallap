@@ -1,114 +1,128 @@
 /* Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Body styling */
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f6fa;
-    color: #333;
-  }
-  
-  /* Nav styling */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f6fa;
+  color: #333;
+}
+
+/* Nav styling */
+nav {
+  background-color: #ffffff;
+  border-bottom: 2px solid #ddd;
+  padding: 20px 20px;
+  min-height: 70px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Nav icons */
+nav a {
+  color: #333;
+  font-size: 22px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #007bff;
+}
+
+/* Font Awesome icons */
+nav i {
+  pointer-events: none;
+}
+
+/* Search form */
+.search-form {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* Input styles */
+.search-form input {
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+  width: 100%;
+  max-width: 180px;
+  font-size: 14px;
+  height: 36px;
+  box-sizing: border-box;
+}
+
+/* Button styles */
+.search-form button {
+  height: 36px;
+  width: 36px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+/* Remove border and background from the search button */
+#search-toggle-button {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Content area */
+.container {
+  padding: 20px;
+}
+
+/* Responsive layout */
+@media (max-width: 600px) {
   nav {
-    background-color: #ffffff;
-    border-bottom: 2px solid #ddd;
-    padding: 12px 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; /* Ensure space between items */
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    gap: 12px;
+    padding: 16px 10px;
+    min-height: 70px;
   }
-  
-  /* Nav icons */
+
   nav a {
-    color: #333;
-    font-size: 22px;
-    text-decoration: none;
-    transition: color 0.3s ease;
+    font-size: 20px;
   }
-  
-  nav a:hover {
-    color: #007bff;
-  }
-  
-  /* Font Awesome icons */
-  nav i {
-    pointer-events: none;
-  }
-  
-  /* Search form inline by default */
+
   .search-form {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: flex-end; /* Align to the right */
+    flex-grow: 1;
+    justify-content: flex-end;
+    margin-top: 10px;
   }
-  
-  /* Input styles */
+
   .search-form input {
-    padding: 6px 14px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    outline: none;
-    width: 180px;
-    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 180px;
   }
-  
-  .search-form input:focus {
-    border-color: #007bff;
-  }
-  
-  /* Button styles */
+
   .search-form button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
   }
-  
-  .search-form button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Content area */
-  .container {
-    padding: 20px;
-  }
-  
-  /* Responsive layout */
-  @media (max-width: 600px) {
-    nav {
-      flex-direction: row; /* Keep items side by side */
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding: 10px;
-    }
-  
-    nav a {
-      font-size: 20px;
-    }
-  
-    .search-form {
-      flex-grow: 1; /* Make it grow and take up remaining space */
-      justify-content: flex-end; /* Align to the right */
-    }
-  
-    .search-form input {
-      width: 100%; /* Ensure the search input takes full width */
-      max-width: 180px; /* Limit width to prevent stretching */
-    }
-  
-    .search-form button {
-      padding: 6px 10px;
-    }
-  }
-  
+}

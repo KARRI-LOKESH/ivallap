@@ -22,8 +22,11 @@
         <a href="{% url 'inbox' %}"><i class="fas fa-envelope"></i></a>
         {% endif %}
 
-        <!-- Search Form -->
-        <form action="{% url 'search-users' %}" method="GET" class="search-form">
+        <!-- Search Button -->
+        <button type="button" id="search-toggle-button"><i class="fas fa-search"></i></button>
+
+        <!-- Search Form (Initially hidden) -->
+        <form action="{% url 'search-users' %}" method="GET" class="search-form" id="search-form" style="display: none;">
             <input type="text" name="query" placeholder="Search users...">
             <button type="submit"><i class="fas fa-search"></i></button>
         </form>
@@ -32,5 +35,17 @@
     <div class="container">
         {% block content %}{% endblock %}
     </div>
+
+    <script>
+        // Toggle search form visibility on button click
+        document.getElementById('search-toggle-button').addEventListener('click', function() {
+            const searchForm = document.getElementById('search-form');
+            if (searchForm.style.display === 'none' || searchForm.style.display === '') {
+                searchForm.style.display = 'flex';
+            } else {
+                searchForm.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

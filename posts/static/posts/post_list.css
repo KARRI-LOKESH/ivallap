@@ -25,8 +25,8 @@ p {
     margin: 20px auto;
     border-radius: 15px;
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
-    width: 90%;
-    max-width: 700px;
+    width: 95%; /* Increase the width for better visibility */
+    max-width: 900px; /* Increased max-width for larger screens */
     box-sizing: border-box;
     border: 1px solid #e0e0e0;
     transition: transform 0.2s ease;
@@ -233,11 +233,10 @@ hr {
     }
 
     /* Adjust Like Count */
-     #like-count-{{ post.id }} {
+    #like-count-{{ post.id }} {
         color: white; /* Set the like count text color to white */
     }
     
-
     form input[type="text"] {
         width: 100%;
         margin-bottom: 10px;
