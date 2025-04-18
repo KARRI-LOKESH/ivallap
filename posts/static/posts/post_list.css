@@ -191,16 +191,22 @@ hr {
     flex-wrap: wrap;
     justify-content: center;
     gap: 12px;
-    margin-top: 16px;
-    margin-bottom: 16px;
+    margin-top: 20px;
+    margin-bottom: 24px;
     padding: 8px 0;
+}
+
+.post .post-actions a {
+    flex: 1 1 45%;
+    max-width: 45%;
+    margin: 4px 0;
 }
 
 /* Mobile View Tweaks */
 @media (max-width: 768px) {
     .post {
         width: 95%;
-        padding: 18px;
+        padding: 20px;
     }
 
     h2 {
@@ -218,8 +224,8 @@ hr {
         justify-content: center;
         gap: 14px;
         padding: 10px 0;
-        margin-top: 14px;
-        margin-bottom: 20px;
+        margin-top: 20px;
+        margin-bottom: 24px;
     }
 
     .btn,
@@ -233,8 +239,9 @@ hr {
     }
 
     .post .post-actions a {
-        flex: 1 1 45%;
-        max-width: 45%;
+        flex: 1 1 100%;
+        max-width: 100%;
+        margin: 4px 0;
     }
 }
 
@@ -244,17 +251,17 @@ hr {
     }
 
     .post {
-        width: 100%;
-        padding: 15px 12px;
-        margin: 15px 0;
+        width: 95%;
+        padding: 20px 16px;
+        margin: 20px auto;
     }
 
     .post .post-actions {
         flex-wrap: wrap;
         justify-content: center;
         gap: 12px;
-        margin-top: 14px;
-        margin-bottom: 24px; /* Extra space between buttons and below content */
+        margin-top: 20px;
+        margin-bottom: 24px;
         padding: 10px 0;
     }
 
@@ -272,6 +279,7 @@ hr {
     .post .post-actions a {
         flex: 1 1 100%;
         max-width: 100%;
+        margin: 6px 0;
     }
 
     form input[type="text"] {

@@ -49,8 +49,9 @@ h1 {
 /* Post Image */
 .post-image {
     width: 100%;
-    max-height: 300px;
-    object-fit: cover;
+    height: auto;
+    max-height: none;
+    object-fit: contain;
     border-radius: 8px;
     margin-bottom: 15px;
 }
@@ -58,7 +59,9 @@ h1 {
 /* Post Video */
 .post-video {
     width: 100%;
-    max-height: 300px;
+    height: auto;
+    max-height: none;
+    object-fit: contain;
     border-radius: 8px;
     margin-bottom: 15px;
 }
@@ -153,6 +156,7 @@ h1 {
     margin-top: 20px;
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .add-comment-form input {
@@ -161,6 +165,7 @@ h1 {
     font-size: 1rem;
     border: 1px solid #ddd;
     border-radius: 5px;
+    min-width: 60%;
 }
 
 .add-comment-form button {
@@ -232,6 +237,7 @@ a.btn:hover {
     }
 }
 
+/* Animation */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }

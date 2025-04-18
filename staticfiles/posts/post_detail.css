@@ -5,9 +5,10 @@ body {
 }
 
 .container {
-    max-width: 800px;
-    margin: auto;
-    padding: 30px 20px;
+    max-width: 100%;
+    width: 95%;
+    margin: 20px auto;
+    padding: 30px 25px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -66,6 +67,21 @@ hr {
     border-top: 1px solid #ddd;
 }
 
+/* Individual Post Styling */
+.post {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
+    width: 95%;
+    max-width: 750px;
+    box-sizing: border-box;
+    border: 1px solid #e0e0e0;
+    transition: transform 0.2s ease;
+    text-align: center;
+}
+
 /* Comments Section */
 .comment {
     background-color: #f9fafc;
@@ -111,20 +127,28 @@ hr {
 /* Mobile responsiveness */
 @media (max-width: 600px) {
     .container {
-        padding: 20px 10px;
+        width: 95%;
+        padding: 25px 15px;
     }
 
     h2, h3 {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
     }
 
     .btn,
     .back-button {
         width: 100%;
-        padding: 12px;
+        padding: 14px;
+        font-size: 1rem;
     }
 
     .add-comment-form textarea {
-        font-size: 0.95rem;
+        font-size: 1rem;
+    }
+
+    .post {
+        width: 98%;
+        padding: 18px 12px;
+        margin: 15px auto;
     }
 }
