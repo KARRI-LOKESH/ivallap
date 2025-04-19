@@ -33,55 +33,63 @@
 
         <!-- View Post Button -->
         <!-- Actions: View, Edit, Delete -->
-<div class="post-actions">
-    <a href="{% url 'post-detail' post.id %}" class="btn btn-primary">👁️View</a>
-
-    {% if request.user == post.user %}
-        <a href="{% url 'post-update' post.id %}" class="btn btn-warning">✏️Edit</a>
-        <a href="{% url 'post-delete' post.id %}" class="btn btn-danger">🗑️Delete</a>
-    {% endif %}
-</div>
-
-
+        <div class="post-actions">
+            <a href="{% url 'post-detail' post.id %}" class="btn btn-primary">
+                <i class="fa fa-eye"></i> 
+            </a>
+        
+            {% if request.user == post.user %}
+                <a href="{% url 'post-update' post.id %}" class="btn btn-warning">
+                    <i class="fa fa-pencil-alt"></i>
+                </a>
+                <a href="{% url 'post-delete' post.id %}" class="btn btn-danger">
+                    <i class="fa fa-trash"></i> 
+                </a>
+            {% endif %}
+        </div>
+        
         <!-- Like Button -->
         <form action="{% url 'like-post' post.id %}" method="POST" style="display: inline;">
             {% csrf_token %}
             <button class="like-btn" data-post-id="{{ post.id }}">
                 {% if request.user in post.likes.all %}
-                    👎UnLike
+                    ❤️ <!-- Liked -->
                 {% else %}
-                    👍Like
+                    🤍 <!-- Not Liked -->
                 {% endif %}
             </button>
             <span id="like-count-{{ post.id }}" style="color: white;">{{ post.total_likes }}</span>
         </form>
-
+        
         <!-- Save Button -->
         <form action="{% url 'save-post' post.id %}" method="POST" style="display: inline;">
             {% csrf_token %}
             <button type="submit">
                 {% if request.user in post.saved_by.all %}
-                    ❌UnSave
+                    <i class="fa fa-bookmark"></i> <!-- Saved -->
                 {% else %}
-                    💾Save
+                    <i class="fa fa-bookmark"></i> <!-- Unsave (Outline Bookmark) -->
                 {% endif %}
             </button>
             <span style="color: white;">{{ post.total_saves }}</span>
         </form>
-        <button class="share-btn" class="sh"
-        data-title="Check this post"
-        data-text="{{ post.content|truncatechars:100 }}"
-        data-url="{{ request.build_absolute_uri|slice:':-1' }}{% url 'post-detail' post.id %}">
-        🔗 Share
-        </button>
 
+        
+        <!-- Share Button -->
+        <button class="share-btn" 
+            data-title="Check this post"
+            data-text="{{ post.content|truncatechars:100 }}"
+            data-url="{{ request.build_absolute_uri|slice:':-1' }}{% url 'post-detail' post.id %}">
+            <i class="fa fa-paper-plane"></i> 
+        </button>
+        
         <!-- Comment Section -->
         <form action="{% url 'add-comment' post.id %}" method="POST">
             {% csrf_token %}
             <input type="text" name="content" placeholder="Add a comment" required>
-            <button type="submit">💬Comment</button>
+            <button type="submit"><i class="fa fa-comment"></i></button>
         </form>
-
+        
         <p><strong>Comments ({{ post.comments.count }})</strong></p>
 
         {% if post.comments.exists %}
@@ -104,8 +112,6 @@
         {% else %}
             <p>No comments yet. Be the first to comment!</p>
         {% endif %}
-
-
     </div>
     <hr>
 {% endfor %}

@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let likeButton = document.querySelector(`.like-btn[data-post-id="${postId}"]`);
             if (likeButton) {
-                likeButton.innerHTML = data.liked ? "👎 UnLike" : "👍 Like";
+                likeButton.innerHTML = data.liked ? "❤️" : "🤍 ";
             }
         })
         .catch(error => console.error("Error:", error));

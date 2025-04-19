@@ -26,7 +26,7 @@ h2 {
 form.formy {
     width: 100%;
     max-width: 650px; /* Increased from 500px */
-    background-color: #ffffff;
+    background-color: #8dbcd9;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
@@ -75,7 +75,7 @@ ul.errorlist {
 .back-link {
     margin-top: 20px;
     display: inline-block;
-    background-color: #007bff;
+    background-color: #71a3d8;
     color: #fff;
     padding: 12px 24px;
     border-radius: 8px;
@@ -86,7 +86,7 @@ ul.errorlist {
 }
 
 .back-link:hover {
-    background-color: #0056b3;
+    background-color: #273c86;
     transform: scale(1.03);
 }
 
