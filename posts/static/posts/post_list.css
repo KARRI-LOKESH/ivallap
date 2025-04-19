@@ -21,7 +21,6 @@ p {
 /* Post card */
 .post {
     background-color: #1f1d1d;
-    color: #ffffff;
     padding: 20px;
     margin: 20px auto;
     border-radius: 15px;
@@ -29,7 +28,7 @@ p {
     width: 90%;
     max-width: 700px;
     box-sizing: border-box;
-    border: 1px solid #444;
+    border: 1px solid #e0e0e0;
     transition: transform 0.2s ease;
     text-align: center;
 }
@@ -38,7 +37,7 @@ p {
     transform: translateY(-3px);
 }
 
-/* Links */
+/* Remove underlines from links like 'view' and 'edit' */
 .post a {
     text-decoration: none;
     color: #e9eef4;
@@ -46,16 +45,16 @@ p {
 
 .post a:hover {
     text-decoration: underline;
-    color: #00bcd4;
+    color: #0056b3;
 }
 
 .username-link,
 .created-at {
-    color: #dddddd;
+    color: rgb(19, 18, 18);
     font-weight: bold;
 }
 
-/* Media content */
+/* Post content (text, image, video) */
 .post img,
 .post video {
     width: 100%;
@@ -65,12 +64,12 @@ p {
     border: 1px solid #ddd;
 }
 
-/* Buttons & styles */
+/* Buttons */
 .btn,
 .like-btn,
-.share-btn,
 button[type="submit"],
-button[id^="toggle-btn-"] {
+button[id^="toggle-btn-"],
+.share-btn {
     padding: 10px 14px;
     margin: 6px;
     border-radius: 8px;
@@ -80,10 +79,12 @@ button[id^="toggle-btn-"] {
     border: none;
 }
 
+/* Button colors */
 .btn-primary {
     background-color: #5b7c07;
     color: #fff;
 }
+
 .btn-primary:hover {
     background-color: #f8c90f;
 }
@@ -92,6 +93,7 @@ button[id^="toggle-btn-"] {
     background-color: #c45d18;
     color: #fff;
 }
+
 .btn-warning:hover {
     background-color: #e0a800;
 }
@@ -100,6 +102,7 @@ button[id^="toggle-btn-"] {
     background-color: #dc3545;
     color: #fff;
 }
+
 .btn-danger:hover {
     background-color: #c82333;
 }
@@ -108,14 +111,16 @@ button[id^="toggle-btn-"] {
     background-color: #28a745;
     color: #fff;
 }
+
 .like-btn:hover {
     background-color: #218838;
 }
 
 button[type="submit"] {
-    background-color: #2595d6;
+    background-color: #17a2b8;
     color: #fff;
 }
+
 button[type="submit"]:hover {
     background-color: #138496;
 }
@@ -124,6 +129,7 @@ button[type="submit"]:hover {
     background-color: #6f42c1;
     color: #fff;
 }
+
 .share-btn:hover {
     background-color: #5a32a3;
 }
@@ -132,26 +138,17 @@ button[id^="toggle-btn-"] {
     background-color: #6c757d;
     color: white;
 }
+
 button[id^="toggle-btn-"]:hover {
     background-color: #5a6268;
 }
 
 /* Like Count */
 .like-count {
-    color: #00e676;
-    margin-left: 6px;
+    color: white;
 }
 
-/* Save button icon */
-.save-btn i {
-    font-size: 20px;
-    padding: 5px;
-}
-.save-btn:hover i {
-    color: #ff6347;
-}
-
-/* Comment input */
+/* Comment form */
 form input[type="text"] {
     width: 70%;
     padding: 10px;
@@ -160,6 +157,10 @@ form input[type="text"] {
     border: 1px solid #ccc;
     border-radius: 8px;
     box-sizing: border-box;
+}
+
+form button[type="submit"] {
+    padding: 10px 15px;
 }
 
 /* Comment section */
@@ -175,92 +176,60 @@ ul li {
     margin-bottom: 6px;
     border-radius: 6px;
     border: 1px solid #ddd;
-    color: #333;
 }
 
-/* Separator */
 hr {
     margin: 30px auto;
     width: 90%;
     border: 1px solid #ccc;
 }
 
-/* Button container */
+/* Button container with spacing */
 .post .post-actions {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 14px;
-    margin-top: 30px;
+    margin-top: 30px; /* Increased gap between post and buttons */
     margin-bottom: 12px;
     padding: 10px 0;
 }
 
-/* Scrollable Icons Row */
-.post-icons {
-    display: flex;
-    justify-content: flex-start;  /* Align icons from the left */
-    align-items: center;
-    flex-wrap: nowrap;            /* Prevent wrapping */
-    gap: 10px;
-    overflow-x: auto;             /* Enable horizontal scroll if needed */
-    padding: 5px 0;
-    scrollbar-width: thin;        /* Firefox scrollbar */
-}
 
-/* Optional: For Webkit (Chrome, Safari) custom scrollbar style */
-.post-icons::-webkit-scrollbar {
-    height: 6px;
-}
-.post-icons::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
-}
-.post-icons::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-
-.post-icons form,
-.post-icons button {
-    margin: 0;
-}
-
-.post-icons button,
-.post-icons form button[type="submit"] {
-    font-size: 20px;
-    padding: 8px;
-    background: transparent;
-    border: none;
-    color: white;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-.post-icons button:hover,
-.post-icons form button:hover {
-    transform: scale(1.2);
-    color: #00bcd4;
-}
-
-/* Responsive styles */
+/* Responsive tweaks */
 @media (max-width: 768px) {
     .post {
         padding: 15px;
         width: 95%;
+        max-width: 95%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     h2 {
         font-size: 1.6rem;
     }
 
-    form input[type="text"] {
-        width: 65%;
+    .post .post-actions {
+        justify-content: center;
+        gap: 14px;
+        margin-top: 12px;
+        margin-bottom: 12px;
+        padding: 8px 0;
     }
 
-    .post-icons button,
-    .post-icons form button[type="submit"] {
-        font-size: 18px;
-        padding: 10px;
+    .btn,
+    .like-btn,
+    button[type="submit"],
+    button[id^="toggle-btn-"],
+    .share-btn {
+        font-size: 14px;
+        padding: 9px 13px;
+        margin: 6px;
+    }
+
+    form input[type="text"] {
+        width: 65%;
     }
 }
 
@@ -270,8 +239,15 @@ hr {
     }
 
     .post {
+        width: 100%;
         padding: 15px 10px;
         margin: 15px 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #like-count-{{ post.id }} {
+        color: white;
     }
 
     form input[type="text"] {
@@ -282,26 +258,24 @@ hr {
     .post .post-actions {
         flex-direction: row;
         flex-wrap: wrap;
-        gap: 12px;
         justify-content: center;
+        gap: 12px;
+        margin-top: 12px;
+        margin-bottom: 15px;
+        padding: 8px 0;
     }
 
     .btn,
     .like-btn,
-    .share-btn,
     button[type="submit"],
-    button[id^="toggle-btn-"] {
+    button[id^="toggle-btn-"],
+    .share-btn {
         font-size: 13px;
         padding: 10px 14px;
+        margin: 6px;
     }
 
-    .post-icons {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        gap: 10px;
-    }
-
-    .post-icons button:hover {
-        background-color: #333;
+    .post .post-actions a {
+        flex: 1 1 auto;
     }
 }
