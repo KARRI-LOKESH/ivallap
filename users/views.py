@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.contrib import messages as django_messages
 from django.shortcuts import redirect
-from posts.models import Post 
+from posts.models import Post,Notification
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from posts.forms import CustomUserCreationForm,UserProfileUpdateForm,MessageForm
@@ -90,7 +90,6 @@ def verify_otp(request):
 
 
 User = get_user_model()
-
 @login_required
 def profile_view(request, username=None):
     if not username:
@@ -98,15 +97,16 @@ def profile_view(request, username=None):
             return redirect("user-profile", username=request.user.username)
         else:
             return redirect("login")
+
     user_profile = get_object_or_404(User, username=username)
 
     followers_count = user_profile.followers.count()
     following_count = user_profile.following.count()
     posts = Post.objects.filter(user=user_profile)
 
-    # Check if the logged-in user is following this profile
     is_following = request.user.following.filter(id=user_profile.id).exists()
-
+    notification_count = request.user.notifications.filter(is_read=False).count()
+    notifications = request.user.notifications.all().order_by('-timestamp')  # 👈 Add this
     if request.method == "POST":
         if request.user == user_profile:
             form = UserProfileUpdateForm(request.POST, request.FILES, instance=user_profile)
@@ -128,7 +128,9 @@ def profile_view(request, username=None):
         "following_count": following_count,
         "posts": posts,
         "user_profile": user_profile,
-        "is_following": is_following,  # Pass is_following to the template
+        "is_following": is_following,
+        "notification_count": notification_count,
+        'notifications': 'notifications',
     })
 # Logout View
 def logout_view(request):
@@ -204,8 +206,6 @@ def contact_view(request):
 def my_posts(request):
     user_posts = Post.objects.filter(user=request.user)
     return render(request, 'posts/my_posts.html', {'posts': user_posts})
-
-
 @login_required
 def follow_unfollow(request, user_id):
     user_to_follow = get_object_or_404(CustomUser, id=user_id)
@@ -217,8 +217,15 @@ def follow_unfollow(request, user_id):
         else:
             request.user.following.add(user_to_follow)
             messages.success(request, f"You are now following {user_to_follow.username}.")
+
+            # ✅ Create a notification for following
+            Notification.objects.create(
+                user=user_to_follow,
+                message=f"{request.user.username} started following you!"
+            )
     
     return redirect("user-profile", username=user_to_follow.username)
+
 User = get_user_model()
 
 def search_users(request):

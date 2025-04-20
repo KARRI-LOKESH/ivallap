@@ -49,40 +49,50 @@
         </div>
         
         <!-- Like Button -->
-        <form action="{% url 'like-post' post.id %}" method="POST" style="display: inline;">
+        <form style="display: inline;">
             {% csrf_token %}
-            <button class="like-btn" data-post-id="{{ post.id }}">
+            <button type="button" class="like-btn" data-post-id="{{ post.id }}">
                 {% if request.user in post.likes.all %}
-                    ❤️ <!-- Liked -->
+                    ❤️
                 {% else %}
-                    🤍 <!-- Not Liked -->
+                    🤍
                 {% endif %}
             </button>
-            <span id="like-count-{{ post.id }}" style="color: white;">{{ post.total_likes }}</span>
+            <span id="like-count-{{ post.id }}" style="color: white;">
+                {{ post.likes.count }}
+            </span>
         </form>
         
         <!-- Save Button -->
         <form action="{% url 'save-post' post.id %}" method="POST" style="display: inline;">
             {% csrf_token %}
-            <button type="submit">
+            <button type="submit" class="save-btn" data-post-id="{{ post.id }}">
                 {% if request.user in post.saved_by.all %}
                     <i class="fa fa-bookmark"></i> <!-- Saved -->
                 {% else %}
                     <i class="fa fa-bookmark"></i> <!-- Unsave (Outline Bookmark) -->
                 {% endif %}
             </button>
-            <span style="color: white;">{{ post.total_saves }}</span>
+            <span id="save-count-{{ post.id }}" style="color: white;">{{ post.total_saves }}</span>
         </form>
-
         
         <!-- Share Button -->
-        <button class="share-btn" 
-            data-title="Check this post"
-            data-text="{{ post.content|truncatechars:100 }}"
-            data-url="{{ request.build_absolute_uri|slice:':-1' }}{% url 'post-detail' post.id %}">
-            <i class="fa fa-paper-plane"></i> 
+        <button class="share-btn" onclick="toggleShareForm({{ post.id }})">
+            <i class="fa fa-paper-plane"></i>
         </button>
         
+        <!-- Hidden form for username input, initially not displayed -->
+        <div id="share-form-{{ post.id }}" class="share-form" style="display: none;">
+            <form method="POST" class="share-form-ajax" data-post-id="{{ post.id }}">
+                {% csrf_token %}
+                <input type="text" name="shared_with" placeholder="Search username..." required>
+                <label>
+                    <input type="checkbox" name="share_with_self"> Share to my profile
+                </label>
+                <button type="submit"><i class="fa fa-paper-plane"></i></button>
+                <p class="share-status" style="color: green;"></p>
+            </form>
+        </div>
         <!-- Comment Section -->
         <form action="{% url 'add-comment' post.id %}" method="POST">
             {% csrf_token %}
@@ -156,5 +166,50 @@
         });
     });
 </script>
-
+<script>
+    // Function to toggle the share form
+    function toggleShareForm(postId) {
+        const form = document.getElementById('share-form-' + postId);
+        // Toggle visibility of the form
+        if (form.style.display === 'none') {
+            form.style.display = 'block';
+        } else {
+            form.style.display = 'none';
+        }
+    }
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('.share-form-ajax').forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+    
+                const postId = form.getAttribute('data-post-id');
+                const formData = new FormData(form);
+    
+                fetch(`/posts/share/${postId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const statusPara = form.querySelector('.share-status');
+                    if (data.success) {
+                        statusPara.textContent = data.message;
+                    } else {
+                        statusPara.style.color = "red";
+                        statusPara.textContent = data.message;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+            });
+        });
+    });
+    </script>
+    
 {% endblock %}

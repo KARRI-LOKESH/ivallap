@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{% static 'posts/my_posts.css' %}">
 {% block extra_css %}
 {% endblock %}
+
 <div class="container">
     <h1>My Posts</h1>
 
@@ -77,5 +78,24 @@
 
     <a href="{% url 'profile' %}" class="btn">Back to Profile</a>
 </div>
-
 {% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'posts/post_list.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const videos = document.querySelectorAll('video');
+
+        videos.forEach(video => {
+            video.addEventListener('play', () => {
+                videos.forEach(other => {
+                    if (other !== video && !other.paused) {
+                        other.pause();
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}
+

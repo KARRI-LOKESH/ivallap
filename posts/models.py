@@ -13,7 +13,8 @@ class Post(models.Model):
     # Many-to-Many relationships
     likes = models.ManyToManyField(User, related_name="liked_posts", blank=True)
     saved_by = models.ManyToManyField(User, related_name="saved_posts", blank=True)
-
+    shared_by = models.ManyToManyField(User, related_name='shared_by_posts', blank=True)
+    shared_with = models.ManyToManyField(get_user_model(), related_name='shared_with_posts', blank=True)
     class Meta:
         ordering = ["-created_at"]  # Show latest posts first
         verbose_name_plural = "Posts"
@@ -50,3 +51,20 @@ class Message(models.Model):
 
     def __str__(self):
         return f"From {self.sender} to {self.receiver}"
+class SharedPost(models.Model):
+    original_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='shared_post')
+    shared_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    shared_with = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_shared_posts')
+    shared_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Shared by {self.shared_by} to {self.shared_with}"
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    message = models.CharField(max_length=255)
+    link = models.URLField(blank=True, null=True)
+    is_read = models.BooleanField(default=False)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, null=True, blank=True) 
+    timestamp = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"Notification for {self.user.username}"

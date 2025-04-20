@@ -1,0 +1,30 @@
+{% extends 'posts/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'posts/notification.css' %}">
+{% block extra_css %}
+{% endblock %}
+<div class="notifications-container">
+    <h2>Your Notifications</h2>
+
+    {% if notifications %}
+        <ul class="notifications-list">
+            {% for notification in notifications %}
+                <li class="{% if not notification.is_read %}unread{% endif %}">
+                    <p>{{ notification.message|safe }}</p>
+                    <small>{{ notification.timestamp|naturaltime }}</small>
+                    
+                    {% if notification.post %}
+                        <p><a href="{% url 'post-detail' post_id=notification.post.id %}">View Post</a></p>  <!-- Link to the post -->
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No notifications yet.</p>
+    {% endif %}
+
+    <p><a href="{% url 'user-profile' request.user.username %}">← Back to Profile</a></p>
+</div>
+{% endblock %}

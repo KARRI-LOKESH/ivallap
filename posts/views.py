@@ -1,11 +1,12 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Post, Comment,Message
+from .models import Post, Comment,Message,SharedPost,Notification
 from users.models import CustomUser
 from posts.forms import MessageForm
+from django.contrib import messages
 from django.utils.timezone import localtime
 import json
 from django.http import JsonResponse # Ensure Post model is imported
@@ -70,7 +71,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 def like_post(request, post_id):
     if request.method == "POST":
         post = get_object_or_404(Post, id=post_id)
-        
+
         if request.user in post.likes.all():
             post.likes.remove(request.user)
             liked = False
@@ -82,22 +83,66 @@ def like_post(request, post_id):
 
     return JsonResponse({"error": "Invalid request"}, status=400)
 
-
 @login_required
 def save_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
+    # Check if the post is already saved by the user
     if request.user in post.saved_by.all():
-        post.saved_by.remove(request.user)
+        post.saved_by.remove(request.user)  # Remove the user from saved posts
         saved = False
     else:
-        post.saved_by.add(request.user)
+        post.saved_by.add(request.user)  # Add the user to saved posts
         saved = True
 
     return JsonResponse({
-        "total_saves": post.saved_by.count(),
-        "saved": saved
+        "total_saves": post.saved_by.count(),  # Return the updated save count
+        "saved": saved  # Return whether the post is saved by the user
     })
+
+@login_required
+def share_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    
+    if request.method == 'POST':
+        shared_with_username = request.POST.get('shared_with')
+        share_with_self = request.POST.get('share_with_self')
+
+        shared_any = False
+
+        # Share with another user
+        if shared_with_username:
+            try:
+                user_to_share_with = CustomUser.objects.get(username=shared_with_username)
+                post.shared_with.add(user_to_share_with)
+                Notification.objects.create(
+                user=user_to_share_with,
+                message=f"{request.user.username} shared a <a href='{reverse('post-detail', kwargs={'pk': post.id})}'>post</a> with you!"
+            )
+                shared_any = True
+            except CustomUser.DoesNotExist:
+                messages.error(request, "User not found.")
+                return redirect("post-detail", pk=post_id)
+
+        # Share with self
+        if share_with_self:
+            post.shared_with.add(request.user)
+            # Optional: notification for self
+            Notification.objects.create(
+                user=request.user,
+                message="You shared a post to your profile."
+            )
+            shared_any = True
+
+        if shared_any:
+            messages.success(request, "Post shared successfully.")
+        else:
+            messages.warning(request, "No one selected to share the post.")
+
+        return redirect("post-detail", pk=post_id)
+
+    return redirect("post-list")
+
 @login_required
 def add_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -167,3 +212,9 @@ def chat_room(request, user_id):
         'room_name': room_name,
         'other_user': other_user,
     })
+@login_required
+def notifications_view(request):
+    notifications = request.user.notifications.all().order_by('-timestamp')
+    # Optional: Mark all notifications as read
+    notifications.update(is_read=True)
+    return render(request, 'posts/notifications.html', {'notifications': notifications})

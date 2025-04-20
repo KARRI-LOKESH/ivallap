@@ -13,6 +13,17 @@ h2 {
     font-size: 2rem;
     color: #333;
 }
+.success {
+    color: green;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.error {
+    color: red;
+    margin-top: 5px;
+    font-size: 14px;
+}
 
 p {
     color: white;

@@ -28,46 +28,52 @@
             </script>
         {% endif %}
 
-        <!-- Profile Picture Fix -->
+        <!-- Profile Picture Section -->
         <div class="profile-pic">
             {% if user.profile_pic %}
-                <img src="{{ user_profile.profile_pic.url }}" alt="Profile Picture">
+                <img src="{{ user.profile_pic.url }}" alt="Profile Picture">
             {% else %}
                 <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile">
             {% endif %}
-        </div>   
+        </div>
 
+        <!-- Followers, Following, Notifications -->
         <p>
             <a href="{% url 'followers-list' user.id %}">Followers: {{ user.followers.count }}</a> |
-            <a href="{% url 'following-list' user.id %}">Following: {{ user.following.count }}</a>
+            <a href="{% url 'following-list' user.id %}">Following: {{ user.following.count }}</a> |
+            <a href="{% url 'notifications' %}" class="notifications-btn">
+                Notifications
+                {% if notification_count > 0 %}
+                    <span class="notif-count">{{ notification_count }}</span>
+                {% endif %}
+            </a>
         </p>
+
+        <!-- Follow Button -->
         {% if request.user != user_profile %}
-    <form id="followForm" action="{% url 'follow-user' user_profile.id %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" id="followButton">
-            {% if is_following %}
-                Unfollow
-            {% else %}
-                Follow
-            {% endif %}
-        </button>
-    </form>
-{% endif %}
-{% if request.user != user_profile %}
-<p><a href="{% url 'send-message' user_profile.id %}">Send Message</a></p>
-{% endif %}
+        <form id="followForm" action="{% url 'follow-user' user_profile.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" id="followButton">
+                {% if is_following %}
+                    Unfollow
+                {% else %}
+                    Follow
+                {% endif %}
+            </button>
+        </form>
+        <p><a href="{% url 'send-message' user_profile.id %}">Send Message</a></p>
+        {% endif %}
+
+        <!-- Profile Edit Form -->
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-
-            <!-- Buttons for Redirecting After Profile Update -->
             <button type="submit" name="redirect" value="create">Save & Create Post</button>
             <button type="submit" name="redirect" value="list">Save & View Posts</button>
         </form>
-        
-        <!-- My Posts Button -->
+
+        <!-- Extra Buttons -->
         <p><a href="{% url 'my-posts' %}" class="btn">My Posts</a></p>
-        
         <p><a href="{% url 'logout' %}">Logout</a></p>
     </div>
 </body>

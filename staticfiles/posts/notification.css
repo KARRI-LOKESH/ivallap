@@ -1,0 +1,120 @@
+/* Container */
+.notifications-container {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #1f1d1d;
+    color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 95%;
+}
+
+/* Title */
+.notifications-container h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #f0f0f0;
+}
+
+/* Notification list */
+.notifications-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notifications-list li {
+    background-color: #2c2b2b;
+    border: 1px solid #444;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+}
+
+/* Highlight unread notifications */
+.notifications-list li.unread {
+    background-color: #3b3a3a;
+    border-left: 5px solid #ffce00;
+}
+
+/* Notification text */
+.notifications-list p {
+    margin: 0 0 6px 0;
+    font-size: 1rem;
+    color: #e2e2e2;
+}
+
+/* Timestamp */
+.notifications-list small {
+    color: #aaa;
+    font-size: 0.85rem;
+}
+
+/* Back link */
+.notifications-container a {
+    display: inline-block;
+    margin-top: 25px;
+    color: #4da6ff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.notifications-container a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .notifications-container {
+        padding: 16px;
+        width: 95%;
+    }
+
+    .notifications-container h2 {
+        font-size: 1.6rem;
+    }
+
+    .notifications-list li {
+        padding: 14px 16px;
+    }
+
+    .notifications-list p {
+        font-size: 0.95rem;
+    }
+
+    .notifications-container a {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .notifications-container {
+        padding: 14px 10px;
+        width: 100%;
+        margin: 20px auto;
+    }
+
+    .notifications-container h2 {
+        font-size: 1.4rem;
+    }
+
+    .notifications-list li {
+        padding: 12px 14px;
+    }
+
+    .notifications-list p {
+        font-size: 0.9rem;
+    }
+
+    .notifications-list small {
+        font-size: 0.8rem;
+    }
+
+    .notifications-container a {
+        font-size: 0.9rem;
+    }
+}
