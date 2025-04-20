@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const currentTime = new Date().getTime();
                 const tapLength = currentTime - lastTap;
 
-                if (tapLength < 200 && tapLength > 0) {
+                if (tapLength < 100 && tapLength > 0) {
                     clearTimeout(timeout);
                     likePost(postId);
                     lastTap = 0;
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     lastTap = currentTime;
                     timeout = setTimeout(() => {
                         lastTap = 0;
-                    }, 300);
+                    }, 200);
                 }
             }
         });

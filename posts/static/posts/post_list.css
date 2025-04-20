@@ -206,6 +206,10 @@ hr {
     padding: 10px 0;
 }
 
+label {
+    color: #fff;
+}
+
 
 /* Responsive tweaks */
 @media (max-width: 768px) {

@@ -22,7 +22,7 @@
                     {% if "Profile updated successfully!" in message.message %}
                         setTimeout(function() {
                             window.location.href = "{% url 'post-list' %}";
-                        }, 2000);
+                        }, 1000);
                     {% endif %}
                 {% endfor %}
             </script>
