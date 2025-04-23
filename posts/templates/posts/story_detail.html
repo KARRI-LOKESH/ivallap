@@ -1,0 +1,112 @@
+{% extends 'posts/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'posts/story_detail.css' %}">
+
+<div class="story-container">
+    <div class="story-header">
+        <p><strong>{{ story.user.username }}</strong> | {{ story.created_at|naturaltime }}</p>
+        {% if story.user == request.user %}
+            <form method="POST" action="{% url 'delete-story' story.id %}" onsubmit="return confirm('Delete story?');">
+                {% csrf_token %}
+                <button type="submit" class="delete-button">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </form>
+        {% endif %}
+    </div>
+
+    <!-- Display media -->
+    <div class="story-media" style="position: relative;">
+        {% if story.is_video %}
+            <video id="storyVideo" width="100%" autoplay controls onended="nextStory();">
+                <source src="{{ story.media.url }}" type="video/mp4">
+            </video>
+        {% else %}
+            <img src="{{ story.media.url }}" width="100%" id="storyImage">
+            <script>
+                setTimeout(() => {
+                    nextStory();
+                }, 15000); // 15 sec for image
+            </script>
+        {% endif %}
+    
+        <!-- Invisible click zones -->
+        <div class="click-zone left-zone" onclick="prevStory()"></div>
+        <div class="click-zone right-zone" onclick="nextStory()"></div>
+    </div>
+
+    <p>{{ story.caption }}</p>
+    <p><strong>Viewed by:</strong> {{ story.viewer_count }}</p>
+
+    <form method="POST" action="{% url 'share-story' story.id %}" class="share-form">
+        {% csrf_token %}
+        <input type="text" name="shared_with_username" placeholder="Username to share with">
+        <button type="submit">
+            <i class="fas fa-share"></i> Share Story
+        </button>
+    </form>
+
+    {% if story.shared_by %}
+        <p><small>Shared by {{ story.shared_by.username }}</small></p>
+    {% endif %}
+
+    <div class="story-navigation">
+        {% if previous_story %}
+            <a href="{% url 'story-detail' previous_story.id %}" class="prev-story">
+                <i class="fas fa-arrow-left"></i> Previous
+            </a>
+        {% endif %}
+        {% if next_story %}
+            <a href="{% url 'story-detail' next_story.id %}" class="next-story">
+                Next <i class="fas fa-arrow-right"></i>
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function nextStory() {
+        {% if next_story %}
+        window.location.href = "{% url 'story-detail' next_story.id %}";
+        {% endif %}
+    }
+
+    function prevStory() {
+        {% if previous_story %}
+        window.location.href = "{% url 'story-detail' previous_story.id %}";
+        {% endif %}
+    }
+    const video = document.getElementById('storyVideo');
+
+    // Pause on long press
+    let pressTimer;
+
+    function startPress() {
+        pressTimer = setTimeout(() => {
+            video.pause();
+        }, 300); // after 300ms of holding, pause the video
+    }
+
+    function endPress() {
+        clearTimeout(pressTimer);
+        if (video.paused) {
+            video.play(); // resume if it was paused
+        }
+    }
+
+    // Touch devices
+    video.addEventListener('touchstart', startPress);
+    video.addEventListener('touchend', endPress);
+    video.addEventListener('touchcancel', endPress);
+
+    // Mouse devices
+    video.addEventListener('mousedown', startPress);
+    video.addEventListener('mouseup', endPress);
+    video.addEventListener('mouseleave', endPress);
+</script>
+
+
+{% endblock %}

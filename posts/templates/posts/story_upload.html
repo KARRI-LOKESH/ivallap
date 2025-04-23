@@ -1,0 +1,55 @@
+{% extends 'posts/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'posts/story_upload.css' %}">
+
+<h2>Upload Story</h2>
+
+<form method="POST" enctype="multipart/form-data" class="story-upload-form">
+    {% csrf_token %}
+    
+    <!-- Media Upload -->
+    <div class="upload-container">
+        <input type="file" name="media" id="media" accept="image/*,video/*" required>
+        <label for="media">Choose an image/video</label>
+        <div id="media-preview" class="media-preview">
+            <span>No media selected</span>
+        </div>
+    </div>
+
+    <!-- Caption Input -->
+    <textarea name="caption" id="caption" placeholder="Add a caption..." maxlength="2200" rows="4"></textarea><br><br>
+
+    <!-- Upload Button -->
+    <button type="submit" class="upload-btn">Upload</button>
+</form>
+
+<script>
+    const mediaInput = document.getElementById('media');
+    const mediaPreview = document.getElementById('media-preview');
+
+    // Show media preview after selecting file
+    mediaInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const mediaUrl = e.target.result;
+            const fileType = file.type.split('/')[0]; // Get the file type (image or video)
+            mediaPreview.innerHTML = '';
+
+            if (fileType === 'image') {
+                mediaPreview.innerHTML = `<img src="${mediaUrl}" style="width:100%;max-height:400px;"/>`;
+            } else if (fileType === 'video') {
+                mediaPreview.innerHTML = `<video controls style="width:100%;max-height:400px;">
+                                            <source src="${mediaUrl}" type="${file.type}">
+                                            Your browser does not support the video tag.
+                                          </video>`;
+            }
+        };
+
+        reader.readAsDataURL(file);
+    });
+</script>
+{% endblock %}

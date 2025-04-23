@@ -16,7 +16,11 @@
                     <small>{{ notification.timestamp|naturaltime }}</small>
                     
                     {% if notification.post %}
-                        <p><a href="{% url 'post-detail' post_id=notification.post.id %}">View Post</a></p>  <!-- Link to the post -->
+                        <p><a href="{% url 'post-detail' notification.post.id %}">View Post</a></p>  <!-- Link to the post -->
+                    {% endif %}
+
+                    {% if notification.story %}
+                        <p><a href="{% url 'story-detail' notification.story.id %}">View Story</a></p>  <!-- Link to the story -->
                     {% endif %}
                 </li>
             {% endfor %}

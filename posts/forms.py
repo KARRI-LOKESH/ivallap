@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from users.models import CustomUser
-from posts.models import Message
+from posts.models import Message,Story
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
@@ -21,3 +21,7 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ['receiver', 'content']
+class StoryUploadForm(forms.ModelForm):
+    class Meta:
+        model = Story
+        fields = ['media', 'caption']

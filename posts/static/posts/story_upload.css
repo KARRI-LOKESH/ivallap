@@ -1,0 +1,130 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin: 20px 0;
+}
+
+.story-upload-form {
+    background-color: #fff;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.upload-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.upload-container input[type="file"] {
+    display: none;
+}
+
+.upload-container label {
+    display: inline-block;
+    background-color: #3b82f6;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.upload-container label:hover {
+    background-color: #2563eb;
+}
+
+.media-preview {
+    margin-top: 20px;
+    text-align: center;
+    border: 1px dashed #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    max-height: 400px;
+    overflow: hidden;
+}
+
+.media-preview img,
+.media-preview video {
+    width: 100%;
+    height: auto;
+    object-fit: contain; /* Ensures the image/video fits within the container */
+    max-height: 350px; /* Adjust as necessary to prevent overflowing */
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: vertical;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+.upload-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #3b82f6;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.upload-btn:hover {
+    background-color: #2563eb;
+}
+
+/* Mobile Friendly */
+@media (max-width: 600px) {
+    .story-upload-form {
+        padding: 15px;
+        margin: 10px;
+        box-shadow: none;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .upload-container label {
+        font-size: 14px;
+    }
+
+    .upload-btn {
+        font-size: 16px;
+    }
+
+    textarea {
+        font-size: 14px;
+    }
+}
+
+/* Tablet and Larger Devices */
+@media (min-width: 600px) and (max-width: 1024px) {
+    .story-upload-form {
+        padding: 20px;
+    }
+
+    .upload-btn {
+        font-size: 18px;
+    }
+
+    textarea {
+        font-size: 16px;
+    }
+}

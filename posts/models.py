@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-
+from django.utils import timezone
+from django.conf import settings
 User = get_user_model()
 
 class Post(models.Model):
@@ -68,3 +69,18 @@ class Notification(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"Notification for {self.user.username}"
+
+class Story(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='stories')
+    media = models.FileField(upload_to='stories/')
+    caption = models.TextField(blank=True)
+    is_video = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    viewers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='viewed_stories', blank=True)
+    shared_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='shared_stories')
+
+    def is_expired(self):
+        return timezone.now() > self.created_at + timezone.timedelta(hours=24)
+
+    def viewer_count(self):
+        return self.viewers.count()
