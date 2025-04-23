@@ -265,10 +265,10 @@ def share_story(request, story_id):
             messages.error(request, "User not found.")
 
     return redirect('story-detail', story_id=story_id)
-
 @login_required
 def view_story(request, story_id):
     story = get_object_or_404(Story, id=story_id)
+    print(f"Story created at: {story.created_at}, Expiry status: {story.is_expired()}")
     
     if story.is_expired():
         messages.error(request, "This story has expired.")
@@ -276,8 +276,10 @@ def view_story(request, story_id):
 
     if request.user not in story.viewers.all():
         story.viewers.add(request.user)
+        print(f"User {request.user.username} added to viewers.")
 
     return render(request, 'posts/story_detail.html', {'story': story})
+
 @login_required
 def delete_story(request, story_id):
     story = get_object_or_404(Story, id=story_id, user=request.user)

@@ -1,138 +1,66 @@
-/* Base styling */
+/* General reset for margins and padding */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Body and container styling */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f6fa;
-  color: #333;
-}
-
+/* Container for the entire story block */
 .story-container {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.story-container p {
-  margin-bottom: 15px;
-  font-size: 1rem;
-}
-
-strong {
-  font-weight: bold;
-}
-
-/* Media styling for video and images */
-.story-container img {
-  width: 100%;
-  border-radius: 8px;
-  object-fit: cover;
-  margin-bottom: 15px;
-}
-
-.story-container video {
-  width: 100%;
-  max-height: 500px; /* Restrict video height to prevent cut off */
-  object-fit: contain; /* Ensure full video is visible without cutting */
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-/* Share form styling */
-.share-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.share-form input {
-  padding: 8px 14px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-.share-form button {
-  background-color: #007bff;
-  color: white;
+  max-width: 100%;
+  margin: 10px auto;
   padding: 10px;
-  border: none;
+  background: #fff;
   border-radius: 10px;
-  cursor: pointer;
-  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
-.share-form button i {
-  margin-right: 5px;
-}
-
-/* Icon for delete button */
-.delete-button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  color: crimson;
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-}
-
-/* Icon styling */
-.fas {
-  font-size: 18px;
-  margin-right: 5px;
-}
-
-.fas.fa-eye {
-  color: #28a745;
-}
-
-.fas.fa-share {
-  color: #007bff;
-}
-
-.fas.fa-trash-alt {
-  color: crimson;
-}
-
-/* Header of the story */
-.story-container {
-  max-width: 600px;
-  margin: auto;
-  padding: 20px;
-}
+/* Header section */
 .story-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 14px;
+  padding: 5px 10px;
 }
-.story-navigation {
-  margin-top: 15px;
-  display: flex;
-  justify-content: space-between;
+
+.story-header p {
+  color: #333;
+  margin-right: 10px;
 }
-.delete-button, .share-form button {
-  background-color: transparent;
+
+.delete-button {
+  background: transparent;
   border: none;
   cursor: pointer;
-  color: red;
+  color: #ff4d4d;
 }
+
+.delete-button i {
+  font-size: 18px;
+}
+
+/* Media container */
+.story-media {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.story-media img, .story-media video {
+  width: 100%;
+  display: block;
+}
+
+/* Invisible click zones for navigation */
 .click-zone {
   position: absolute;
   top: 0;
-  height: 100%;
+  bottom: 0;
   width: 50%;
+  background: rgba(0, 0, 0, 0.3);
   z-index: 10;
-  cursor: pointer;
 }
 
 .left-zone {
@@ -142,87 +70,111 @@ strong {
 .right-zone {
   right: 0;
 }
-.prev-story, .next-story {
-  font-size: 16px;
-  color: #007BFF;
-  text-decoration: none;
+
+/* Caption and viewer count */
+p {
+  font-size: 14px;
+  color: #333;
+  margin: 10px;
 }
 
-.prev-story:hover, .next-story:hover {
-  text-decoration: underline;
+p strong {
+  font-weight: bold;
 }
 
-.prev-story i, .next-story i {
+/* Share form styling */
+.share-form {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.share-form input {
+  padding: 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.share-form button {
+  background-color: #007bff;
+  border: none;
+  padding: 10px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.share-form button:hover {
+  background-color: #0056b3;
+}
+
+.share-form i {
   margin-right: 5px;
 }
 
-/* Responsive layout */
+/* Story Navigation */
+.story-navigation {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.story-navigation a {
+  color: #007bff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.story-navigation a i {
+  margin-left: 5px;
+}
+
+/* Media responsiveness */
 @media (max-width: 768px) {
+  .story-header p {
+      font-size: 12px;
+  }
+
   .story-container {
-      margin: 15px;
-      padding: 15px;
-  }
-
-  .story-container p {
-      font-size: 0.9rem;
-  }
-
-  .share-form {
-      gap: 8px;
+      margin: 5px;
+      padding: 8px;
   }
 
   .share-form input {
-      padding: 8px;
-      font-size: 13px;
+      font-size: 12px;
   }
 
   .share-form button {
-      font-size: 13px;
+      font-size: 12px;
+      padding: 8px;
   }
 
-  .delete-button {
-      font-size: 16px;
-  }
-
-  .fas {
-      font-size: 16px;
+  .story-navigation {
+      font-size: 12px;
   }
 }
 
+/* Mobile adjustments for touch events */
 @media (max-width: 480px) {
   .story-container {
-      margin: 10px;
-      padding: 10px;
+      padding: 5px;
   }
 
-  .story-container p {
-      font-size: 0.85rem;
+  .story-media {
+      margin-bottom: 10px;
   }
 
-  .share-form input {
-      font-size: 12px;
-  }
-
-  .share-form button {
-      font-size: 12px;
+  .story-header {
+      flex-direction: column;
+      align-items: flex-start;
   }
 
   .delete-button {
-      font-size: 14px;
-  }
-
-  .fas {
-      font-size: 14px;
-  }
-
-  .share-form {
-      flex-direction: column;
-      gap: 6px;
-  }
-
-  .story-container img,
-  .story-container video {
-      max-width: 100%;
-      border-radius: 10px;
+      margin-top: 5px;
   }
 }
