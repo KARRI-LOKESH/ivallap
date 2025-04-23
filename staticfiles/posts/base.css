@@ -83,9 +83,9 @@ nav i {
 .story-wrapper {
   position: relative;
   display: inline-block;
-  width: 70px; /* increased from 50px */
-  height: 70px;
-  margin-left: 15px; /* increased from 50px */
+  width: 80px; /* increased from 50px */
+  height: 80px;
+  margin-left: 14px; /* increased from 50px */
 }
 
 .profile-icon {
@@ -182,10 +182,11 @@ nav i {
 }
 .stories-bar {
   display: flex;
-  overflow-x: auto;
-  padding: 10px;
+  padding: 14px 10px;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
+  height: 100px; /* increased from default height */
+  align-items: center;
 }
 
 .story-bubble {

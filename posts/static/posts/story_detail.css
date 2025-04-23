@@ -1,180 +1,116 @@
-/* General reset for margins and padding */
-* {
+body {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff;
+  color: #000;
 }
 
-/* Container for the entire story block */
 .story-container {
-  max-width: 100%;
-  margin: 10px auto;
-  padding: 10px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 16px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
 }
 
-/* Header section */
 .story-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
-  padding: 5px 10px;
+  margin-bottom: 10px;
 }
 
 .story-header p {
-  color: #333;
-  margin-right: 10px;
+  margin: 0;
+  font-weight: bold;
 }
 
 .delete-button {
-  background: transparent;
+  background: #ff4d4d;
   border: none;
+  color: white;
+  padding: 6px 8px;
+  border-radius: 8px;
   cursor: pointer;
-  color: #ff4d4d;
 }
 
-.delete-button i {
-  font-size: 18px;
-}
-
-/* Media container */
 .story-media {
   position: relative;
+  border-radius: 20px;
   overflow: hidden;
-  width: 100%;
+  margin-bottom: 10px;
 }
 
-.story-media img, .story-media video {
+.story-media video,
+.story-media img {
   width: 100%;
-  display: block;
+  height: auto;
+  border-radius: 16px;
 }
 
-/* Invisible click zones for navigation */
 .click-zone {
   position: absolute;
   top: 0;
   bottom: 0;
   width: 50%;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 10;
-}
-
-.left-zone {
-  left: 0;
-}
-
-.right-zone {
-  right: 0;
-}
-
-/* Caption and viewer count */
-p {
-  font-size: 14px;
-  color: #333;
-  margin: 10px;
-}
-
-p strong {
-  font-weight: bold;
-}
-
-/* Share form styling */
-.share-form {
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-}
-
-.share-form input {
-  padding: 8px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.share-form button {
-  background-color: #007bff;
-  border: none;
-  padding: 10px;
-  color: #fff;
-  border-radius: 5px;
   cursor: pointer;
-  font-size: 14px;
 }
 
-.share-form button:hover {
-  background-color: #0056b3;
-}
+.left-zone { left: 0; }
+.right-zone { right: 0; }
 
-.share-form i {
-  margin-right: 5px;
-}
-
-/* Story Navigation */
 .story-navigation {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  font-size: 14px;
+  margin-top: 16px;
 }
 
 .story-navigation a {
-  color: #007bff;
   text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.share-form {
   display: flex;
-  align-items: center;
+  margin-top: 12px;
+  gap: 6px;
 }
 
-.story-navigation a i {
-  margin-left: 5px;
+.share-form input {
+  flex-grow: 1;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
-/* Media responsiveness */
-@media (max-width: 768px) {
-  .story-header p {
-      font-size: 12px;
-  }
+.share-form button {
+  padding: 8px 12px;
+  background-color: #0095f6;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
 
+@media (max-width: 500px) {
   .story-container {
-      margin: 5px;
-      padding: 8px;
+    padding: 12px;
+    margin: 0 10px;
+    border-radius: 0;
   }
 
-  .share-form input {
-      font-size: 12px;
-  }
-
-  .share-form button {
-      font-size: 12px;
-      padding: 8px;
+  .story-media video,
+  .story-media img {
+    border-radius: 10px;
   }
 
   .story-navigation {
-      font-size: 12px;
-  }
-}
-
-/* Mobile adjustments for touch events */
-@media (max-width: 480px) {
-  .story-container {
-      padding: 5px;
-  }
-
-  .story-media {
-      margin-bottom: 10px;
-  }
-
-  .story-header {
-      flex-direction: column;
-      align-items: flex-start;
-  }
-
-  .delete-button {
-      margin-top: 5px;
+    font-size: 12px;
   }
 }
