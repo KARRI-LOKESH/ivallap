@@ -1,125 +1,106 @@
-/* posts/post_confirm_delete.css */
-
-/* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Body */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-}
-
 /* Container */
 .container {
-    width: 100%;
-    max-width: 600px;  /* Limit width on large screens */
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 25px;
+    background-color: #1f1d1d;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
-    box-sizing: border-box; /* Ensure padding doesn't cause overflow */
-    overflow: hidden;
+    width: 90%;
 }
 
-/* Title */
-h2 {
-    font-size: 24px;
-    color: #d9534f;
-    margin-bottom: 15px;
-    word-wrap: break-word; /* Ensure no long words overflow */
-}
-
-/* Paragraph */
-p {
-    font-size: 16px;
+/* Heading */
+.container h2 {
+    font-size: 2rem;
     margin-bottom: 20px;
-    color: #555;
-    word-wrap: break-word; /* Ensure no long words overflow */
+    color: #ff5555;
 }
 
-/* Form Button */
-button {
-    background-color: #d9534f;
-    color: white;
-    font-size: 16px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+/* Confirmation text */
+.container p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
 }
 
-button:hover {
-    background-color: #c9302c;
-}
-
-/* Cancel Link */
-a {
+/* Buttons */
+.container button,
+.container a {
     display: inline-block;
-    margin-top: 15px;
-    font-size: 16px;
-    color: #5bc0de;
+    padding: 10px 18px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    margin: 6px 10px;
     text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
-a:hover {
-    text-decoration:none;
+/* Submit button */
+.container button {
+    background-color: #dc3545;
+    color: #fff;
 }
 
-/* Mobile and Tablet Responsiveness */
+.container button:hover {
+    background-color: #c82333;
+}
+
+/* Cancel link styled like a button */
+.container a {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.container a:hover {
+    background-color: #5a6268;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .container {
-        padding: 15px;
-        margin: 10px;
+        padding: 20px;
+        width: 95%;
     }
 
-    h2 {
-        font-size: 20px;
+    .container h2 {
+        font-size: 1.6rem;
     }
 
-    p, button, a {
-        font-size: 14px;
+    .container p {
+        font-size: 1rem;
+    }
+
+    .container button,
+    .container a {
+        font-size: 0.95rem;
+        padding: 10px 14px;
+        margin: 6px 6px;
     }
 }
 
-/* Small Screens */
 @media (max-width: 480px) {
     .container {
-        padding: 10px;
-        margin: 5px;
+        padding: 16px;
+        width: 100%;
     }
 
-    h2 {
-        font-size: 18px;
+    .container h2 {
+        font-size: 1.4rem;
     }
 
-    p, button, a {
-        font-size: 12px;
-    }
-}
-
-/* For Laptop Screens (medium width screens like 1024px and below) */
-@media (max-width: 1024px) {
-    .container {
-        padding: 20px;
-        width: 90%;  /* Adjust container width to 90% of screen width */
-        max-width: 600px;  /* Still limit max-width */
-        margin: 20px auto;
+    .container p {
+        font-size: 0.95rem;
     }
 
-    h2 {
-        font-size: 22px; /* Slightly smaller heading for medium screens */
-    }
-
-    p, button, a {
-        font-size: 14px; /* Adjust font size for better fit */
+    .container button,
+    .container a {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        font-size: 1rem;
     }
 }
