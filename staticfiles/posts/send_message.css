@@ -1,107 +1,100 @@
-/* General reset for better box sizing */
-*,
-*::before,
-*::after {
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f9f9f9;
-}
-
-.message-form-container {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 1.5rem;
-    background: rgb(207, 194, 131);
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    width: 90%; /* Responsive width */
-}
-
-h2 {
-    text-align: center;
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
+    background-color: #f4f4f4;
     color: #333;
+    padding: 10px;
 }
 
+/* Container */
+.message-form-container {
+    max-width: 500px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+.message-form-container h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #2c3e50;
+}
+
+/* Form */
 .fom {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 15px;
 }
 
-.fom input,
+.fom input[type="text"],
 .fom textarea,
-.fom button {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 8px;
+.fom select {
+    padding: 10px;
     border: 1px solid #ccc;
-    font-size: 1rem;
-}
-
-.fom button[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-
-.fom button[type="submit"]:hover {
-    background-color: #45a049;
+    border-radius: 6px;
+    font-size: 16px;
+    resize: vertical;
 }
 
 .fom textarea {
-    resize: vertical;
     min-height: 100px;
 }
 
-a {
-    display: inline-block;
-    margin-top: 1rem;
+/* Button */
+.fom button[type="submit"] {
+    background-color: #3498db;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.fom button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+/* Back Link */
+.message-form-container p {
+    margin-top: 20px;
     text-align: center;
-    color: #007BFF;
+}
+
+.message-form-container a {
+    color: #3498db;
     text-decoration: none;
     font-weight: 500;
 }
 
-a:hover {
-    text-decoration: none;
+.message-form-container a:hover {
+    text-decoration: underline;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Responsive */
+@media (max-width: 600px) {
     .message-form-container {
-        margin: 1rem;
-        padding: 1rem;
+        margin: 15px 10px;
+        padding: 15px;
     }
 
-    h2 {
-        font-size: 1.6rem;
+    .message-form-container h2 {
+        font-size: 18px;
     }
 
-    .fom input,
-    .fom textarea,
-    .fom button {
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
     .fom button[type="submit"] {
-        font-size: 1rem;
-        padding: 0.75rem;
-    }
-
-    .fom textarea {
-        font-size: 0.95rem;
+        font-size: 15px;
     }
 }

@@ -107,7 +107,7 @@ DATABASES = {
 
 # Use PostgreSQL on Render
 if not DEBUG:
-    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=False)
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
