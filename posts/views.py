@@ -9,6 +9,7 @@ from posts.forms import MessageForm,StoryUploadForm
 from django.contrib import messages
 from django.utils.timezone import localtime
 import json
+from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.http import JsonResponse # Ensure Post model is imported
 from django.contrib.auth import get_user_model
@@ -80,10 +81,20 @@ def like_post(request, post_id):
             post.likes.add(request.user)
             liked = True
 
+            # Create a notification
+            if post.user != request.user:  # avoid self-notification
+                Notification.objects.create(
+                    user=post.user,
+                    sender=request.user,
+                    notification_type='like_post',
+                    post=post,
+                    message=f"{request.user.username} liked your post!",
+                    link=f"/post/{post.id}/"
+                )
+
         return JsonResponse({"liked": liked, "total_likes": post.likes.count()})
 
     return JsonResponse({"error": "Invalid request"}, status=400)
-
 @login_required
 def save_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -154,6 +165,17 @@ def add_comment(request, post_id):
             comment = Comment.objects.create(user=request.user, post=post, content=content)
             print(f"New Comment Added by {comment.user}: {comment.content}")
 
+            # Create a notification
+            if post.user != request.user:  # avoid self-notifications
+                Notification.objects.create(
+                    user=post.user,
+                    sender=request.user,
+                    notification_type='comment',
+                    post=post,
+                    message=f"{request.user.username} commented on your post!",
+                    link=f"/post/{post.id}/"
+                )
+
     return redirect('post-detail', pk=post.id)
  # Redirect to the same post
 
@@ -184,6 +206,7 @@ User = get_user_model()
 @login_required
 def send_message(request, receiver_id):
     receiver = get_object_or_404(User, id=receiver_id)
+
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
@@ -191,11 +214,21 @@ def send_message(request, receiver_id):
             message.sender = request.user
             message.receiver = receiver
             message.save()
+
+            # Create a notification
+            if receiver != request.user:
+                Notification.objects.create(
+                    user=receiver,
+                    sender=request.user,
+                    notification_type='message',
+                    message=f"{request.user.username} sent you a message!",
+                    link=f"/messages/{receiver.username}/"
+                )
+
             return redirect('inbox')
     else:
         form = MessageForm()
     return render(request, 'posts/send_message.html', {'form': form, 'receiver': receiver})
-
 @login_required
 def inbox(request):
     received_messages = Message.objects.filter(receiver=request.user).order_by('-timestamp')
@@ -340,3 +373,33 @@ def my_story_view(request):
         return redirect('story-detail', story_id=latest_story.id)
     else:
         return redirect('story-upload')
+def like_story(request, story_id):
+    if request.method == 'POST':
+        story = get_object_or_404(Story, id=story_id)
+        if request.user in story.likes.all():
+            story.likes.remove(request.user)
+        else:
+            story.likes.add(request.user)
+
+            # Create a notification (only if new Like)
+            if story.user != request.user:
+                Notification.objects.create(
+                    user=story.user,
+                    sender=request.user,
+                    notification_type='like_story',
+                    story=story
+                )
+        
+        # Return the updated like count and a boolean for like/unlike state
+        return JsonResponse({
+            'like_count': story.likes.count(),
+            'is_liked': request.user in story.likes.all()
+        })
+    return JsonResponse({'error': 'Bad Request'}, status=400)
+def send_message(request, username):
+    if request.method == 'POST':
+        receiver = get_object_or_404(User, username=username)
+        message_text = request.POST.get('message')
+        # Assuming you have a Message model
+        Message.objects.create(sender=request.user, receiver=receiver, content=message_text)
+        return redirect('inbox') 

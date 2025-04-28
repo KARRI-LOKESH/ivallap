@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{% static 'posts/story_detail.css' %}">
 {% block extra_css %}
 {% endblock %}
+
 <div class="story-container">
     <div class="story-header">
         <p><strong>{{ story.user.username }}</strong> | {{ story.created_at|naturaltime }}</p>
@@ -40,6 +41,30 @@
     </div>
 
     <p>{{ story.caption }}</p>
+
+    <!-- 👍 Like and Like Count -->
+    <form id="like-form-{{ story.id }}" method="POST" action="{% url 'like-story' story.id %}" class="like-form">
+        {% csrf_token %}
+        <button type="submit" class="like-button" data-story-id="{{ story.id }}">
+            {% if request.user in story.likes.all %}
+                ❤️ Unlike
+            {% else %}
+                🤍 Like
+            {% endif %}
+        </button>
+        <span id="like-count-{{ story.id }}">{{ story.likes.count }}</span> likes
+    </form>
+
+    <!-- 📩 Send Message -->
+    <form method="POST" action="{% url 'send-message' story.user.username %}" class="message-form">
+        {% csrf_token %}
+        <input type="hidden" name="story_id" value="{{ story.id }}">
+        <input type="text" name="message" placeholder="Send a message...">
+        <button type="submit">
+            <i class="fas fa-paper-plane"></i> Send
+        </button>
+    </form>
+
     <p><strong>Viewed by:</strong> {{ story.viewer_count }}</p>
 
     <form method="POST" action="{% url 'share-story' story.id %}" class="share-form">
@@ -80,34 +105,62 @@
         window.location.href = "{% url 'story-detail' previous_story.id %}";
         {% endif %}
     }
+
     const video = document.getElementById('storyVideo');
 
-    // Pause on long press
-    let pressTimer;
-
-    function startPress() {
-        pressTimer = setTimeout(() => {
-            video.pause();
-        }, 300); // after 300ms of holding, pause the video
-    }
-
-    function endPress() {
-        clearTimeout(pressTimer);
-        if (video.paused) {
-            video.play(); // resume if it was paused
+    if (video) {
+        let pressTimer;
+        function startPress() {
+            pressTimer = setTimeout(() => {
+                video.pause();
+            }, 300);
         }
+        function endPress() {
+            clearTimeout(pressTimer);
+            if (video.paused) {
+                video.play();
+            }
+        }
+
+        video.addEventListener('touchstart', startPress);
+        video.addEventListener('touchend', endPress);
+        video.addEventListener('touchcancel', endPress);
+
+        video.addEventListener('mousedown', startPress);
+        video.addEventListener('mouseup', endPress);
+        video.addEventListener('mouseleave', endPress);
     }
+    document.querySelectorAll('.like-button').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent form submission
 
-    // Touch devices
-    video.addEventListener('touchstart', startPress);
-    video.addEventListener('touchend', endPress);
-    video.addEventListener('touchcancel', endPress);
+            const storyId = this.getAttribute('data-story-id');
+            const form = document.getElementById(`like-form-${storyId}`);
+            
+            // Send an AJAX request to like/unlike the story
+            fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': form.querySelector('[name="csrfmiddlewaretoken"]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error('Error:', data.error);
+                    return;
+                }
 
-    // Mouse devices
-    video.addEventListener('mousedown', startPress);
-    video.addEventListener('mouseup', endPress);
-    video.addEventListener('mouseleave', endPress);
-</script>
-
-
+                // Update the like count and button text
+                document.getElementById(`like-count-${storyId}`).textContent = data.like_count;
+                const likeButton = document.querySelector(`.like-button[data-story-id="${storyId}"]`);
+                if (data.is_liked) {
+                    likeButton.textContent = '❤️ Unlike';
+                } else {
+                    likeButton.textContent = '🤍 Like';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });    </script>
 {% endblock %}

@@ -99,29 +99,29 @@
             <input type="text" name="content" placeholder="Add a comment" required>
             <button type="submit"><i class="fa fa-comment"></i></button>
         </form>
-        
         <p><strong>Comments ({{ post.comments.count }})</strong></p>
 
-        {% if post.comments.exists %}
-            <!-- Display last 2 comments -->
-            <ul id="limited-comments-{{ post.id }}">
-                {% for comment in post.comments.all|slice:"-2:" %}
-                    <li><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</li>
-                {% endfor %}
-            </ul>
+{% if post.comments.exists %}
+    <!-- Display the first 2 comments -->
+    <ul id="limited-comments-{{ post.id }}">
+        {% for comment in post.comments.all|slice:"-2:" %}
+            <li><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</li>
+        {% endfor %}
+    </ul>
+    
+    <!-- Hidden full comment list -->
+    <ul id="full-comments-{{ post.id }}" style="display: none;">
+        {% for comment in post.comments.all %}
+            <li><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</li>
+        {% endfor %}
+    </ul>
 
-            <!-- Hidden full comment list -->
-            <ul id="full-comments-{{ post.id }}" style="display: none;">
-                {% for comment in post.comments.all %}
-                    <li><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</li>
-                {% endfor %}
-            </ul>
+    <!-- Toggle Button -->
+    <button id="toggle-btn-{{ post.id }}" onclick="toggleComments({{ post.id }})">View all comments</button>
+{% else %}
+    <p>No comments yet. Be the first to comment!</p>
+{% endif %}
 
-            <!-- Toggle Button -->
-            <button id="toggle-btn-{{ post.id }}">View all comments</button>
-        {% else %}
-            <p>No comments yet. Be the first to comment!</p>
-        {% endif %}
     </div>
     <hr>
 {% endfor %}
@@ -210,6 +210,27 @@
             });
         });
     });
+    </script>
+    <script>
+        function toggleComments(postId) {
+            var fullComments = document.getElementById("full-comments-" + postId);
+            var toggleButton = document.getElementById("toggle-btn-" + postId);
+            var limitedComments = document.getElementById("limited-comments-" + postId);
+        
+            if (fullComments.style.display === "none") {
+                // Show full comments
+                fullComments.style.display = "block";
+                toggleButton.textContent = "Hide all comments";
+            } else {
+                // Hide full comments
+                fullComments.style.display = "none";
+                toggleButton.textContent = "View all comments";
+            }
+        
+            // Ensure that the limited comments are always visible
+            limitedComments.style.display = "block";
+        }
+        
     </script>
     
 {% endblock %}

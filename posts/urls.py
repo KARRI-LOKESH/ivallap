@@ -28,4 +28,6 @@ urlpatterns = [
     path('story/<int:story_id>/delete/', views.delete_story, name='delete-story'),
     path('stories/', story_list_view, name='story-list'),
     path('stories/my/', views.my_story_view, name='my-story'), 
+    path('story/<int:story_id>/like/', views.like_story, name='like-story'),
+    path('send-message/<str:username>/', views.send_message, name='send-message'),
 ]
