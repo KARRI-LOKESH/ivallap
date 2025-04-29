@@ -91,35 +91,54 @@
         <p class="share-status" style="color: green;"></p>
     </form>
 </div>
+<!-- Comment Section -->
+<form action="{% url 'add-comment' post.id %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="content" placeholder="Add a comment" required>
+    <button type="submit"><i class="fa fa-comment"></i></button>
+</form>
 
-        <!-- Comment Section -->
-        <form action="{% url 'add-comment' post.id %}" method="POST">
-            {% csrf_token %}
-            <input type="text" name="content" placeholder="Add a comment" required>
-            <button type="submit"><i class="fa fa-comment"></i></button>
-        </form>
-        <p><strong>Comments ({{ post.comments.count }})</strong></p>
+<p><strong>Comments ({{ post.comments.count }})</strong></p>
 
 {% if post.comments.exists %}
-    <!-- Display the first 2 comments -->
-    <ul id="limited-comments-{{ post.id }}">
+    <!-- Comment Cards Section -->
+    <div class="comment-container" id="limited-comments-{{ post.id }}">
         {% for comment in post.comments.all|slice:"-2:" %}
-            <li><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</li>
+            <div class="comment-card">
+                <div class="comment-header">
+                    <strong>
+                        <a href="{% url 'user-profile' comment.user.username %}" class="username-link">
+                            {{ comment.user.username }}
+                        </a>
+                    </strong>
+                </div>
+                <div class="comment-text">
+                    {{ comment.content }}
+                </div>
+            </div>
         {% endfor %}
-    </ul>
-    
+    </div>
+
     <!-- Hidden full comment list -->
-    <ul id="full-comments-{{ post.id }}" style="display: none;">
+    <div class="comment-container" id="full-comments-{{ post.id }}" style="display: none;">
         {% for comment in post.comments.all %}
-            <li><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</li>
+            <div class="comment-card">
+                <div class="comment-header">
+                    <strong>{{ comment.user.username }}</strong>
+                </div>
+                <div class="comment-text">
+                    {{ comment.content }}
+                </div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 
     <!-- Toggle Button -->
     <button id="toggle-btn-{{ post.id }}" onclick="toggleComments({{ post.id }})">View all comments</button>
 {% else %}
     <p>No comments yet. Be the first to comment!</p>
 {% endif %}
+
 
     </div>
     <hr>
@@ -212,22 +231,19 @@
     </script>
     <script>
         function toggleComments(postId) {
-            var fullComments = document.getElementById("full-comments-" + postId);
-            var toggleButton = document.getElementById("toggle-btn-" + postId);
-            var limitedComments = document.getElementById("limited-comments-" + postId);
+            var limitedComments = document.getElementById('limited-comments-' + postId);
+            var fullComments = document.getElementById('full-comments-' + postId);
+            var toggleButton = document.getElementById('toggle-btn-' + postId);
         
-            if (fullComments.style.display === "none") {
-                // Show full comments
-                fullComments.style.display = "block";
-                toggleButton.textContent = "Hide all comments";
+            if (fullComments.style.display === 'none') {
+                fullComments.style.display = 'block';
+                limitedComments.style.display = 'none';
+                toggleButton.innerHTML = 'View less comments';
             } else {
-                // Hide full comments
-                fullComments.style.display = "none";
-                toggleButton.textContent = "View all comments";
+                fullComments.style.display = 'none';
+                limitedComments.style.display = 'block';
+                toggleButton.innerHTML = 'View all comments';
             }
-        
-            // Ensure that the limited comments are always visible
-            limitedComments.style.display = "block";
         }
         
     </script>

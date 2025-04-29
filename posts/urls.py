@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     PostListView, PostCreateView, PostDetailView, 
     PostUpdateView, PostDeleteView, like_post, 
-    save_post, add_comment, delete_comment, 
+    save_post, add_comment, delete_comment, send_messag,
     dashboard, send_message, inbox, chat_room,share_post,notifications_view,story_list_view
 )
 from . import views
@@ -16,7 +16,6 @@ urlpatterns = [
     path('comments/<int:comment_id>/delete/', delete_comment, name="comment-delete"),
     path('posts/<int:post_id>/comment/', add_comment, name="add-comment"),
     path('dashboard/', dashboard, name='dashboard'),
-    path('send/<int:receiver_id>/', send_message, name='send-message'),
     path('inbox/', inbox, name='inbox'),
     path('share/<int:post_id>/', share_post, name='share-post'),
     path('posts/posts/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
@@ -30,4 +29,5 @@ urlpatterns = [
     path('stories/my/', views.my_story_view, name='my-story'), 
     path('story/<int:story_id>/like/', views.like_story, name='like-story'),
     path('send-message/<str:username>/', views.send_message, name='send-message'),
+    path('send/<int:receiver_id>/',send_messag, name='send-messag'),
 ]

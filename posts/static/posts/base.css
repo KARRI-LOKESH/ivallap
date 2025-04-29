@@ -11,6 +11,8 @@ body {
   background-color: #f5f6fa;
   color: #333;
   padding-bottom: 70px; /* Space for bottom nav */
+  margin-left: auto; /* Align body content to center */
+  margin-right: auto; /* Align body content to center */
 }
 
 /* Bottom Navbar styling like Instagram */
@@ -97,7 +99,6 @@ nav i {
   position: relative;
   z-index: 1;
 }
-
 .plus-icon {
   position: absolute;
   bottom: 0;
@@ -105,13 +106,13 @@ nav i {
   background: #101010;
   color: white;
   border-radius: 50%;
-  width: 20px;
+  width: 22px;
   margin-left: 20px;
-  height: 19px;
+  height: 21px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 10px;
+  font-size: 18px; /* Increased from 15px */
   border: 2px solid white;
   z-index: 3;
 }
@@ -143,7 +144,11 @@ nav i {
 /* Content area */
 .container {
   padding: 20px;
+  max-width: 100%; /* Remove extra gap on the sides */
+  margin-left: auto;
+  margin-right: auto;
 }
+
 /* Style for stories section */
 .stories-container {
   width: 100%;
@@ -151,7 +156,7 @@ nav i {
   background-color: #f7f7f7; /* Optional background color */
   border-bottom: 1px solid #ddd;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* Align left */
   align-items: center;
   overflow-x: auto; /* For horizontal scrolling if stories are too long */
 }
@@ -180,6 +185,7 @@ nav i {
   margin-top: 5px;
   color: #555;
 }
+
 .stories-bar {
   display: flex;
   padding: 14px 10px;

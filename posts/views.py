@@ -199,12 +199,10 @@ def delete_comment(request, comment_id):
         print("User not authorized to delete this comment.")
 
     return redirect('post-list')
-
-
 User = get_user_model()
 
 @login_required
-def send_message(request, receiver_id):
+def send_messag(request, receiver_id):
     receiver = get_object_or_404(User, id=receiver_id)
 
     if request.method == 'POST':
@@ -215,7 +213,6 @@ def send_message(request, receiver_id):
             message.receiver = receiver
             message.save()
 
-            # Create a notification
             if receiver != request.user:
                 Notification.objects.create(
                     user=receiver,
@@ -226,8 +223,11 @@ def send_message(request, receiver_id):
                 )
 
             return redirect('inbox')
-    else:
-        form = MessageForm()
+        else:
+            return render(request, 'posts/send_message.html', {'form': form, 'receiver': receiver})
+
+    # For GET requests
+    form = MessageForm()
     return render(request, 'posts/send_message.html', {'form': form, 'receiver': receiver})
 @login_required
 def inbox(request):
