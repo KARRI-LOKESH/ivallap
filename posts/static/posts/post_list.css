@@ -33,8 +33,8 @@ p {
 /* Post card */
 .post {
     background-color: #1f1d1d;
-    padding: 15px 10px; /* smaller padding inside the post */
-    margin: 10px 0; /* very little margin between posts, no side margins */
+    padding: 15px 10px;
+    margin: 10px 0;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     width: 100%;
@@ -44,7 +44,7 @@ p {
     transition: transform 0.2s ease;
     text-align: center;
     margin-left: auto;
-    margin-right: auto; /* Ensure centering on large screens */
+    margin-right: auto;
 }
 
 .post:hover {
@@ -84,15 +84,15 @@ p {
 button[type="submit"],
 button[id^="toggle-btn-"],
 .share-btn {
-    padding: 10px 14px;
-    margin: 6px;
-    border-radius: 8px;
-    font-size: 14px;
+    padding: 15px 24px;
+    margin: 4px;
+    border-radius: 10px;
+    font-size: 18px;
     cursor: pointer;
     transition: background-color 0.2s ease;
     border: none;
-    background-color: transparent; /* Remove button background */
-    color: white; /* Ensure icon/text color */
+    background-color: transparent;
+    color: white;
 }
 
 /* Button specific colors (just text color for buttons without background) */
@@ -154,7 +154,7 @@ button[id^="toggle-btn-"]:hover {
 
 /* Like Count */
 .like-count {
-    color: rgb(221, 212, 212);
+    color: white;
 }
 
 /* Comment form */
@@ -169,7 +169,7 @@ form input[type="text"] {
 }
 
 form button[type="submit"] {
-    padding: 10px 15px;
+    padding: 15px 24px;
 }
 
 /* Comment section */
@@ -198,9 +198,9 @@ hr {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 14px;
-    margin-top: 30px;
-    margin-bottom: 12px;
+    gap: 6px; /* Reduced gap */
+    margin-top: 25px;
+    margin-bottom: 10px;
     padding: 10px 0;
 }
 
@@ -243,7 +243,7 @@ label {
 
     .post .post-actions {
         justify-content: center;
-        gap: 14px;
+        gap: 6px; /* Reduced gap */
         margin-top: 12px;
         margin-bottom: 12px;
         padding: 8px 0;
@@ -254,9 +254,9 @@ label {
     button[type="submit"],
     button[id^="toggle-btn-"],
     .share-btn {
-        font-size: 14px;
-        padding: 9px 13px;
-        margin: 6px;
+        font-size: 17px;
+        padding: 14px 22px;
+        margin: 4px;
     }
 
     form input[type="text"] {
@@ -284,7 +284,7 @@ label {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 12px;
+        gap: 6px; /* Reduced gap */
         margin-top: 12px;
         margin-bottom: 15px;
         padding: 8px 0;
@@ -295,9 +295,9 @@ label {
     button[type="submit"],
     button[id^="toggle-btn-"],
     .share-btn {
-        font-size: 13px;
-        padding: 10px 14px;
-        margin: 6px;
+        font-size: 16px;
+        padding: 13px 20px;
+        margin: 4px;
     }
 
     .post .post-actions a {
