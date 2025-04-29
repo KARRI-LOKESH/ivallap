@@ -13,6 +13,7 @@ h2 {
     font-size: 2rem;
     color: #333;
 }
+
 .success {
     color: green;
     margin-top: 5px;
@@ -32,16 +33,18 @@ p {
 /* Post card */
 .post {
     background-color: #1f1d1d;
-    padding: 20px;
-    margin: 20px auto;
-    border-radius: 15px;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
-    width: 90%;
+    padding: 15px 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    width: 100%;
     max-width: 700px;
     box-sizing: border-box;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #333;
     transition: transform 0.2s ease;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .post:hover {
@@ -75,83 +78,78 @@ p {
     border: 1px solid #ddd;
 }
 
-/* Buttons */
+/* Buttons and icons */
 .btn,
 .like-btn,
 button[type="submit"],
 button[id^="toggle-btn-"],
 .share-btn {
-    padding: 10px 14px;
-    margin: 6px;
-    border-radius: 8px;
-    font-size: 14px;
+    padding: 15px 24px;
+    margin: 4px;
+    border-radius: 10px;
+    font-size: 18px;
     cursor: pointer;
     transition: background-color 0.2s ease;
     border: none;
-}
-
-/* Button colors */
-.btn-primary {
-    background-color: #5b7c07;
-    color: #fff;
-}
-
-.btn-primary:hover {
-    background-color: #f8c90f;
-}
-
-.btn-warning {
-    background-color: #c45d18;
-    color: #fff;
-}
-
-.btn-warning:hover {
-    background-color: #e0a800;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-    color: #fff;
-}
-
-.btn-danger:hover {
-    background-color: #c82333;
-}
-
-.like-btn {
-    background-color: #28a745;
-    color: #fff;
-}
-
-.like-btn:hover {
-    background-color: #218838;
-}
-
-button[type="submit"] {
-    background-color: #17a2b8;
-    color: #fff;
-}
-
-button[type="submit"]:hover {
-    background-color: #138496;
-}
-
-.share-btn {
-    background-color: #6f42c1;
-    color: #fff;
-}
-
-.share-btn:hover {
-    background-color: #5a32a3;
-}
-
-button[id^="toggle-btn-"] {
-    background-color: #6c757d;
+    background-color: transparent;
     color: white;
 }
 
+/* Button specific colors (just text color for buttons without background) */
+.btn-primary {
+    color: #5b7c07;
+}
+
+.btn-primary:hover {
+    color: #f8c90f;
+}
+
+.btn-warning {
+    color: #c45d18;
+}
+
+.btn-warning:hover {
+    color: #e0a800;
+}
+
+.btn-danger {
+    color: #dc3545;
+}
+
+.btn-danger:hover {
+    color: #c82333;
+}
+
+.like-btn {
+    color: #28a745;
+}
+
+.like-btn:hover {
+    color: #218838;
+}
+
+button[type="submit"] {
+    color: #eef5f6;
+}
+
+button[type="submit"]:hover {
+    color: #138496;
+}
+
+.share-btn {
+    color: #f2eff7;
+}
+
+.share-btn:hover {
+    color: #64469e;
+}
+
+button[id^="toggle-btn-"] {
+    color: #6c757d;
+}
+
 button[id^="toggle-btn-"]:hover {
-    background-color: #5a6268;
+    color: #5a6268;
 }
 
 /* Like Count */
@@ -171,7 +169,7 @@ form input[type="text"] {
 }
 
 form button[type="submit"] {
-    padding: 10px 15px;
+    padding: 15px 24px;
 }
 
 /* Comment section */
@@ -200,9 +198,9 @@ hr {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 14px;
-    margin-top: 30px; /* Increased gap between post and buttons */
-    margin-bottom: 12px;
+    gap: 6px; /* Reduced gap */
+    margin-top: 25px;
+    margin-bottom: 10px;
     padding: 10px 0;
 }
 
@@ -210,6 +208,25 @@ label {
     color: #fff;
 }
 
+/* Center content and ensure proper responsiveness */
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* To keep all posts centered */
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
 
 /* Responsive tweaks */
 @media (max-width: 768px) {
@@ -217,8 +234,7 @@ label {
         padding: 15px;
         width: 95%;
         max-width: 95%;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 0 auto;
     }
 
     h2 {
@@ -227,7 +243,7 @@ label {
 
     .post .post-actions {
         justify-content: center;
-        gap: 14px;
+        gap: 6px; /* Reduced gap */
         margin-top: 12px;
         margin-bottom: 12px;
         padding: 8px 0;
@@ -238,9 +254,9 @@ label {
     button[type="submit"],
     button[id^="toggle-btn-"],
     .share-btn {
-        font-size: 14px;
-        padding: 9px 13px;
-        margin: 6px;
+        font-size: 17px;
+        padding: 14px 22px;
+        margin: 4px;
     }
 
     form input[type="text"] {
@@ -249,16 +265,10 @@ label {
 }
 
 @media (max-width: 480px) {
-    h2 {
-        font-size: 1.4rem;
-    }
-
     .post {
         width: 100%;
         padding: 15px 10px;
-        margin: 15px 0;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 0 auto;
     }
 
     #like-count-{{ post.id }} {
@@ -274,7 +284,7 @@ label {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 12px;
+        gap: 6px; /* Reduced gap */
         margin-top: 12px;
         margin-bottom: 15px;
         padding: 8px 0;
@@ -285,12 +295,18 @@ label {
     button[type="submit"],
     button[id^="toggle-btn-"],
     .share-btn {
-        font-size: 13px;
-        padding: 10px 14px;
-        margin: 6px;
+        font-size: 16px;
+        padding: 13px 20px;
+        margin: 4px;
     }
 
     .post .post-actions a {
         flex: 1 1 auto;
+    }
+}
+
+@media (max-width: 1200px) {
+    .content-wrapper {
+        width: 100%;
     }
 }
