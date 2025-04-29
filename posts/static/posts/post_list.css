@@ -13,6 +13,7 @@ h2 {
     font-size: 2rem;
     color: #333;
 }
+
 .success {
     color: green;
     margin-top: 5px;
@@ -32,16 +33,18 @@ p {
 /* Post card */
 .post {
     background-color: #1f1d1d;
-    padding: 20px;
-    margin: 20px auto;
-    border-radius: 15px;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
-    width: 90%;
+    padding: 15px 10px; /* smaller padding inside the post */
+    margin: 10px 0; /* very little margin between posts, no side margins */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    width: 100%;
     max-width: 700px;
     box-sizing: border-box;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #333;
     transition: transform 0.2s ease;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto; /* Ensure centering on large screens */
 }
 
 .post:hover {
@@ -75,7 +78,7 @@ p {
     border: 1px solid #ddd;
 }
 
-/* Buttons */
+/* Buttons and icons */
 .btn,
 .like-btn,
 button[type="submit"],
@@ -88,75 +91,70 @@ button[id^="toggle-btn-"],
     cursor: pointer;
     transition: background-color 0.2s ease;
     border: none;
+    background-color: transparent; /* Remove button background */
+    color: white; /* Ensure icon/text color */
 }
 
-/* Button colors */
+/* Button specific colors (just text color for buttons without background) */
 .btn-primary {
-    background-color: #5b7c07;
-    color: #fff;
+    color: #5b7c07;
 }
 
 .btn-primary:hover {
-    background-color: #f8c90f;
+    color: #f8c90f;
 }
 
 .btn-warning {
-    background-color: #c45d18;
-    color: #fff;
+    color: #c45d18;
 }
 
 .btn-warning:hover {
-    background-color: #e0a800;
+    color: #e0a800;
 }
 
 .btn-danger {
-    background-color: #dc3545;
-    color: #fff;
+    color: #dc3545;
 }
 
 .btn-danger:hover {
-    background-color: #c82333;
+    color: #c82333;
 }
 
 .like-btn {
-    background-color: #28a745;
-    color: #fff;
+    color: #28a745;
 }
 
 .like-btn:hover {
-    background-color: #218838;
+    color: #218838;
 }
 
 button[type="submit"] {
-    background-color: #17a2b8;
-    color: #fff;
+    color: #eef5f6;
 }
 
 button[type="submit"]:hover {
-    background-color: #138496;
+    color: #138496;
 }
 
 .share-btn {
-    background-color: #6f42c1;
-    color: #fff;
+    color: #f2eff7;
 }
 
 .share-btn:hover {
-    background-color: #5a32a3;
+    color: #64469e;
 }
 
 button[id^="toggle-btn-"] {
-    background-color: #6c757d;
-    color: white;
+    color: #6c757d;
 }
 
 button[id^="toggle-btn-"]:hover {
-    background-color: #5a6268;
+    color: #5a6268;
 }
 
 /* Like Count */
 .like-count {
-    color: white;
+    color: rgb(221, 212, 212);
 }
 
 /* Comment form */
@@ -201,7 +199,7 @@ hr {
     flex-wrap: wrap;
     justify-content: center;
     gap: 14px;
-    margin-top: 30px; /* Increased gap between post and buttons */
+    margin-top: 30px;
     margin-bottom: 12px;
     padding: 10px 0;
 }
@@ -210,6 +208,25 @@ label {
     color: #fff;
 }
 
+/* Center content and ensure proper responsiveness */
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* To keep all posts centered */
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
 
 /* Responsive tweaks */
 @media (max-width: 768px) {
@@ -217,8 +234,7 @@ label {
         padding: 15px;
         width: 95%;
         max-width: 95%;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 0 auto;
     }
 
     h2 {
@@ -249,16 +265,10 @@ label {
 }
 
 @media (max-width: 480px) {
-    h2 {
-        font-size: 1.4rem;
-    }
-
     .post {
         width: 100%;
         padding: 15px 10px;
-        margin: 15px 0;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 0 auto;
     }
 
     #like-count-{{ post.id }} {
@@ -292,5 +302,11 @@ label {
 
     .post .post-actions a {
         flex: 1 1 auto;
+    }
+}
+
+@media (max-width: 1200px) {
+    .content-wrapper {
+        width: 100%;
     }
 }
