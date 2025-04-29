@@ -56,7 +56,7 @@
     </form>
 
     <!-- 📩 Send Message -->
-    <form method="POST" action="{% url 'send-message' story.user.username %}" class="message-form">
+    <form method="POST" action="{% url 'send-story-message' story.user.username %}" class="message-form">
         {% csrf_token %}
         <input type="hidden" name="story_id" value="{{ story.id }}">
         <input type="text" name="message" placeholder="Send a message...">

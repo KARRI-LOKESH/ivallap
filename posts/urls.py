@@ -2,8 +2,8 @@ from django.urls import path
 from .views import (
     PostListView, PostCreateView, PostDetailView, 
     PostUpdateView, PostDeleteView, like_post, 
-    save_post, add_comment, delete_comment, send_messag,
-    dashboard, send_message, inbox, chat_room,share_post,notifications_view,story_list_view
+    save_post, add_comment, delete_comment,
+    dashboard, send_story_message, inbox, chat_room,share_post,notifications_view,story_list_view
 )
 from . import views
 urlpatterns = [
@@ -28,6 +28,6 @@ urlpatterns = [
     path('stories/', story_list_view, name='story-list'),
     path('stories/my/', views.my_story_view, name='my-story'), 
     path('story/<int:story_id>/like/', views.like_story, name='like-story'),
-    path('send-message/<str:username>/', views.send_message, name='send-message'),
-    path('send/<int:receiver_id>/',send_messag, name='send-messag'),
+    path('send-story-message/<str:username>/', send_story_message, name='send-story-message'),
+    path('send/<int:receiver_id>/', views.send_message, name='send-message')
 ]

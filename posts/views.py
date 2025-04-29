@@ -200,9 +200,8 @@ def delete_comment(request, comment_id):
 
     return redirect('post-list')
 User = get_user_model()
-
 @login_required
-def send_messag(request, receiver_id):
+def send_message(request, receiver_id):
     receiver = get_object_or_404(User, id=receiver_id)
 
     if request.method == 'POST':
@@ -213,6 +212,7 @@ def send_messag(request, receiver_id):
             message.receiver = receiver
             message.save()
 
+            # Notification creation
             if receiver != request.user:
                 Notification.objects.create(
                     user=receiver,
@@ -223,12 +223,14 @@ def send_messag(request, receiver_id):
                 )
 
             return redirect('inbox')
-        else:
-            return render(request, 'posts/send_message.html', {'form': form, 'receiver': receiver})
+    else:
+        form = MessageForm()
 
-    # For GET requests
-    form = MessageForm()
-    return render(request, 'posts/send_message.html', {'form': form, 'receiver': receiver})
+    return render(request, 'posts/send_message.html', {
+        'form': form,
+        'receiver': receiver
+    })
+
 @login_required
 def inbox(request):
     received_messages = Message.objects.filter(receiver=request.user).order_by('-timestamp')
@@ -396,10 +398,9 @@ def like_story(request, story_id):
             'is_liked': request.user in story.likes.all()
         })
     return JsonResponse({'error': 'Bad Request'}, status=400)
-def send_message(request, username):
+def send_story_message(request, username):
     if request.method == 'POST':
         receiver = get_object_or_404(User, username=username)
         message_text = request.POST.get('message')
-        # Assuming you have a Message model
         Message.objects.create(sender=request.user, receiver=receiver, content=message_text)
-        return redirect('inbox') 
+        return redirect('inbox')

@@ -5,9 +5,9 @@
 {% block extra_css %}
 {% endblock %}
 <div class="message-form-container">
-    <h2>Send Message to {{ receiver_id }}</h2>
+    <h2>Send Message to {{ receiver.username }}</h2>
     
-    <form method="post" class="fom">
+    <form method="post" action="{% url 'send-message' receiver.id %}" class="fom">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Send</button>
