@@ -89,71 +89,80 @@ button[id^="toggle-btn-"],
     border-radius: 10px;
     font-size: 18px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
     border: none;
-    background-color: transparent;
     color: white;
 }
 
-/* Button specific colors (just text color for buttons without background) */
+/* Primary Button */
 .btn-primary {
-    color: #5b7c07;
+    background-color: #5b7c07;
 }
 
 .btn-primary:hover {
-    color: #f8c90f;
+    background-color: #f8c90f;
+    color: black;
 }
 
+/* Warning Button */
 .btn-warning {
-    color: #c45d18;
+    background-color: #c45d18;
 }
 
 .btn-warning:hover {
-    color: #e0a800;
+    background-color: #e0a800;
+    color: black;
 }
 
+/* Danger Button */
 .btn-danger {
-    color: #dc3545;
+    background-color: #dc3545;
 }
 
 .btn-danger:hover {
-    color: #c82333;
+    background-color: #c82333;
 }
 
+/* Like Button */
 .like-btn {
-    color: #28a745;
+    background-color: #28a745;
 }
 
 .like-btn:hover {
-    color: #218838;
+    background-color: #218838;
 }
 
+/* Submit Button */
 button[type="submit"] {
-    color: #eef5f6;
+    background-color: #17a2b8;
 }
 
 button[type="submit"]:hover {
-    color: #138496;
+    background-color: #138496;
 }
 
+/* Share Button */
 .share-btn {
-    color: #f2eff7;
+    background-color: #6f42c1;
 }
 
 .share-btn:hover {
-    color: #64469e;
+    background-color: #64469e;
 }
 
+/* Toggle Button */
 button[id^="toggle-btn-"] {
-    color: #6c757d;
+    background-color: #6c757d;
 }
 
 button[id^="toggle-btn-"]:hover {
-    color: #5a6268;
+    background-color: #5a6268;
 }
 
-/* Like Count */
-.like-count {
+/* Like and Save Count */
+.like-count,
+.save-count,
+.count-text {
     color: white;
 }
 
@@ -172,21 +181,7 @@ form button[type="submit"] {
     padding: 15px 24px;
 }
 
-/* Comment section */
-ul {
-    margin-top: 10px;
-    padding-left: 20px;
-    list-style: disc;
-}
-
-ul li {
-    background: #f8f9fa;
-    padding: 8px 12px;
-    margin-bottom: 6px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-}
-
+/* Divider */
 hr {
     margin: 30px auto;
     width: 90%;
@@ -198,10 +193,30 @@ hr {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 6px; /* Reduced gap */
+    gap: 6px;
     margin-top: 25px;
     margin-bottom: 10px;
     padding: 10px 0;
+}
+
+/* Style links in post-actions same as buttons */
+.post .post-actions a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 24px;
+    margin: 4px;
+    border-radius: 10px;
+    font-size: 18px;
+    color: white;
+    background-color: #007bff;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.post .post-actions a:hover {
+    background-color: #0056b3;
+    color: white;
 }
 
 label {
@@ -243,7 +258,7 @@ label {
 
     .post .post-actions {
         justify-content: center;
-        gap: 6px; /* Reduced gap */
+        gap: 6px;
         margin-top: 12px;
         margin-bottom: 12px;
         padding: 8px 0;
@@ -271,10 +286,6 @@ label {
         margin: 0 auto;
     }
 
-    #like-count-{{ post.id }} {
-        color: white;
-    }
-
     form input[type="text"] {
         width: 100%;
         margin-bottom: 10px;
@@ -284,7 +295,7 @@ label {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 6px; /* Reduced gap */
+        gap: 6px;
         margin-top: 12px;
         margin-bottom: 15px;
         padding: 8px 0;
@@ -301,7 +312,8 @@ label {
     }
 
     .post .post-actions a {
-        flex: 1 1 auto;
+        font-size: 16px;
+        padding: 13px 20px;
     }
 }
 

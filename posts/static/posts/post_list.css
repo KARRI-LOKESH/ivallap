@@ -161,7 +161,8 @@ button[id^="toggle-btn-"]:hover {
 
 /* Like and Save Count */
 .like-count,
-.save-count {
+.save-count,
+.count-text {
     color: white;
 }
 
@@ -180,8 +181,6 @@ form button[type="submit"] {
     padding: 15px 24px;
 }
 
-/* Removed comment list styling */
-
 /* Divider */
 hr {
     margin: 30px auto;
@@ -198,6 +197,26 @@ hr {
     margin-top: 25px;
     margin-bottom: 10px;
     padding: 10px 0;
+}
+
+/* Style links in post-actions same as buttons */
+.post .post-actions a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 24px;
+    margin: 4px;
+    border-radius: 10px;
+    font-size: 18px;
+    color: white;
+    background-color: #007bff;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.post .post-actions a:hover {
+    background-color: #0056b3;
+    color: white;
 }
 
 label {
@@ -223,9 +242,7 @@ label {
     margin: 0 auto;
     padding: 20px;
 }
-.count-text{
-    color:white;
-}
+
 /* Responsive tweaks */
 @media (max-width: 768px) {
     .post {
@@ -295,7 +312,8 @@ label {
     }
 
     .post .post-actions a {
-        flex: 1 1 auto;
+        font-size: 16px;
+        padding: 13px 20px;
     }
 }
 
@@ -304,80 +322,3 @@ label {
         width: 100%;
     }
 }
-
-/* Comment Box */
-.comment-box {
-    background-color: #1f1d1d;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #333;
-    margin-top: 10px;
-    width: 100%;
-    max-width: 700px;
-    box-sizing: border-box;
-    margin: 10px auto;
-}
-
-.comment-box input[type="text"] {
-    width: 80%;
-    padding: 10px;
-    margin-right: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    background-color: #2f2f2f;
-    color: white;
-}
-
-.comment-box button[type="submit"] {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-}
-
-.comment-box button[type="submit"]:hover {
-    background-color: #218838;
-}
-
-/* Comment list */
-.comment-list {
-    margin-top: 20px;
-}
-
-.comment-item {
-    background-color: #2f2f2f;
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    border: 1px solid #333;
-}
-
-.comment-item .username {
-    font-weight: bold;
-    color: #e9eef4;
-}
-
-.comment-item .comment-text {
-    color: white;
-    margin-top: 8px;
-}
-
-/* Comment actions (like/reply) */
-.comment-actions {
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
-    margin-top: 8px;
-}
-
-.comment-actions a {
-    color: #5b7c07;
-    text-decoration: none;
-}
-
-.comment-actions a:hover {
-    text-decoration: underline;
-}
-
