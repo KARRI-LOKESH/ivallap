@@ -36,6 +36,8 @@ def signup_view(request):
 
 # Login View
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect("post-list")
     if request.method == "POST":
         email = request.POST.get("email")
 
@@ -67,6 +69,9 @@ def login_view(request):
 
 # OTP Verification View
 def verify_otp(request):
+    if request.user.is_authenticated:
+        return redirect("post-list")  # Already logged in
+
     if request.method == "POST":
         email = request.session.get("email")
         otp_entered = request.POST.get("otp")
@@ -80,7 +85,7 @@ def verify_otp(request):
         if user.otp == otp_entered:
             login(request, user)
             messages.success(request, "OTP Verified. Welcome!")
-            return redirect("profile")
+            return redirect("post-list")
         else:
             messages.error(request, "Invalid OTP. Please try again.")
             return redirect("verify_otp")

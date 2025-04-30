@@ -66,7 +66,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'socialapp.urls'
-
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30  # 30 days
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # Templates
 TEMPLATES = [
     {
