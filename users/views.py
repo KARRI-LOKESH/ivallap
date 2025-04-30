@@ -14,6 +14,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from posts.forms import CustomUserCreationForm,UserProfileUpdateForm,MessageForm
 from django.db.models import Q
+
 # User Signup View
 def signup_view(request):
     if request.method == "POST":
@@ -22,13 +23,21 @@ def signup_view(request):
             user = form.save(commit=False)
 
             if not user.username:
-                user.username = user.email.split("@")[0] + str(random.randint(1000, 9999))
+                base_username = user.email.split("@")[0]
+                username = base_username
+                counter = 1
+                while get_user_model().objects.filter(username=username).exists():
+                    username = f"{base_username}{counter}"
+                    counter += 1
+                user.username = username
 
             user.save()
             messages.success(request, "Account created successfully! Please log in.")
             return redirect("login")
         else:
-            messages.error(request, "Error in sign-up form. Please check the fields.")
+            for field in form:
+                for error in field.errors:
+                    messages.error(request, f"{field.label}: {error}")
     else:
         form = CustomUserCreationForm()
 
