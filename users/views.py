@@ -46,7 +46,7 @@ def signup_view(request):
 # Login View
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect("profile")
+        return redirect("post-list")
     if request.method == "POST":
         email = request.POST.get("email")
 
