@@ -18,7 +18,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "your-default-secret-key")
 
 # SECURITY WARNING: Don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEBUG", "True").lower() in ["true", "1"]
-
+DEBUG=False
 ALLOWED_HOSTS = ['ivallap.onrender.com', '127.0.0.1', 'localhost']
 
 # CSRF Trusted Origins (add your deployed domain)
