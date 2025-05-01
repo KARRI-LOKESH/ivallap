@@ -62,7 +62,7 @@ p {
 
 .username-link,
 .created-at {
-    color: rgb(21, 21, 239);
+    color: rgb(235, 235, 243);
     font-weight: bold;
 }
 
@@ -146,28 +146,19 @@ button[type="submit"]:not(.btn-follow):not(.btn-unfollow):hover {
 .share-btn:hover {
     background-color: #64469e;
 }
-.btn-follow {
-    background-color: #1f1d1d;
-    color: #fdf6f6;
-    font-size: 13px;     /* Further reduced padding to minimize space around the text */
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.btn-follow:hover {
-    background-color: #101010;
-}
-
+.btn-follow,
 .btn-unfollow {
     background-color: #1f1d1d;
     color: #fdf6f6;
-    font-size: 13px;       /* Further reduced padding to minimize space around the text */
-    border: none;
-    border-radius: 3px;
+    font-size: 13px;
+    padding: 2px 6px; /* Minimal padding around the text */
+    border: 1px solid white;
+    border-radius: 4px;
     cursor: pointer;
+    line-height: 1;
 }
 
+.btn-follow:hover,
 .btn-unfollow:hover {
     background-color: #101010;
 }
@@ -259,7 +250,7 @@ label {
     color: rgb(44, 60, 208);
 }
 
-.profile-pic-small img {
+.profile-pic-smalli img {
     width: 32px;
     height: 32px;
     border-radius: 50%;

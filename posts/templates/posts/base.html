@@ -57,11 +57,12 @@
         <a href="{% url 'profile' %}" class="user-info">
             <div class="profile-pic-small">
                 {% if user.profile_pic %}
-                    <img src="{{ user.profile_pic.url }}" alt="Ppic">
+                    <img src="{{ user.profile_pic.url }}" alt=" ">
                 {% else %}
                     <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile">
                 {% endif %}
             </div>
+        </a>
         <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a>
         {% if request.user.is_authenticated and request.user.id %}
             <a href="{% url 'inbox' %}"><i class="fas fa-envelope"></i></a>

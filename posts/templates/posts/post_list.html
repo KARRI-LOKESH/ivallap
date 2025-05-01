@@ -13,9 +13,9 @@
 <div class="post" data-post-id="{{ post.id }}">
     <div class="post-header">
         <a href="{% url 'user-profile' post.user.username %}" class="user-info">
-            <div class="profile-pic-small">
+            <div class="profile-pic-smalli">
                 {% if post.user.profile_pic %}
-                    <img src="{{ post.user.profile_pic.url }}" alt="Ppic">
+                    <img src="{{ post.user.profile_pic.url }}" alt=" ">
                 {% else %}
                     <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile">
                 {% endif %}
@@ -27,6 +27,7 @@
     
     <!-- Post Content -->
     <p>{{ post.content }}</p>
+    <br>
    {% if request.user != post.user %}
     <form action="{% url 'follow-user' post.user.id %}" method="POST" class="follow-form" data-user-id="{{ post.user.id }}">
         {% csrf_token %}

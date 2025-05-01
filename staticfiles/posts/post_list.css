@@ -150,7 +150,7 @@ button[type="submit"]:not(.btn-follow):not(.btn-unfollow):hover {
     background-color: #1f1d1d;
     color: #fdf6f6;
     font-size: 13px;     /* Further reduced padding to minimize space around the text */
-    border: none;
+    border: 1px solid white;
     border-radius: 3px;
     cursor: pointer;
 }
@@ -163,7 +163,7 @@ button[type="submit"]:not(.btn-follow):not(.btn-unfollow):hover {
     background-color: #1f1d1d;
     color: #fdf6f6;
     font-size: 13px;       /* Further reduced padding to minimize space around the text */
-    border: none;
+    border: 1px solid white;
     border-radius: 3px;
     cursor: pointer;
 }

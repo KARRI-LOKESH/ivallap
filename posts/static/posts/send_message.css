@@ -1,92 +1,82 @@
-/* Reset some default styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    padding: 10px;
-}
-
-/* Container */
 .message-form-container {
-    max-width: 500px;
-    margin: 30px auto;
-    background: #fff;
-    padding: 20px 25px;
+    max-width: 600px;
+    width: 100%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #1f1f1f;
+    color: #f9f9f9;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    font-family: 'Arial', sans-serif;
 }
 
-/* Heading */
 .message-form-container h2 {
-    font-size: 22px;
-    margin-bottom: 20px;
     text-align: center;
-    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #ffffff;
 }
 
-/* Form */
-.fom {
+.message-form-container form.fom {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 15px; /* Increased gap between fields */
 }
 
-.fom input[type="text"],
-.fom textarea,
-.fom select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+.message-form-container form.fom input,
+.message-form-container form.fom textarea {
+    padding: 12px 15px;
     font-size: 16px;
-    resize: vertical;
+    border: 1px solid #3b82f6; /* Border color */
+    border-radius: 5px;
+    background-color: #2c2c2c;
+    color: #fff;
+    resize: vertical; /* Allow resizing only vertically for textarea */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    width: 100%; /* Full width to make sure it adjusts properly */
 }
 
-.fom textarea {
-    min-height: 100px;
+/* Focus styling for input and textarea */
+.message-form-container form.fom input:focus,
+.message-form-container form.fom textarea:focus {
+    border-color: #2563eb; /* Highlight border when focused */
+    background-color: #3b3b3b; /* Slightly darker background */
+    outline: none; /* Remove default outline */
 }
 
-/* Button */
-.fom button[type="submit"] {
-    background-color: #3498db;
+.message-form-container form.fom button {
+    background-color: #3b82f6;
     color: white;
-    padding: 12px;
-    font-size: 16px;
     border: none;
-    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 16px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Full width for button to make it responsive */
 }
 
-.fom button[type="submit"]:hover {
-    background-color: #2980b9;
-}
-
-/* Back Link */
-.message-form-container p {
-    margin-top: 20px;
-    text-align: center;
+.message-form-container form.fom button:hover {
+    background-color: #2563eb;
 }
 
 .message-form-container a {
-    color: #3498db;
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #9ca3af;
     text-decoration: none;
-    font-weight: 500;
 }
 
 .message-form-container a:hover {
     text-decoration: underline;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
+/* Responsive Styles */
+@media (max-width: 768px) {
     .message-form-container {
-        margin: 15px 10px;
+        width: 90%;
+        margin: 20px auto;
         padding: 15px;
     }
 
@@ -94,7 +84,34 @@ body {
         font-size: 18px;
     }
 
-    .fom button[type="submit"] {
-        font-size: 15px;
+    .message-form-container form.fom input,
+    .message-form-container form.fom textarea {
+        font-size: 14px;
+    }
+
+    .message-form-container form.fom button {
+        padding: 12px 18px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .message-form-container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .message-form-container h2 {
+        font-size: 16px;
+    }
+
+    .message-form-container form.fom input,
+    .message-form-container form.fom textarea {
+        font-size: 12px;
+    }
+
+    .message-form-container form.fom button {
+        padding: 12px 15px;
+        font-size: 12px;
     }
 }
