@@ -54,7 +54,14 @@
         <a href="{% url 'post-list' %}"><i class="fas fa-home"></i></a>
         <a href="{% url 'post-create' %}"><i class="fas fa-plus-square"></i></a>
         <a href="{% url 'dashboard' %}"><i class="fas fa-chart-line"></i></a>
-        <a href="{% url 'profile' %}"><i class="fas fa-user"></i></a>
+        <a href="{% url 'profile' %}" class="user-info">
+            <div class="profile-pic-small">
+                {% if user.profile_pic %}
+                    <img src="{{ user.profile_pic.url }}" alt="Ppic">
+                {% else %}
+                    <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile">
+                {% endif %}
+            </div>
         <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a>
         {% if request.user.is_authenticated and request.user.id %}
             <a href="{% url 'inbox' %}"><i class="fas fa-envelope"></i></a>
