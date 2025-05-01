@@ -22,4 +22,5 @@ urlpatterns = [
     path('followers/<int:user_id>/', followers_list, name='followers-list'),
     path('following/<int:user_id>/', following_list, name='following-list'),
     path('follow/<int:user_id>/', follow_unfollow, name='follow-user'),
+    path('toggle-follow/', views.toggle_follow, name='toggle-follow'),
 ]

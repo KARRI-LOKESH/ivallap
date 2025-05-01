@@ -6,7 +6,6 @@ body {
     padding: 0;
 }
 
-/* Page title */
 h2 {
     text-align: center;
     margin-top: 25px;
@@ -51,10 +50,9 @@ p {
     transform: translateY(-3px);
 }
 
-/* Remove underlines from links like 'view' and 'edit' */
 .post a {
     text-decoration: none;
-    color: #e9eef4;
+    color: #105dbb;
 }
 
 .post a:hover {
@@ -64,11 +62,10 @@ p {
 
 .username-link,
 .created-at {
-    color: rgb(19, 18, 18);
+    color: rgb(21, 21, 239);
     font-weight: bold;
 }
 
-/* Post content (text, image, video) */
 .post img,
 .post video {
     width: 100%;
@@ -78,10 +75,10 @@ p {
     border: 1px solid #ddd;
 }
 
-/* Buttons and icons */
+/* Generic Buttons */
 .btn,
 .like-btn,
-button[type="submit"],
+button[type="submit"]:not(.btn-follow):not(.btn-unfollow),
 button[id^="toggle-btn-"],
 .share-btn {
     padding: 15px 24px;
@@ -94,7 +91,7 @@ button[id^="toggle-btn-"],
     color: white;
 }
 
-/* Primary Button */
+/* Primary */
 .btn-primary {
     background-color: #5b7c07;
 }
@@ -104,7 +101,7 @@ button[id^="toggle-btn-"],
     color: black;
 }
 
-/* Warning Button */
+/* Warning */
 .btn-warning {
     background-color: #c45d18;
 }
@@ -114,7 +111,7 @@ button[id^="toggle-btn-"],
     color: black;
 }
 
-/* Danger Button */
+/* Danger */
 .btn-danger {
     background-color: #dc3545;
 }
@@ -132,16 +129,16 @@ button[id^="toggle-btn-"],
     background-color: #218838;
 }
 
-/* Submit Button */
-button[type="submit"] {
+/* Submit Button (excluding follow/unfollow) */
+button[type="submit"]:not(.btn-follow):not(.btn-unfollow) {
     background-color: #17a2b8;
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:not(.btn-follow):not(.btn-unfollow):hover {
     background-color: #138496;
 }
 
-/* Share Button */
+/* Share */
 .share-btn {
     background-color: #6f42c1;
 }
@@ -149,17 +146,42 @@ button[type="submit"]:hover {
 .share-btn:hover {
     background-color: #64469e;
 }
+.btn-follow {
+    background-color: #1f1d1d;
+    color: #fdf6f6;
+    font-size: 13px;     /* Further reduced padding to minimize space around the text */
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
 
-/* Toggle Button */
+.btn-follow:hover {
+    background-color: #101010;
+}
+
+.btn-unfollow {
+    background-color: #1f1d1d;
+    color: #fdf6f6;
+    font-size: 13px;       /* Further reduced padding to minimize space around the text */
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn-unfollow:hover {
+    background-color: #101010;
+}
+
+
+/* Toggle */
 button[id^="toggle-btn-"] {
     background-color: #6c757d;
 }
-
 button[id^="toggle-btn-"]:hover {
     background-color: #5a6268;
 }
 
-/* Like and Save Count */
+/* Like / Save counts */
 .like-count,
 .save-count,
 .count-text {
@@ -188,7 +210,7 @@ hr {
     border: 1px solid #ccc;
 }
 
-/* Button container with spacing */
+/* Post button group */
 .post .post-actions {
     display: flex;
     flex-wrap: wrap;
@@ -199,7 +221,6 @@ hr {
     padding: 10px 0;
 }
 
-/* Style links in post-actions same as buttons */
 .post .post-actions a {
     display: inline-flex;
     justify-content: center;
@@ -223,7 +244,40 @@ label {
     color: #fff;
 }
 
-/* Center content and ensure proper responsiveness */
+/* Header and profile */
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: rgb(44, 60, 208);
+}
+
+.profile-pic-small img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.username-link {
+    margin-left: 8px;
+    font-weight: 600;
+}
+
+.post-time {
+    margin-left: auto;
+    font-size: 12px;
+    color: rgb(253, 251, 251);
+}
+
+/* Wrapper & Container */
 .content-wrapper {
     display: flex;
     justify-content: center;
@@ -232,7 +286,6 @@ label {
     margin: 0 auto;
 }
 
-/* To keep all posts centered */
 .container {
     display: flex;
     justify-content: center;
@@ -243,7 +296,7 @@ label {
     padding: 20px;
 }
 
-/* Responsive tweaks */
+/* Responsive: Tablet */
 @media (max-width: 768px) {
     .post {
         padding: 15px;
@@ -266,7 +319,7 @@ label {
 
     .btn,
     .like-btn,
-    button[type="submit"],
+    button[type="submit"]:not(.btn-follow):not(.btn-unfollow),
     button[id^="toggle-btn-"],
     .share-btn {
         font-size: 17px;
@@ -279,6 +332,7 @@ label {
     }
 }
 
+/* Responsive: Mobile */
 @media (max-width: 480px) {
     .post {
         width: 100%;
@@ -303,7 +357,7 @@ label {
 
     .btn,
     .like-btn,
-    button[type="submit"],
+    button[type="submit"]:not(.btn-follow):not(.btn-unfollow),
     button[id^="toggle-btn-"],
     .share-btn {
         font-size: 16px;
@@ -317,6 +371,7 @@ label {
     }
 }
 
+/* Responsive: Large Screens */
 @media (max-width: 1200px) {
     .content-wrapper {
         width: 100%;

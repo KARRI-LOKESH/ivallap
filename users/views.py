@@ -11,6 +11,7 @@ from django.contrib import messages as django_messages
 from django.shortcuts import redirect
 from posts.models import Post,Notification
 from django.http import HttpResponse
+from django.template.loader import render_to_string
 from django.views.generic import TemplateView
 from posts.forms import CustomUserCreationForm,UserProfileUpdateForm,MessageForm
 from django.db.models import Q
@@ -253,14 +254,76 @@ def search_users(request):
         "users": users,
         "posts": posts,
     })
+@login_required
 def followers_list(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     followers = user.followers.all()
-    return render(request, 'users/followers_list.html', {'user': user, 'followers': followers})
 
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == "POST":
+        follow_user_id = request.POST.get("user_id")
+        follow_user = get_object_or_404(CustomUser, id=follow_user_id)
+        
+        if request.user != follow_user:
+            if request.user.following.filter(id=follow_user_id).exists():
+                request.user.following.remove(follow_user)
+                followed = False
+            else:
+                request.user.following.add(follow_user)
+                followed = True
+
+                # Create notification
+                Notification.objects.create(
+                    user=follow_user,
+                    message=f"{request.user.username} started following you!"
+                )
+            
+            # Return the updated follow button HTML
+            button_html = render_to_string('partials/follow_button.html', {'followed': followed, 'user_to_follow': follow_user})
+            return HttpResponse(button_html)
+
+    return render(request, 'users/followers_list.html', {'user': user, 'followers': followers})
+@login_required
 def following_list(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     following = user.following.all()
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == "POST":
+        follow_user_id = request.POST.get("user_id")
+        follow_user = get_object_or_404(CustomUser, id=follow_user_id)
+        
+        if request.user != follow_user:
+            if request.user.following.filter(id=follow_user_id).exists():
+                request.user.following.remove(follow_user)
+                followed = False
+            else:
+                request.user.following.add(follow_user)
+                followed = True
+
+                # Create notification
+                Notification.objects.create(
+                    user=follow_user,
+                    message=f"{request.user.username} started following you!"
+                )
+
+            # Return the updated follow button HTML
+            button_html = render_to_string('partials/follow_button.html', {'followed': followed, 'user_to_follow': follow_user})
+            return HttpResponse(button_html)
+
     return render(request, 'users/following_list.html', {'user': user, 'following': following})
 
+@login_required
+def toggle_follow(request):
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        target_user = User.objects.get(id=user_id)
+        profile = request.user.profile
 
+        if target_user in profile.following.all():
+            profile.following.remove(target_user)
+            followed = False
+        else:
+            profile.following.add(target_user)
+            followed = True
+
+        return JsonResponse({'followed': followed})
+    return JsonResponse({'error': 'Invalid request'}, status=400)

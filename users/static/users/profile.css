@@ -250,6 +250,57 @@ p a:hover {
     background: #c82333;
     transform: scale(1.05);
 }
+/* Code & Share Enhancements */
+.qr-share-container {
+    margin-top: 25px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.qr-share-container h2 {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.qr-code img {
+    width: 130px;
+    height: 130px;
+    border-radius: 8px;
+    border: 3px solid #fff;
+    background-color: #fff;
+    padding: 5px;
+    margin-bottom: 15px;
+
+    /* Animated Border Glow */
+    box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc;
+    animation: borderGlow 2s infinite alternate;
+}
+
+/* Glowing animation */
+@keyframes borderGlow {
+    from {
+        box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+    }
+    to {
+        box-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc;
+    }
+}
+
+.share-icons a {
+    font-size: 24px;
+    margin: 0 10px;
+    color: #f1f1f1;
+    transition: color 0.3s;
+}
+
+.share-icons a:hover {
+    color: #1da1f2;
+}
 
 /* Animations */
 @keyframes fadeIn {

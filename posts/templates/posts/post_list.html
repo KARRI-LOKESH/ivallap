@@ -3,145 +3,159 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'posts/post_list.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 {% block extra_css %}
 {% endblock %}
 <h2>All Posts</h2>
 
 {% for post in posts %}
-    <div class="post" data-post-id="{{ post.id }}">
-        <p>
-            <strong>
-              <a href="{% url 'user-profile' post.user.username %}" class="username-link">
-                {{ post.user.username }}
-              </a>
-            </strong>
-            - {{ post.created_at }}
-          </p>
-        <p>{{ post.content }}</p>
-        
-        {% if post.image %}
-            <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 100%; height: auto;">
+<div class="post" data-post-id="{{ post.id }}">
+    <div class="post-header">
+        <a href="{% url 'user-profile' post.user.username %}" class="user-info">
+            <div class="profile-pic-small">
+                {% if post.user.profile_pic %}
+                    <img src="{{ post.user.profile_pic.url }}" alt="Profile Picture">
+                {% else %}
+                    <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile">
+                {% endif %}
+            </div>
+            <strong class="username-link">{{ post.user.username }}</strong>
+        </a>
+        <span class="post-time">- {{ post.created_at }}</span>
+    </div>
+    
+    <!-- Post Content -->
+    <p>{{ post.content }}</p>
+   {% if request.user != post.user %}
+    <form action="{% url 'follow-user' post.user.id %}" method="POST" class="follow-form" data-user-id="{{ post.user.id }}">
+        {% csrf_token %}
+        {% if post.user in request.user.profile.following.all %}
+            <button type="submit" class="btn-unfollow">Unfollow</button>
+        {% else %}
+            <button type="submit" class="btn-follow">Follow</button>
         {% endif %}
-        {% if post.video %}
+    </form>
+{% endif %}
+
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 100%; height: auto;">
+    {% endif %}
+    {% if post.video %}
         <video width="400" controls>
             <source src="{{ post.video.url }}" type="video/mp4">
             Your browser does not support the video tag.
         </video>
     {% endif %}
-        
-        <br>
 
-        <!-- View Post Button -->
-        <!-- Actions Row -->
-<div class="post-actions">
-    <!-- View Post -->
-    <a href="{% url 'post-detail' post.id %}" class="btn btn-primary">
-        <i class="fa fa-eye"></i>
-    </a>
+    <!-- Post Actions -->
+    <div class="post-actions">
+        <!-- View Post -->
+        <a href="{% url 'post-detail' post.id %}" class="btn btn-primary">
+            <i class="fa fa-eye"></i>
+        </a>
 
-    {% if request.user == post.user %}
-        <!-- Edit Post -->
-        <a href="{% url 'post-update' post.id %}" class="btn btn-warning">
-            <i class="fa fa-pencil-alt"></i>
-        </a>
-        
-        <!-- Delete Post -->
-        <a href="{% url 'post-delete' post.id %}" class="btn btn-danger">
-            <i class="fa fa-trash"></i>
-        </a>
+        {% if request.user == post.user %}
+            <!-- Edit -->
+            <a href="{% url 'post-update' post.id %}" class="btn btn-warning">
+                <i class="fa fa-pencil-alt"></i>
+            </a>
+
+            <!-- Delete -->
+            <a href="{% url 'post-delete' post.id %}" class="btn btn-danger">
+                <i class="fa fa-trash"></i>
+            </a>
+        {% endif %}
+
+        <!-- Like -->
+        <form style="display: inline;" class="like-form">
+            {% csrf_token %}
+            <button type="button" class="like-btn" data-post-id="{{ post.id }}">
+                {% if request.user in post.likes.all %}
+                    ❤️
+                {% else %}
+                    🤍
+                {% endif %}
+            </button>
+            <span id="like-count-{{ post.id }}" class="count-text">{{ post.likes.count }}</span>
+        </form>
+
+        <!-- Save -->
+        <form action="{% url 'save-post' post.id %}" method="POST" style="display: inline;" class="save-form">
+            {% csrf_token %}
+            <button type="submit" class="save-btn" data-post-id="{{ post.id }}">
+                <i class="fa fa-bookmark"></i>
+            </button>
+            <span id="save-count-{{ post.id }}" class="count-text">{{ post.total_saves }}</span>
+        </form>
+
+        <!-- Share -->
+        <button class="share-btn" onclick="toggleShareForm({{ post.id }})">
+            <i class="fa fa-paper-plane"></i>
+        </button>
+    </div>
+
+    <!-- Share Form -->
+    <div id="share-form-{{ post.id }}" class="share-form" style="display: none;">
+        <form method="POST" class="share-form-ajax" data-post-id="{{ post.id }}">
+            {% csrf_token %}
+            <input type="text" name="shared_with" placeholder="Search username..." required>
+            <label>
+                <input type="checkbox" name="share_with_self"> Share to my profile
+            </label>
+            <button type="submit"><i class="fa fa-paper-plane"></i></button>
+            <p class="share-status" style="color: green;"></p>
+        </form>
+    </div>
+
+    <!-- Comment Form -->
+    <form action="{% url 'add-comment' post.id %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="content" placeholder="Add a comment" required>
+        <button type="submit"><i class="fa fa-comment"></i></button>
+    </form>
+
+    <!-- Comments -->
+    <p><strong>Comments ({{ post.comments.count }})</strong></p>
+
+    {% if post.comments.exists %}
+        <!-- Last 2 Comments -->
+        <div class="comment-container" id="limited-comments-{{ post.id }}">
+            {% for comment in post.comments.all|slice:"-2:" %}
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <strong>
+                            <a href="{% url 'user-profile' comment.user.username %}" class="username-link">
+                                {{ comment.user.username }}
+                            </a>
+                        </strong>
+                    </div>
+                    <div class="comment-text">{{ comment.content }}</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- All Comments Hidden Initially -->
+        <div class="comment-container" id="full-comments-{{ post.id }}" style="display: none;">
+            {% for comment in post.comments.all %}
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <strong>{{ comment.user.username }}</strong>
+                    </div>
+                    <div class="comment-text">{{ comment.content }}</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Toggle View Button -->
+        <button id="toggle-btn-{{ post.id }}" onclick="toggleComments({{ post.id }})">
+            View all comments
+        </button>
+    {% else %}
+        <p>No comments yet. Be the first to comment!</p>
     {% endif %}
-
-    <!-- Like Button -->
-    <form style="display: inline;" class="like-form">
-        {% csrf_token %}
-        <button type="button" class="like-btn" data-post-id="{{ post.id }}">
-            {% if request.user in post.likes.all %}
-                ❤️
-            {% else %}
-                🤍
-            {% endif %}
-        </button>
-        <span id="like-count-{{ post.id }}" class="count-text">{{ post.likes.count }}</span>
-    </form>
-
-    <!-- Save Button -->
-    <form action="{% url 'save-post' post.id %}" method="POST" style="display: inline;" class="save-form">
-        {% csrf_token %}
-        <button type="submit" class="save-btn" data-post-id="{{ post.id }}">
-            <i class="fa fa-bookmark"></i>
-        </button>
-        <span id="save-count-{{ post.id }}" class="count-text">{{ post.total_saves }}</span>
-    </form>
-
-    <!-- Share Button -->
-    <button class="share-btn" onclick="toggleShareForm({{ post.id }})">
-        <i class="fa fa-paper-plane"></i>
-    </button>
 </div>
-
-<!-- Hidden Share Form -->
-<div id="share-form-{{ post.id }}" class="share-form" style="display: none;">
-    <form method="POST" class="share-form-ajax" data-post-id="{{ post.id }}">
-        {% csrf_token %}
-        <input type="text" name="shared_with" placeholder="Search username..." required>
-        <label>
-            <input type="checkbox" name="share_with_self"> Share to my profile
-        </label>
-        <button type="submit"><i class="fa fa-paper-plane"></i></button>
-        <p class="share-status" style="color: green;"></p>
-    </form>
-</div>
-<!-- Comment Section -->
-<form action="{% url 'add-comment' post.id %}" method="POST">
-    {% csrf_token %}
-    <input type="text" name="content" placeholder="Add a comment" required>
-    <button type="submit"><i class="fa fa-comment"></i></button>
-</form>
-
-<p><strong>Comments ({{ post.comments.count }})</strong></p>
-
-{% if post.comments.exists %}
-    <!-- Comment Cards Section -->
-    <div class="comment-container" id="limited-comments-{{ post.id }}">
-        {% for comment in post.comments.all|slice:"-2:" %}
-            <div class="comment-card">
-                <div class="comment-header">
-                    <strong>
-                        <a href="{% url 'user-profile' comment.user.username %}" class="username-link">
-                            {{ comment.user.username }}
-                        </a>
-                    </strong>
-                </div>
-                <div class="comment-text">
-                    {{ comment.content }}
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
-    <!-- Hidden full comment list -->
-    <div class="comment-container" id="full-comments-{{ post.id }}" style="display: none;">
-        {% for comment in post.comments.all %}
-            <div class="comment-card">
-                <div class="comment-header">
-                    <strong>{{ comment.user.username }}</strong>
-                </div>
-                <div class="comment-text">
-                    {{ comment.content }}
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
-    <!-- Toggle Button -->
-    <button id="toggle-btn-{{ post.id }}" onclick="toggleComments({{ post.id }})">View all comments</button>
-{% else %}
-    <p>No comments yet. Be the first to comment!</p>
-{% endif %}
-
-
-    </div>
-    <hr>
+<hr>
 {% endfor %}
 
 <!-- Load JavaScript -->
@@ -247,5 +261,39 @@
         }
         
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.follow-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const userId = this.getAttribute('data-user-id');
+                    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                    const btn = this;
+        
+                    fetch("{% url 'toggle-follow' %}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRFToken': csrftoken
+                        },
+                        body: `user_id=${userId}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.followed) {
+                            btn.textContent = 'Unfollow';
+                            btn.classList.remove('btn-follow');
+                            btn.classList.add('btn-unfollow');
+                        } else {
+                            btn.textContent = 'Follow';
+                            btn.classList.remove('btn-unfollow');
+                            btn.classList.add('btn-follow');
+                        }
+                    });
+                    
+                });
+            });
+        });
+        </script>
+        
     
 {% endblock %}
