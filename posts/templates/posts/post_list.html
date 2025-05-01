@@ -15,7 +15,7 @@
         <a href="{% url 'user-profile' post.user.username %}" class="user-info">
             <div class="profile-pic-small">
                 {% if post.user.profile_pic %}
-                    <img src="{{ post.user.profile_pic.url }}" alt="Profile Picture">
+                    <img src="{{ post.user.profile_pic.url }}" alt="Ppic">
                 {% else %}
                     <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile">
                 {% endif %}
