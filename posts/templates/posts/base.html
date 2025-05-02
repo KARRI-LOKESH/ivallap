@@ -40,7 +40,7 @@
         {% endfor %}
         
         <!-- Notifications button on the right side -->
-        <a href="{% url 'notifications' %}" class="notifications-btn">
+        <a href="{% url 'notifications' %}" class="notifications-btn top-right-notif">
             <i class="fas fa-bell"></i>
             {% if notification_count > 0 %}
                 <span class="notif-count">{{ notification_count }}</span>
