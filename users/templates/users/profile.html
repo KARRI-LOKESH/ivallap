@@ -41,14 +41,6 @@
         <p>
             <a href="{% url 'followers-list' user.id %}">Followers: {{ user.followers.count }}</a> |
             <a href="{% url 'following-list' user.id %}">Following: {{ user.following.count }}</a> |
-            <a href="{% url 'notifications' %}" class="notifications-btn">
-                Notifications
-                {% if notification_count > 0 %}
-                    <span class="notif-count">{{ notification_count }}</span>
-                {% endif %}
-            </a>
-        </p>
-
         <!-- Follow Button -->
         {% if request.user != user_profile %}
         <form id="followForm" action="{% url 'follow-user' user_profile.id %}" method="POST">

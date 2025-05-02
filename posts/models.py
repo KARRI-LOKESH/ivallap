@@ -91,6 +91,6 @@ class Story(models.Model):
     likes = models.ManyToManyField(User, related_name='story_likes', blank=True)
     def is_expired(self):
         return timezone.now() > self.created_at + timezone.timedelta(hours=24)
-
+    @property
     def viewer_count(self):
         return self.viewers.count()

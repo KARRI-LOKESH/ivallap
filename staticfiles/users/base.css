@@ -198,3 +198,44 @@ footer ul li a {
 .social-links a:hover {
     color: var(--highlight-color);
 }
+
+/* Notifications Section */
+.notifications {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 999;
+}
+
+.notifications ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notifications-btn {
+    position: relative;
+    padding: 6px 12px;
+    background-color: #eee;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+}
+
+.notifications .notification {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.notifications .notification.info {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.notifications .notification.success {
+    background-color: #d4edda;
+    color: #155724;
+}

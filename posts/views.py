@@ -9,6 +9,7 @@ from posts.forms import MessageForm,StoryUploadForm
 from django.contrib import messages
 from django.utils.timezone import localtime
 import json
+from django.utils import timezone
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.http import JsonResponse # Ensure Post model is imported
@@ -333,7 +334,6 @@ def delete_story(request, story_id):
             return redirect('story-detail')  # fallback if no next story
 
     return redirect('story-detail', story_id)
-
 @login_required
 def story_detail_view(request, story_id=None):
     # If no story_id is given, get the latest story from the current user
@@ -345,18 +345,23 @@ def story_detail_view(request, story_id=None):
     else:
         story = get_object_or_404(Story, id=story_id)
 
-    # Get all stories ordered by creation time
-    all_stories = list(Story.objects.order_by('created_at'))
+    # Get all other users' stories, excluding the current user's
+    all_stories = Story.objects.exclude(user=request.user).order_by('-created_at')
 
-    current_index = all_stories.index(story)
-    previous_story = all_stories[current_index - 1] if current_index > 0 else None
-    next_story = all_stories[current_index + 1] if current_index < len(all_stories) - 1 else None
+    # Get the index of the current story
+    current_index = list(all_stories).index(story) if story in all_stories else None
+
+    # Ensure previous_story and next_story are assigned only if the index is valid
+    previous_story = all_stories[current_index - 1] if current_index and current_index > 0 else None
+    next_story = all_stories[current_index + 1] if current_index and current_index < len(all_stories) - 1 else None
 
     return render(request, 'posts/story_detail.html', {
         'story': story,
         'previous_story': previous_story,
         'next_story': next_story,
+        'all_stories': all_stories,  # Pass all other stories
     })
+
 def story_list_view(request):
     # Fetch all stories ordered by creation date or as needed
     stories = Story.objects.all().order_by('-created_at')  # Adjust your query as needed
@@ -404,3 +409,4 @@ def send_story_message(request, username):
         message_text = request.POST.get('message')
         Message.objects.create(sender=request.user, receiver=receiver, content=message_text)
         return redirect('inbox')
+    

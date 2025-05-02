@@ -193,6 +193,7 @@ nav i {
   border-bottom: 1px solid #ddd;
   height: 100px; /* increased from default height */
   align-items: center;
+  justify-content: space-between;
 }
 
 .story-bubble {
@@ -252,7 +253,26 @@ nav i {
   color: #333;
 }
 
+.notifications-btn {
+  display: flex;
+  align-items: center;
+  color: #151414; /* or your preferred color */
+  text-decoration: none;
+  font-size: 25px;
+  padding: 5px;
+  position: relative;
+}
 
+.notif-count {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 0 6px;
+  font-size: 16px;
+  position: absolute;
+  top: -5px;
+  right: -10px;
+}
 /* Responsive */
 @media (max-width: 600px) {
   nav a {
