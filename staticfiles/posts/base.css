@@ -10,12 +10,12 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f5f6fa;
   color: #333;
-  padding-bottom: 70px; /* Space for bottom nav */
-  margin-left: auto; /* Align body content to center */
-  margin-right: auto; /* Align body content to center */
+  padding-bottom: 70px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Bottom Navbar styling like Instagram */
+/* Bottom Navbar */
 nav {
   background-color: #ffffff;
   border-top: 2px solid #ddd;
@@ -31,24 +31,19 @@ nav {
   align-items: center;
 }
 
-/* Nav icons */
 nav a {
   color: #333;
   font-size: 22px;
   text-decoration: none;
   transition: color 0.3s ease;
 }
-
 nav a:hover {
   color: #007bff;
 }
-
-/* Font Awesome icons */
 nav i {
   pointer-events: none;
 }
 
-/* Search toggle button in nav */
 #search-toggle-button {
   background: none;
   border: none;
@@ -72,8 +67,6 @@ nav i {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   z-index: 1001;
 }
-
-/* Input styles */
 .search-form input {
   padding: 8px 14px;
   border: 1px solid #ccc;
@@ -82,53 +75,6 @@ nav i {
   width: 180px;
   font-size: 14px;
 }
-.story-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 80px; /* increased from 50px */
-  height: 80px;
-  margin-left: 12px; /* increased from 50px */
-}
-
-.profile-icon {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid transparent;
-  position: relative;
-  z-index: 1;
-}
-.plus-icon {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background: #101010;
-  color: white;
-  border-radius: 50%;
-  width: 22px;
-  margin-left: 20px;
-  height: 22px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px; /* Increased from 15px */
-  border: 2px solid white;
-  z-index: 3;
-}
-
-/* Red ring if the user has an active story */
-.profile-icon.has-story {
-  border-color: red;
-}
-
-/* Optional: hover effect for profile icon */
-.profile-icon:hover {
-  transform: scale(1.05);
-  transition: transform 0.2s ease;
-}
-
-/* Button styles */
 .search-form button {
   height: 36px;
   width: 36px;
@@ -141,85 +87,80 @@ nav i {
   justify-content: center;
 }
 
-/* Content area */
+/* Content container */
 .container {
   padding: 20px;
-  max-width: 100%; /* Remove extra gap on the sides */
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
 
-/* Style for stories section */
-.stories-container {
-  width: 100%;
-  padding: 10px 0;
-  background-color: #f7f7f7; /* Optional background color */
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  justify-content: flex-start; /* Align left */
-  align-items: center;
-  overflow-x: auto; /* For horizontal scrolling if stories are too long */
-}
-
-.stories-container .story {
-  margin-right: 10px;
-  text-align: center;
-}
-
-.stories-container .story img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #fff;
-  transition: transform 0.2s ease;
-}
-
-.stories-container .story img:hover {
-  transform: scale(1.1);
-}
-
-.stories-container .story span {
-  display: block;
-  font-size: 0.8rem;
-  margin-top: 5px;
-  color: #555;
-}
-
+/* Stories bar container */
 .stories-bar {
   display: flex;
-  padding: 14px 10px;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  overflow-x: auto;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
-  height: 100px; /* increased from default height */
-  align-items: center;
-  justify-content: space-between;
+  height: 100px;
 }
 
+/* Story wrapper (your story) and others */
+.story-wrapper,
 .story-bubble {
-  margin-right: 12px;
-  text-align: center;
-  text-decoration: none;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  position: relative;
+  display: inline-block;
 }
 
+/* Story images (your story and others) */
+.story-wrapper img,
 .story-bubble img {
-  width: 55px;
-  height: 55px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  border: 2px solid red;
   object-fit: cover;
+  border: 2px solid transparent;
 }
 
+/* Plus icon on your story */
+.plus-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #101010;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  border: 2px solid white;
+  z-index: 3;
+}
+
+/* Viewed and not viewed styles */
 .story-bubble.viewed img {
   border-color: gray;
 }
-.has-story {
-  border-color: red;
-}
-
 .story-bubble.not-viewed img {
   border-color: red;
 }
+.profile-icon.has-story {
+  border-color: red;
+}
+.profile-icon:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}
+
+/* User info */
 .user-info {
   display: flex;
   align-items: center;
@@ -237,11 +178,10 @@ nav i {
   justify-content: center;
   background-color: #ddd;
 }
-
 .profile-pic-small img {
   width: 100%;
   height: 100%;
-  object-fit: cover;  /* ensures image fits without distortion */
+  object-fit: cover;
   border-radius: 50%;
   display: block;
 }
@@ -253,16 +193,16 @@ nav i {
   color: #333;
 }
 
+/* Notifications */
 .notifications-btn {
   display: flex;
   align-items: center;
-  color: #151414; /* or your preferred color */
+  color: #151414;
   text-decoration: none;
   font-size: 25px;
   padding: 5px;
   position: relative;
 }
-
 .notif-count {
   background-color: red;
   color: white;
@@ -273,6 +213,7 @@ nav i {
   top: -5px;
   right: -10px;
 }
+
 /* Responsive */
 @media (max-width: 600px) {
   nav a {
