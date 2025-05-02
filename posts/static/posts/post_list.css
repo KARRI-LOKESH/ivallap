@@ -33,7 +33,7 @@ p {
 .post {
     background-color: #1f1d1d;
     padding: 15px 10px;
-    margin: 10px 0;
+    margin: 20px auto;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     width: 100%;
@@ -42,8 +42,6 @@ p {
     border: 1px solid #333;
     transition: transform 0.2s ease;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .post:hover {
@@ -91,72 +89,28 @@ button[id^="toggle-btn-"],
     color: white;
 }
 
-/* Primary */
-.btn-primary {
-    background-color: #5b7c07;
-}
+/* Button Colors */
+.btn-primary { background-color: #5b7c07; }
+.btn-primary:hover { background-color: #f8c90f; color: black; }
 
-.btn-primary:hover {
-    background-color: #f8c90f;
-    color: black;
-}
+.btn-warning { background-color: #c45d18; }
+.btn-warning:hover { background-color: #e0a800; color: black; }
 
-/* Warning */
-.btn-warning {
-    background-color: #c45d18;
-}
+.btn-danger { background-color: #dc3545; }
+.btn-danger:hover { background-color: #c82333; }
 
-.btn-warning:hover {
-    background-color: #e0a800;
-    color: black;
-}
+.like-btn { background-color: #28a745; }
+.like-btn:hover { background-color: #218838; }
 
-/* Danger */
-.btn-danger {
-    background-color: #dc3545;
-}
+button[type="submit"]:not(.btn-follow):not(.btn-unfollow) { background-color: #17a2b8; }
+button[type="submit"]:not(.btn-follow):not(.btn-unfollow):hover { background-color: #138496; }
 
-.btn-danger:hover {
-    background-color: #c82333;
-}
+.share-btn { background-color: #6f42c1; }
+.share-btn:hover { background-color: #64469e; }
 
-/* Like Button */
-.like-btn {
-    background-color: #28a745;
-}
+button[id^="toggle-btn-"] { background-color: #6c757d; }
+button[id^="toggle-btn-"]:hover { background-color: #5a6268; }
 
-.like-btn:hover {
-    background-color: #218838;
-}
-
-/* Submit Button (excluding follow/unfollow) */
-button[type="submit"]:not(.btn-follow):not(.btn-unfollow) {
-    background-color: #17a2b8;
-}
-
-button[type="submit"]:not(.btn-follow):not(.btn-unfollow):hover {
-    background-color: #138496;
-}
-
-/* Share */
-.share-btn {
-    background-color: #6f42c1;
-}
-
-.share-btn:hover {
-    background-color: #64469e;
-}
-
-
-/* Toggle */
-button[id^="toggle-btn-"] {
-    background-color: #6c757d;
-}
-button[id^="toggle-btn-"]:hover {
-    background-color: #5a6268;
-}
-
-/* Like / Save counts */
 .like-count,
 .save-count,
 .count-text {
@@ -242,14 +196,14 @@ label {
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    top: 0px; /* ✅ This nudges the image up slightly to match the text */
+    top: 0px;
 }
 
 .username-link {
     margin-left: 8px;
     font-weight: 600;
     position: relative;
-    top: 5px; /* ✅ Nudges the text slightly down */
+    top: 5px;
 }
 
 .post-time {
@@ -262,90 +216,90 @@ label {
 .content-wrapper {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
-    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
     width: 100%;
+    max-width: 900px; /* ✅ Restrict content from stretching too wide */
     margin: 0 auto;
     padding: 20px;
+    box-sizing: border-box;
 }
+
 .username-linki {
     margin-left: 8px;
     font-weight: 600;
 }
 
-  .post-content.expanded {
-    white-space: normal; /* Allow full content to wrap */
-  }
-  .post-row {
+.post-content.expanded {
+    white-space: normal;
+}
+
+.post-row {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     max-width: 370px;
     gap: 10px;
-  }
-  
-  .post-text {
+}
+
+.post-text {
     width: 300px;
     word-break: break-word;
     margin: 0;
-  }
-  
-  .post-content {
+}
+
+.post-content {
     display: block;
     white-space: normal;
     line-height: 1.5;
-  }
-  
-  .toggle-more {
+}
+
+.toggle-more {
     color: #1877f2;
     font-weight: 500;
     cursor: pointer;
     display: inline-block;
     margin-top: 4px;
-  }
-  .btn-follow,
-  .btn-unfollow {
+}
+
+.btn-follow,
+.btn-unfollow {
     background-color: #1f1d1d;
     color: #fdf6f6;
     font-size: 12px;
-    padding: 2px 8px;           /* Balanced padding */
+    padding: 2px 8px;
     border: 1px solid white;
     border-radius: 4px;
     cursor: pointer;
     line-height: 1;
-    height: 28px;               /* Ensures vertical alignment */
-    display: flex;             /* Centering text vertically */
+    height: 28px;
+    display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .btn-follow:hover,
-  .btn-unfollow:hover {
+}
+
+.btn-follow:hover,
+.btn-unfollow:hover {
     background-color: #101010;
-  }
-  
-  .follow-form {
-    width: 130px;               /* Reduced from 150px to move left */
+}
+
+.follow-form {
+    width: 130px;
     display: flex;
     justify-content: flex-end;
-  }
-  
-  
+}
+
 /* Responsive: Tablet */
 @media (max-width: 768px) {
     .post {
         padding: 15px;
         width: 95%;
         max-width: 95%;
-        margin: 0 auto;
     }
 
     h2 {
@@ -367,11 +321,14 @@ label {
     .share-btn {
         font-size: 17px;
         padding: 14px 22px;
-        margin: 4px;
     }
 
     form input[type="text"] {
         width: 65%;
+    }
+
+    .container {
+        padding: 10px;
     }
 }
 
@@ -380,7 +337,6 @@ label {
     .post {
         width: 100%;
         padding: 15px 10px;
-        margin: 0 auto;
     }
 
     form input[type="text"] {
@@ -405,12 +361,15 @@ label {
     .share-btn {
         font-size: 16px;
         padding: 13px 20px;
-        margin: 4px;
     }
 
     .post .post-actions a {
         font-size: 16px;
         padding: 13px 20px;
+    }
+
+    .container {
+        padding: 8px;
     }
 }
 
