@@ -30,6 +30,14 @@
                 <span class="plus-icon">+</span>
             </a>
         </div>
+        <!-- Other users’ stories here -->
+        {% for story in stories %}
+            {% if story.user != request.user %}
+                <a href="{% url 'story-detail' story.id %}" class="story-bubble {% if request.user in story.viewers.all %}viewed{% else %}not-viewed{% endif %}">
+                    <img src="{{ story.user.profile_pic.url }}" alt="{{ story.user.username }}">
+                </a>
+            {% endif %}
+        {% endfor %}
         
         <!-- Notifications button on the right side -->
         <a href="{% url 'notifications' %}" class="notifications-btn">
@@ -39,14 +47,6 @@
             {% endif %}
         </a>        
         
-        <!-- Other users’ stories here -->
-        {% for story in stories %}
-            {% if story.user != request.user %}
-                <a href="{% url 'story-detail' story.id %}" class="story-bubble {% if request.user in story.viewers.all %}viewed{% else %}not-viewed{% endif %}">
-                    <img src="{{ story.user.profile_pic.url }}" alt="{{ story.user.username }}">
-                </a>
-            {% endif %}
-        {% endfor %}
     </div>
     
     <!-- Main Container -->
