@@ -26,28 +26,43 @@
     </div>
     
     <!-- Post Content -->
-    <p>{{ post.content }}</p>
-    <br>
-   {% if request.user != post.user %}
-    <form action="{% url 'follow-user' post.user.id %}" method="POST" class="follow-form" data-user-id="{{ post.user.id }}">
-        {% csrf_token %}
-        {% if post.user in request.user.profile.following.all %}
-            <button type="submit" class="btn-unfollow">Unfollow</button>
-        {% else %}
-            <button type="submit" class="btn-follow">Follow</button>
+    <div class="post-row">
+        <!-- Post Content -->
+        <p class="post-text">
+          <span id="content-{{ post.id }}" class="post-content" data-full-text="{{ post.content|escapejs }}">
+            {{ post.content|slice:":30" }}{% if post.content|length > 30 %}...
+            {% endif %}
+          </span>
+          {% if post.content|length > 30 %}
+            <a href="javascript:void(0);" class="toggle-more" id="toggle-{{ post.id }}" onclick="toggleContent({{ post.id }})">More</a>
+          {% endif %}
+        </p>
+      
+        <!-- Follow Button -->
+        {% if request.user != post.user %}
+          <form action="{% url 'follow-user' post.user.id %}" method="POST" class="follow-form" data-user-id="{{ post.user.id }}">
+            {% csrf_token %}
+            {% if post.user in request.user.profile.following.all %}
+              <button type="submit" class="btn-unfollow">Unfollow</button>
+            {% else %}
+              <button type="submit" class="btn-follow">Follow</button>
+            {% endif %}
+          </form>
         {% endif %}
-    </form>
+      </div>
+      
+    {% if post.images.all %}
+    {% for img in post.images.all %}
+        <img src="{{ img.image.url }}" alt="Post Image" style="max-width: 100%; height: auto;">
+    {% endfor %}
 {% endif %}
 
-    {% if post.image %}
-        <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 100%; height: auto;">
-    {% endif %}
-    {% if post.video %}
-        <video width="400" controls>
-            <source src="{{ post.video.url }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    {% endif %}
+{% if post.video %}
+    <video width="400" controls>
+        <source src="{{ post.video.url }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+{% endif %}
 
     <!-- Post Actions -->
     <div class="post-actions">
@@ -126,7 +141,7 @@
                 <div class="comment-card">
                     <div class="comment-header">
                         <strong>
-                            <a href="{% url 'user-profile' comment.user.username %}" class="username-link">
+                            <a href="{% url 'user-profile' comment.user.username %}" class="username-linki">
                                 {{ comment.user.username }}
                             </a>
                         </strong>
@@ -295,6 +310,22 @@
             });
         });
         </script>
-        
-    
+        <script>
+            function toggleContent(postId) {
+              const contentSpan = document.getElementById(`content-${postId}`);
+              const toggleLink = document.getElementById(`toggle-${postId}`);
+          
+              const fullText = contentSpan.dataset.fullText;
+              const shortText = fullText.slice(0, 30) + "...";
+          
+              if (toggleLink.textContent === "More") {
+                contentSpan.textContent = fullText;
+                toggleLink.textContent = "Less";
+              } else {
+                contentSpan.textContent = shortText;
+                toggleLink.textContent = "More";
+              }
+            }
+          </script>
+          
 {% endblock %}

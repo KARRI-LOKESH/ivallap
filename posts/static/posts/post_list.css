@@ -146,22 +146,6 @@ button[type="submit"]:not(.btn-follow):not(.btn-unfollow):hover {
 .share-btn:hover {
     background-color: #64469e;
 }
-.btn-follow,
-.btn-unfollow {
-    background-color: #1f1d1d;
-    color: #fdf6f6;
-    font-size: 13px;
-    padding: 2px 6px; /* Minimal padding around the text */
-    border: 1px solid white;
-    border-radius: 4px;
-    cursor: pointer;
-    line-height: 1;
-}
-
-.btn-follow:hover,
-.btn-unfollow:hover {
-    background-color: #101010;
-}
 
 
 /* Toggle */
@@ -255,11 +239,17 @@ label {
     height: 32px;
     border-radius: 50%;
     object-fit: cover;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: 0px; /* ✅ This nudges the image up slightly to match the text */
 }
 
 .username-link {
     margin-left: 8px;
     font-weight: 600;
+    position: relative;
+    top: 5px; /* ✅ Nudges the text slightly down */
 }
 
 .post-time {
@@ -286,7 +276,69 @@ label {
     margin: 0 auto;
     padding: 20px;
 }
+.username-linki {
+    margin-left: 8px;
+    font-weight: 600;
+}
 
+  .post-content.expanded {
+    white-space: normal; /* Allow full content to wrap */
+  }
+  .post-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    max-width: 500px;
+    gap: 10px;
+  }
+  
+  .post-text {
+    width: 350px;
+    word-break: break-word;
+    margin: 0;
+  }
+  
+  .post-content {
+    display: block;
+    white-space: normal;
+    line-height: 1.5;
+  }
+  
+  .toggle-more {
+    color: #1877f2;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 4px;
+  }
+  .btn-follow,
+  .btn-unfollow {
+    background-color: #1f1d1d;
+    color: #fdf6f6;
+    font-size: 12px;
+    padding: 2px 8px;           /* Balanced padding */
+    border: 1px solid white;
+    border-radius: 4px;
+    cursor: pointer;
+    line-height: 1;
+    height: 28px;               /* Ensures vertical alignment */
+    display: flex;             /* Centering text vertically */
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .btn-follow:hover,
+  .btn-unfollow:hover {
+    background-color: #101010;
+  }
+  
+  .follow-form {
+    width: 130px;               /* Reduced from 150px to move left */
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  
 /* Responsive: Tablet */
 @media (max-width: 768px) {
     .post {
