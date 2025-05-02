@@ -37,7 +37,7 @@ p {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     width: 100%;
-    max-width: 700px;
+    max-width: 900px;
     box-sizing: border-box;
     border: 1px solid #333;
     transition: transform 0.2s ease;
