@@ -39,7 +39,7 @@ p {
     width: 100%;
     max-width: 900px; /* ✅ Increased from 700px */
     box-sizing: border-box;
-    border: 1px solid #333;
+    border: none;
     transition: transform 0.2s ease;
     text-align: center;
 }
@@ -446,6 +446,12 @@ label {
     align-items: center;
     justify-content: flex-start; /* Align them to the left (or adjust as needed) */
 }
+/* Remove default margin and padding from the body and html */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
 /* Logo Navigation Bar */
 .Logo-nav {
     display: flex;
@@ -455,16 +461,17 @@ label {
     background-color: #ffffff;
     border-bottom: 1px solid #ddd;
     position: relative;
-    top: 0;
-    height: 60px; /* Slightly increased for better spacing */
+    top: 0; /* Ensures it sticks to the top without any gap */
+    height: 70px; /* Slightly increased for better spacing */
     z-index: 1002;
+    margin-top: 0; /* Ensures no margin on top */
 }
 
 /* Ivallap logo - Instagram-like font */
 .logo-text {
     font-size: 26px;
     text-decoration: none;   
-    font-family:cursive,Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: 'Pacifico', cursive;
     color: #3a293b;
     margin: 0; /* Ensures proper vertical alignment */
     line-height: 1;
@@ -501,10 +508,14 @@ label {
     padding: 0 6px;
     font-size: 13px;
     position: absolute;
-    top: -5px;
-    right: -10px;
+    top: -3px;
+    right: -8px;
+    transform: translateY(-50%);
 }
-
+.logo-text a {
+    text-decoration: none;
+    color: inherit; /* Keeps it the same color as parent h2 */
+  }
 
 /* Responsive: Tablet */
 @media (max-width: 768px) {
