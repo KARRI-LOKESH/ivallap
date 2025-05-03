@@ -62,8 +62,8 @@ nav i {
 
 /* Profile Picture */
 .profile-pic-small img {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   object-fit: cover;
 }
