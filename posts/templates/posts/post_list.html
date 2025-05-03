@@ -51,7 +51,7 @@
 {% for post in posts %}
 <div class="post" data-post-id="{{ post.id }}">
     <div class="post-header">
-        <a href="{% url 'user-profile' post.user.username %}" class="user-info">
+        <a href="{% url 'user-profile' post.user.username %}" class="user-infoo">
             <div class="profile-pic-smalli">
                 {% if post.user.profile_pic %}
                     <img src="{{ post.user.profile_pic.url }}" alt=" ">
