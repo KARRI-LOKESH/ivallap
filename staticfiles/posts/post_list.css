@@ -219,6 +219,8 @@ label {
 }
 
 .user-info {
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -299,6 +301,7 @@ label {
     cursor: pointer;
     display: inline-block;
     margin-top: 4px;
+    text-decoration: none;
 }
 
 .btn-follow,
@@ -401,8 +404,8 @@ label {
   }
   
   .profile-pic-small {
-    width: 32px;
-    height: 32px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     overflow: hidden;
     display: flex;

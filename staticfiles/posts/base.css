@@ -62,12 +62,17 @@ nav i {
 
 /* Profile Picture */
 .profile-pic-small img {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   object-fit: cover;
 }
-
+.user-info {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 /* Search Form */
 .search-form {
   position: fixed;
