@@ -1,10 +1,11 @@
 {% extends 'posts/base.html' %}
 {% load static %}
 {% load humanize %}
+
 {% block content %}
 <link rel="stylesheet" href="{% static 'posts/notification.css' %}">
-{% block extra_css %}
-{% endblock %}
+{% block extra_css %}{% endblock %}
+
 <div class="notifications-container">
     <h2>Your Notifications</h2>
 
@@ -12,15 +13,21 @@
         <ul class="notifications-list">
             {% for notification in notifications %}
                 <li class="{% if not notification.is_read %}unread{% endif %}">
-                    <p>{{ notification.message|safe }}</p>
-                    <small>{{ notification.timestamp|naturaltime }}</small>
                     
+                    {% if notification.link %}
+                        <p><a href="{{ notification.link }}">{{ notification.message|safe }}</a></p>
+                    {% else %}
+                        <p>{{ notification.message|safe }}</p>
+                    {% endif %}
+                    
+                    <small>{{ notification.timestamp|naturaltime }}</small>
+
                     {% if notification.post %}
-                        <p><a href="{% url 'post-detail' notification.post.id %}">View Post</a></p>  <!-- Link to the post -->
+                        <p><a href="{% url 'post-detail' notification.post.id %}">View Post</a></p>
                     {% endif %}
 
                     {% if notification.story %}
-                        <p><a href="{% url 'story-detail' notification.story.id %}">View Story</a></p>  <!-- Link to the story -->
+                        <p><a href="{% url 'story-detail' notification.story.id %}">View Story</a></p>
                     {% endif %}
                 </li>
             {% endfor %}

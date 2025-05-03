@@ -11,11 +11,17 @@ body {
   background-color: #f5f6fa;
   color: #333;
   padding-bottom: 70px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 }
 
-/* Bottom Navbar */
+/* Container */
+.container {
+  padding: 20px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Navbar */
 nav {
   background-color: #ffffff;
   border-top: 2px solid #ddd;
@@ -37,9 +43,11 @@ nav a {
   text-decoration: none;
   transition: color 0.3s ease;
 }
+
 nav a:hover {
   color: #007bff;
 }
+
 nav i {
   pointer-events: none;
 }
@@ -52,7 +60,15 @@ nav i {
   color: #333;
 }
 
-/* Search form */
+/* Profile Picture */
+.profile-pic-small img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Search Form */
 .search-form {
   position: fixed;
   top: 10px;
@@ -67,6 +83,7 @@ nav i {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   z-index: 1001;
 }
+
 .search-form input {
   padding: 8px 14px;
   border: 1px solid #ccc;
@@ -75,6 +92,7 @@ nav i {
   width: 180px;
   font-size: 14px;
 }
+
 .search-form button {
   height: 36px;
   width: 36px;
@@ -87,131 +105,33 @@ nav i {
   justify-content: center;
 }
 
-/* Content container */
-.container {
-  padding: 20px;
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Stories bar container */
-.stories-bar {
+/* Notification */
+.notifications-btn, .inbox-btn {
   display: flex;
   align-items: center;
-  padding: 10px;
-  gap: 10px;
-  overflow-x: auto;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
-  height: 100px;
-}
-
-/* Story wrapper (your story) and others */
-.story-wrapper,
-.story-bubble {
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-  position: relative;
-  display: inline-block;
-}
-
-/* Story images (your story and others) */
-.story-wrapper img,
-.story-bubble img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid transparent;
-}
-
-/* Plus icon on your story */
-.plus-icon {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background: #101010;
-  color: white;
-  border-radius: 50%;
-  width: 22px;
-  height: 22px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  border: 2px solid white;
-  z-index: 3;
-}
-
-/* Viewed and not viewed styles */
-.story-bubble.viewed img {
-  border-color: gray;
-}
-.story-bubble.not-viewed img {
-  border-color: red;
-}
-.profile-icon.has-story {
-  border-color: red;
-}
-.profile-icon:hover {
-  transform: scale(1.05);
-  transition: transform 0.2s ease;
-}
-
-/* User info */
-.user-info {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: rgb(44, 60, 208);
-}
-
-.profile-pic-small {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ddd;
-}
-.profile-pic-small img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-}
-
-.username-link {
-  margin-left: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
-}
-
-/* Notifications */
-.notifications-btn {
-  display: flex;
-  align-items: center;
-  color: #151414;
-  text-decoration: none;
   font-size: 25px;
   padding: 5px;
+  color: #151414;
   position: relative;
 }
+
 .notif-count {
   background-color: red;
   color: white;
   border-radius: 50%;
   padding: 0 6px;
-  font-size: 16px;
+  font-size: 14px;
   position: absolute;
   top: -5px;
   right: -10px;
+}
+
+/* Username link */
+.username-link {
+  margin-left: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
 }
 
 /* Responsive */

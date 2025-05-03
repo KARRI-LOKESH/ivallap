@@ -7,6 +7,44 @@
 
 {% block extra_css %}
 {% endblock %}
+
+<div class="Logo-nav">
+    <h2 class="logo-text">Ivallap</h2>
+    <div class="nav-icons">
+      <a href="{% url 'notifications' %}" class="notifications-btn">
+        <i class="fas fa-bell"></i>
+        {% if notification_count > 0 %}
+          <span class="notif-count">{{ notification_count }}</span>
+        {% endif %}
+      </a>
+      {% if request.user.is_authenticated and request.user.id %}
+        <a href="{% url 'inbox' %}" class="inbox-btn">
+          <i class="fab fa-facebook-messenger"></i>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+<div class="stories-bar">
+    <div class="story-wrapper">
+        <!-- Profile image click = go to my story -->
+        <a href="{% url 'my-story' %}">
+            <img src="{{ request.user.profile_pic.url }}" alt="Profile" class="profile-icon {% if has_story %}has-story{% endif %}">
+        </a>
+        <!-- Plus icon = go to story upload -->
+        <a href="{% url 'story-upload' %}" class="plus-icon-link">
+            <span class="plus-icon">+</span>
+        </a>
+    </div>
+    <!-- Other users’ stories here -->
+    {% for story in stories %}
+        {% if story.user != request.user %}
+            <a href="{% url 'story-detail' story.id %}" class="story-bubble {% if request.user in story.viewers.all %}viewed{% else %}not-viewed{% endif %}">
+                <img src="{{ story.user.profile_pic.url }}" alt="{{ story.user.username }}">
+            </a>
+        {% endif %}
+    {% endfor %}
+</div>
 {% for post in posts %}
 <div class="post" data-post-id="{{ post.id }}">
     <div class="post-header">
