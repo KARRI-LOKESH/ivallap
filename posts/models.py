@@ -7,7 +7,7 @@ User = get_user_model()
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     content = models.TextField()
-    image = models.ImageField(upload_to="post_images/", null=True, blank=True)
+    image = models.FileField(upload_to="post_images/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     video = models.FileField(upload_to="posts/videos/", blank=True, null=True)

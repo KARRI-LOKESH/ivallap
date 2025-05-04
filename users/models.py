@@ -29,7 +29,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     age = models.IntegerField()
     phone= models.CharField(max_length=15, unique=True, null=True, blank=True)
     otp = models.CharField(max_length=6, null=True, blank=True)
-    profile_pic = models.ImageField(upload_to='profile_pics/', null=True, blank=True, default="profile_pics/default-profile.png")
+    profile_pic = models.FileField(upload_to='profile_pics/', null=True, blank=True, default="profile_pics/default-profile.png")
     username = models.CharField(max_length=30, unique=True, null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
     first_name = models.CharField(max_length=30, null=True, blank=True)
