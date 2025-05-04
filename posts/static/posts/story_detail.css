@@ -43,14 +43,17 @@ body {
 
 .story-media {
   position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
 }
 
 .story-media img,
 .story-media video {
   width: 100%;
+  height: auto;
   border-radius: 10px;
-  max-height: 70vh;
-  object-fit: cover;
+  object-fit: contain; /* Ensure images/videos don't get cut off */
 }
 
 /* Click zones for navigation */
@@ -185,5 +188,17 @@ body {
 
   .story-navigation i {
     font-size: 18px;
+  }
+
+  /* Prevent images and videos from getting cut off */
+  .story-media img,
+  .story-media video {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain; /* Prevents cut-off */
+  }
+
+  .story-container p {
+    font-size: 14px; /* Adjust text size */
   }
 }

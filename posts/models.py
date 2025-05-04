@@ -2,15 +2,16 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.conf import settings
+from cloudinary.models import CloudinaryField
 User = get_user_model()
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     content = models.TextField()
-    image = models.FileField(upload_to="post_images/", null=True, blank=True)
+    image = CloudinaryField('image',null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    video = models.FileField(upload_to="posts/videos/", blank=True, null=True)
+    video = CloudinaryField(resource_type='video', blank=True, null=True)
     # Many-to-Many relationships
     likes = models.ManyToManyField(User, related_name="liked_posts", blank=True)
     saved_by = models.ManyToManyField(User, related_name="saved_posts", blank=True)
@@ -82,7 +83,7 @@ class Notification(models.Model):
         return f"{self.sender.username} {self.get_notification_type_display()} to {self.user.username}"
 class Story(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='stories')
-    media = models.FileField(upload_to='stories/', null=True, blank=True)
+    media = CloudinaryField('media',null=True, blank=True)
     caption = models.TextField(blank=True)
     is_video = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

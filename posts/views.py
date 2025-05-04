@@ -9,6 +9,7 @@ from posts.forms import MessageForm,StoryUploadForm
 from django.contrib import messages
 from django.utils.timezone import localtime
 import json
+from cloudinary.uploader import upload
 from django.utils import timezone
 from django.http import HttpResponse
 from django.core.paginator import Paginator
@@ -20,6 +21,7 @@ class PostListView(ListView):
     template_name = 'posts/post_list.html'
     context_object_name = 'posts'
     ordering = ['-created_at']
+
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['content', 'image', 'video']
@@ -27,16 +29,27 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('post-list')
 
     def form_valid(self, form):
-        image = form.cleaned_data.get('image')
-        video = form.cleaned_data.get('video')
+        image = self.request.FILES.get('image')
+        video = self.request.FILES.get('video')
 
         if image and video:
             form.add_error('video', "You can't upload both an image and a video in the same post.")
             return self.form_invalid(form)
 
+        # Image type validation
+        if image:
+            if not image.content_type.startswith('image/'):
+                form.add_error('image', 'Uploaded file is not a valid image.')
+                return self.form_invalid(form)
+
+        # Video type validation (optional)
+        if video:
+            if not video.content_type.startswith('video/'):
+                form.add_error('video', 'Uploaded file is not a valid video.')
+                return self.form_invalid(form)
+
         form.instance.user = self.request.user
         return super().form_valid(form)
-
 
 class PostDetailView(DetailView):
     model = Post
@@ -255,6 +268,8 @@ def notifications_view(request):
     # Optional: Mark all notifications as read
     notifications.update(is_read=True)
     return render(request, 'posts/notifications.html', {'notifications': notifications})
+from cloudinary.uploader import upload
+
 @login_required
 def upload_story(request):
     if request.method == 'POST':
@@ -265,19 +280,38 @@ def upload_story(request):
             messages.error(request, "Please select a media file.")
             return redirect('story-upload')
 
+        # Check if it's an image or a video
         is_video = media.name.endswith(('mp4', 'mov', 'avi'))
+        is_image = media.name.endswith(('jpg', 'jpeg', 'png', 'gif'))
 
-        # ⏱ Duration check (placeholder: replace with actual media duration extraction)
-        if is_video and media.size > 10 * 1024 * 1024:  # Optional: 10MB limit
+        if not (is_video or is_image):  # Make sure it's either an image or a video
+            messages.error(request, "Only image or video files are allowed.")
+            return redirect('story-upload')
+
+        if is_video and media.size > 10 * 1024 * 1024:  # Optional: 10MB limit for videos
             messages.error(request, "Video is too large.")
             return redirect('story-upload')
 
+        # Upload media to Cloudinary
+        try:
+            if is_video:
+                cloudinary_response = upload(media, resource_type='video')  # Specify resource_type='video' for videos
+            elif is_image:
+                cloudinary_response = upload(media, resource_type='image')  # Specify resource_type='image' for images
+
+            media_url = cloudinary_response['secure_url']
+        except Exception as e:
+            messages.error(request, f"Error uploading media: {str(e)}")
+            return redirect('story-upload')
+
+        # Create the Story object with the Cloudinary URL
         story = Story.objects.create(
             user=request.user,
-            media=media,
+            media=media_url,
             caption=caption,
             is_video=is_video
         )
+
         return redirect('story-detail', story_id=story.id)
 
     return render(request, 'posts/story_upload.html')

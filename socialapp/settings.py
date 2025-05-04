@@ -17,8 +17,8 @@ load_dotenv()
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv("djrkiohhm"),
-    'API_KEY': os.getenv("792251426959891"),
-    'API_SECRET': os.getenv("1o2uvnWeAXCa0xYyWNRjIeYZrQg"),
+    'API_KEY': os.getenv("666483511269567"),
+    'API_SECRET': os.getenv("166_CKRqGF5euH2KS-5dCcyf811o"),
 }
 
 # Base directory
