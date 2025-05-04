@@ -137,8 +137,7 @@ STATIC_URL = "/static/"
 #MEDIA_URL = '/media/'
 #MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # settings.py
-
-MEDIA_URL = 'https://res.cloudinary.com/djrkiohhm/image/upload/'  # For image files
+ # For image files
 # For videos or other media types, adjust the URL accordingly if needed
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
