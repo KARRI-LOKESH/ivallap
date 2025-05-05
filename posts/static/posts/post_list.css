@@ -26,7 +26,7 @@ h2 {
 }
 
 p {
-    color: white;
+    color: rgb(74, 178, 105);
 }
 
 /* Post card */
@@ -50,12 +50,12 @@ p {
 
 .post a {
     text-decoration: none;
-    color: #105dbb;
+    color: #f7f1ec;
 }
 
 .post a:hover {
-    text-decoration: underline;
-    color: #0056b3;
+    text-decoration: none;
+    color: #ede7e6;
 }
 
 .username-link,
@@ -82,61 +82,36 @@ button[id^="toggle-btn-"],
     padding: 15px 24px;
     margin: 4px;
     border-radius: 10px;
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
     border: none;
     color: white;
 }
 
-/* Primary */
-.btn-primary {
-    background-color: #5b7c07;
-}
-.btn-primary:hover {
-    background-color: #f8c90f;
-    color: black;
-}
-
-/* Warning */
-.btn-warning {
-    background-color: #c45d18;
-}
-.btn-warning:hover {
-    background-color: #e0a800;
-    color: black;
-}
-
-/* Danger */
-.btn-danger {
-    background-color: #dc3545;
-}
-.btn-danger:hover {
-    background-color: #c82333;
-}
-
 /* Like Button */
 .like-btn {
-    background-color: #28a745;
+    background-color: #1f1d1d;
+    font-size: 20px;
 }
 .like-btn:hover {
-    background-color: #218838;
+    background-color: #1f1d1d;
 }
 
 /* Submit Button (excluding follow/unfollow) */
 button[type="submit"]:not(.btn-follow):not(.btn-unfollow) {
-    background-color: #17a2b8;
+    background-color: #1f1d1d;
 }
 button[type="submit"]:not(.btn-follow):not(.btn-unfollow):hover {
-    background-color: #138496;
+    background-color: #1f1d1d;
 }
 
 /* Share */
 .share-btn {
-    background-color: #6f42c1;
+    background-color: #1f1d1d;
 }
 .share-btn:hover {
-    background-color: #64469e;
+    background-color: #1f1d1d;
 }
 
 /* Toggle */
@@ -194,15 +169,15 @@ hr {
     padding: 15px 24px;
     margin: 4px;
     border-radius: 10px;
-    font-size: 18px;
+    font-size: 20px;
     color: white;
-    background-color: #007bff;
+    background-color: #1f1d1d;
     text-decoration: none;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .post .post-actions a:hover {
-    background-color: #0056b3;
+    background-color: #1f1d1d;
     color: white;
 }
 
@@ -501,6 +476,24 @@ html, body {
     text-decoration: none;
     color: inherit; /* Keeps it the same color as parent h2 */
   }
+  .mention-suggestions a{
+    position: absolute;
+    z-index: 1000;
+    color:blue;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 250px;
+}
+
+.suggestion-item {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+}
+
 
 /* Responsive: Tablet */
 @media (max-width: 768px) {

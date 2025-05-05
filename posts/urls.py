@@ -30,5 +30,6 @@ urlpatterns = [
     path('story/<int:story_id>/like/', views.like_story, name='like-story'),
     path('send-story-message/<str:username>/', send_story_message, name='send-story-message'),
     path('send/<int:receiver_id>/', views.send_message, name='send-message'),
-    
+    path('mention-suggestions/', views.mention_suggestions, name='mention-suggestions'),
+
 ]

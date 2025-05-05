@@ -9,6 +9,7 @@ from posts.forms import MessageForm,StoryUploadForm
 from django.contrib import messages
 from django.utils.timezone import localtime
 import json
+import re
 from cloudinary.uploader import upload
 from django.utils import timezone
 from django.http import HttpResponse
@@ -168,6 +169,7 @@ def share_post(request, post_id):
         return redirect("post-detail", pk=post_id)
 
     return redirect("post-list")
+User = get_user_model()
 
 @login_required
 def add_comment(request, post_id):
@@ -179,7 +181,7 @@ def add_comment(request, post_id):
             comment = Comment.objects.create(user=request.user, post=post, content=content)
             print(f"New Comment Added by {comment.user}: {comment.content}")
 
-            # Create a notification
+            # Create a notification to the post owner
             if post.user != request.user:  # avoid self-notifications
                 Notification.objects.create(
                     user=post.user,
@@ -189,6 +191,23 @@ def add_comment(request, post_id):
                     message=f"{request.user.username} commented on your post!",
                     link=f"/post/{post.id}/"
                 )
+
+            # ✅ Handle @mentions
+            mentions = re.findall(r'@(\w+)', content)
+            for username in mentions:
+                try:
+                    mentioned_user = User.objects.get(username=username)
+                    if mentioned_user != request.user:
+                        Notification.objects.create(
+                            user=mentioned_user,
+                            sender=request.user,
+                            notification_type='mention',
+                            post=post,
+                            message=f"{request.user.username} mentioned you in a comment.",
+                            link=f"/post/{post.id}/"
+                        )
+                except User.DoesNotExist:
+                    pass  # Ignore mentions of non-existent users
 
     return redirect('post-detail', pk=post.id)
  # Redirect to the same post
@@ -443,4 +462,11 @@ def send_story_message(request, username):
         message_text = request.POST.get('message')
         Message.objects.create(sender=request.user, receiver=receiver, content=message_text)
         return redirect('inbox')
-    
+from django.db.models import Q
+from django.views.decorators.http import require_GET
+@require_GET
+def mention_suggestions(request):
+    query = request.GET.get('q', '')
+    users = User.objects.filter(username__icontains=query)[:5]
+    usernames = list(users.values_list('username', flat=True))
+    return JsonResponse(usernames, safe=False)

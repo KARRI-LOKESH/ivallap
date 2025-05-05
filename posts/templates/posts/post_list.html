@@ -1,6 +1,6 @@
 {% extends 'posts/base.html' %}
 {% load static %}
-
+{% load custom_filters %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'posts/post_list.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -160,52 +160,56 @@
         </form>
     </div>
 
-    <!-- Comment Form -->
-    <form action="{% url 'add-comment' post.id %}" method="POST">
-        {% csrf_token %}
-        <input type="text" name="content" placeholder="Add a comment" required>
-        <button type="submit"><i class="fa fa-comment"></i></button>
-    </form>
+<!-- Comment Form -->
+<form action="{% url 'add-comment' post.id %}" method="POST" style="position: relative;">
+    {% csrf_token %}
+    <input type="text" name="content" id="comment-input-{{ post.id }}" placeholder="Add a comment" autocomplete="off" required>
+    <div class="mention-suggestions" id="mention-suggestions-{{ post.id }}"></div>
+    <button type="submit"><i class="fa fa-comment"></i></button>
+</form>
 
-    <!-- Comments -->
-    <p><strong>Comments ({{ post.comments.count }})</strong></p>
+<!-- Comments -->
+<p><strong>Comments ({{ post.comments.count }})</strong></p>
 
-    {% if post.comments.exists %}
-        <!-- Last 2 Comments -->
-        <div class="comment-container" id="limited-comments-{{ post.id }}">
-            {% for comment in post.comments.all|slice:"-2:" %}
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <strong>
-                            <a href="{% url 'user-profile' comment.user.username %}" class="username-linki">
-                                {{ comment.user.username }}
-                            </a>
-                        </strong>
-                    </div>
-                    <div class="comment-text">{{ comment.content }}</div>
+{% if post.comments.exists %}
+    <!-- Last 2 Comments -->
+    <div class="comment-container" id="limited-comments-{{ post.id }}">
+        {% for comment in post.comments.all|slice:"-2:" %}
+            <div class="comment-card">
+                <div class="comment-header">
+                    <strong>
+                        <a href="{% url 'user-profile' comment.user.username %}" class="username-linki">
+                            {{ comment.user.username }}
+                        </a>
+                    </strong>
                 </div>
-            {% endfor %}
-        </div>
-
-        <!-- All Comments Hidden Initially -->
-        <div class="comment-container" id="full-comments-{{ post.id }}" style="display: none;">
-            {% for comment in post.comments.all %}
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <strong>{{ comment.user.username }}</strong>
-                    </div>
-                    <div class="comment-text">{{ comment.content }}</div>
+                <div class="comment-text">
+                    {{ comment.content|urlize_mentions|safe }}
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
+    </div>
 
-        <!-- Toggle View Button -->
-        <button id="toggle-btn-{{ post.id }}" onclick="toggleComments({{ post.id }})">
-            View all comments
-        </button>
-    {% else %}
-        <p>No comments yet. Be the first to comment!</p>
-    {% endif %}
+    <!-- All Comments Hidden Initially -->
+    <div class="comment-container" id="full-comments-{{ post.id }}" style="display: none;">
+        {% for comment in post.comments.all %}
+            <div class="comment-card">
+                <div class="comment-header">
+                    <strong>{{ comment.user.username }}</strong>
+                </div>
+                <div class="comment-text">{{ comment.content }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Toggle View Button -->
+    <button id="toggle-btn-{{ post.id }}" onclick="toggleComments({{ post.id }})">
+        View all comments
+    </button>
+{% else %}
+    <p>No comments yet. Be the first to comment!</p>
+{% endif %}
+
 </div>
 <hr>
 {% endfor %}
@@ -297,22 +301,22 @@
     </script>
     <script>
         function toggleComments(postId) {
-            var limitedComments = document.getElementById('limited-comments-' + postId);
-            var fullComments = document.getElementById('full-comments-' + postId);
-            var toggleButton = document.getElementById('toggle-btn-' + postId);
+            const limited = document.getElementById(`limited-comments-${postId}`);
+            const full = document.getElementById(`full-comments-${postId}`);
+            const btn = document.getElementById(`toggle-btn-${postId}`);
         
-            if (fullComments.style.display === 'none') {
-                fullComments.style.display = 'block';
-                limitedComments.style.display = 'none';
-                toggleButton.innerHTML = 'View less comments';
+            if (full.style.display === "none") {
+                limited.style.display = "none";
+                full.style.display = "block";
+                btn.innerText = "Hide comments";
             } else {
-                fullComments.style.display = 'none';
-                limitedComments.style.display = 'block';
-                toggleButton.innerHTML = 'View all comments';
+                limited.style.display = "block";
+                full.style.display = "none";
+                btn.innerText = "View all comments";
             }
         }
+        </script>
         
-    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.follow-btn').forEach(button => {
@@ -363,5 +367,64 @@
               }
             }
           </script>
-          
+          <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const postId = "{{ post.id }}";
+                const input = document.getElementById(`comment-input-${postId}`);
+                const suggestionsBox = document.getElementById(`mention-suggestions-${postId}`);
+            
+                let currentQuery = "";
+                let cursorPosition = 0;
+            
+                input.addEventListener("input", function(e) {
+                    const cursor = input.selectionStart;
+                    const textBeforeCursor = input.value.substring(0, cursor);
+                    const atIndex = textBeforeCursor.lastIndexOf("@");
+            
+                    if (atIndex >= 0) {
+                        const query = textBeforeCursor.substring(atIndex + 1);
+                        currentQuery = query;
+                        cursorPosition = atIndex;
+            
+                        if (query.length > 0) {
+                            fetch(`/users/mention-suggestions/?q=${query}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    suggestionsBox.innerHTML = "";
+                                    if (data.length) {
+                                        suggestionsBox.style.display = "block";
+                                        data.forEach(username => {
+                                            const suggestion = document.createElement("div");
+                                            suggestion.textContent = "@" + username;
+                                            suggestion.classList.add("suggestion-item");
+                                            suggestion.onclick = () => {
+                                                const value = input.value;
+                                                const before = value.substring(0, cursorPosition);
+                                                const after = value.substring(cursor);
+                                                input.value = before + "@" + username + " " + after;
+                                                suggestionsBox.style.display = "none";
+                                                input.focus();
+                                            };
+                                            suggestionsBox.appendChild(suggestion);
+                                        });
+                                    } else {
+                                        suggestionsBox.style.display = "none";
+                                    }
+                                });
+                        } else {
+                            suggestionsBox.style.display = "none";
+                        }
+                    } else {
+                        suggestionsBox.style.display = "none";
+                    }
+                });
+            
+                document.addEventListener("click", function(event) {
+                    if (!suggestionsBox.contains(event.target) && event.target !== input) {
+                        suggestionsBox.style.display = "none";
+                    }
+                });
+            });
+            </script>
+            
 {% endblock %}
