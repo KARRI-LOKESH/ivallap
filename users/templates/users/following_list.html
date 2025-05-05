@@ -6,12 +6,13 @@
 <link rel="stylesheet" href="{% static 'users/following_list.css' %}">
 
 </head>
+<script src="{% static 'users/js/follow.js' %}"></script>
 <body>
     <h2>Following of {{ user.name }}</h2>
     <ul>
         {% for following in following %}
             <li>
-                <a href="{% url 'profile' %}">{{ following.name }}</a>
+                <a href="{% url 'user-profile' following.username%}">{{ following.name }}</a>
                 {% if request.user != following %}
                     <form action="{% url 'follow-user' following.id %}" method="POST" style="display:inline;">
                         {% csrf_token %}

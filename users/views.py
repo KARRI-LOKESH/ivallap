@@ -221,28 +221,8 @@ def contact_view(request):
 def my_posts(request):
     user_posts = Post.objects.filter(user=request.user)
     return render(request, 'posts/my_posts.html', {'posts': user_posts})
-@login_required
-def follow_unfollow(request, user_id):
-    user_to_follow = get_object_or_404(CustomUser, id=user_id)
-    
-    if request.user != user_to_follow:
-        if request.user.following.filter(id=user_id).exists():
-            request.user.following.remove(user_to_follow)
-            messages.success(request, f"You unfollowed {user_to_follow.username}.")
-        else:
-            request.user.following.add(user_to_follow)
-            messages.success(request, f"You are now following {user_to_follow.username}.")
-
-            # ✅ Create a notification for following
-            Notification.objects.create(
-                user=user_to_follow,
-                message=f"{request.user.username} started following you!"
-            )
-    
-    return redirect("user-profile", username=user_to_follow.username)
 
 User = get_user_model()
-
 def search_users(request):
     query = request.GET.get("query", "").strip()
     users = User.objects.filter(username__icontains=query) if query else []
@@ -255,13 +235,31 @@ def search_users(request):
         "posts": posts,
     })
 @login_required
+def follow_unfollow(request, user_id):
+    if request.method == "POST":
+        user_to_follow = get_object_or_404(User, id=user_id)
+
+        if request.user != user_to_follow:
+            if request.user.following.filter(id=user_id).exists():
+                request.user.following.remove(user_to_follow)  # Unfollow
+            else:
+                request.user.following.add(user_to_follow)  # Follow
+                Notification.objects.create(
+                    user=user_to_follow,
+                    message=f"{request.user.username} started following you!"
+                )
+
+            return HttpResponse(status=204)  # No content, but request is successful
+    return HttpResponse(status=400)  # Return error if not a valid request
+
+@login_required
 def followers_list(request, user_id):
-    user = get_object_or_404(CustomUser, id=user_id)
+    user = get_object_or_404(User, id=user_id)
     followers = user.followers.all()
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == "POST":
         follow_user_id = request.POST.get("user_id")
-        follow_user = get_object_or_404(CustomUser, id=follow_user_id)
+        follow_user = get_object_or_404(User, id=follow_user_id)
 
         if request.user != follow_user:
             if request.user.following.filter(id=follow_user_id).exists():
@@ -271,19 +269,15 @@ def followers_list(request, user_id):
                 request.user.following.add(follow_user)
                 followed = True
 
-                # Check if this is a follow back
-                if follow_user.following.filter(id=request.user.id).exists():
-                    message_text = f"{request.user.username} followed you back!"
-                else:
-                    message_text = f"{request.user.username} started following you!"
-
+                # Create a notification for the follow action
                 Notification.objects.create(
                     user=follow_user,
                     sender=request.user,
-                    message=message_text,
+                    message=f"{request.user.username} started following you!",
                     notification_type="follow"
                 )
 
+            # Render the follow button after the change
             button_html = render_to_string(
                 'partials/follow_button.html',
                 {'followed': followed, 'user_to_follow': follow_user}
@@ -291,14 +285,15 @@ def followers_list(request, user_id):
             return HttpResponse(button_html)
 
     return render(request, 'users/followers_list.html', {'user': user, 'followers': followers})
+
 @login_required
 def following_list(request, user_id):
-    user = get_object_or_404(CustomUser, id=user_id)
+    user = get_object_or_404(User, id=user_id)
     following = user.following.all()
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == "POST":
         follow_user_id = request.POST.get("user_id")
-        follow_user = get_object_or_404(CustomUser, id=follow_user_id)
+        follow_user = get_object_or_404(User, id=follow_user_id)
 
         if request.user != follow_user:
             if request.user.following.filter(id=follow_user_id).exists():
@@ -308,19 +303,15 @@ def following_list(request, user_id):
                 request.user.following.add(follow_user)
                 followed = True
 
-                # Check if this is a follow back
-                if follow_user.following.filter(id=request.user.id).exists():
-                    message_text = f"{request.user.username} followed you back!"
-                else:
-                    message_text = f"{request.user.username} started following you!"
-
+                # Create a notification for the follow action
                 Notification.objects.create(
                     user=follow_user,
                     sender=request.user,
-                    message=message_text,
+                    message=f"{request.user.username} started following you!",
                     notification_type="follow"
                 )
 
+            # Render the follow button after the change
             button_html = render_to_string(
                 'partials/follow_button.html',
                 {'followed': followed, 'user_to_follow': follow_user}
@@ -331,17 +322,34 @@ def following_list(request, user_id):
 
 @login_required
 def toggle_follow(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         user_id = request.POST.get('user_id')
-        target_user = User.objects.get(id=user_id)
+        target_user = get_object_or_404(CustomUser, id=user_id)
+
+        if request.user == target_user:
+            return JsonResponse({'error': 'You cannot follow yourself'}, status=400)
+
         profile = request.user.profile
+        followed = False
 
         if target_user in profile.following.all():
             profile.following.remove(target_user)
-            followed = False
         else:
             profile.following.add(target_user)
             followed = True
 
-        return JsonResponse({'followed': followed})
+            Notification.objects.create(
+                user=target_user,
+                sender=request.user,
+                message=f"{request.user.username} started following you!",
+                notification_type="follow"
+            )
+
+        button_html = render_to_string('partials/follow_button.html', {
+            'user_to_follow': target_user,
+            'followed': followed
+        }, request=request)
+
+        return JsonResponse({'button_html': button_html})
+    
     return JsonResponse({'error': 'Invalid request'}, status=400)

@@ -8,7 +8,7 @@
 
 {% block extra_css %}
 {% endblock %}
-
+<script src="{% static 'users/js/follow.js' %}"></script>
 <div class="Logo-nav">
     <h2 class="logo-text">
         <a href="{% url 'about' %}">Ivallap</a>
@@ -79,15 +79,15 @@
       
         <!-- Follow Button -->
         {% if request.user != post.user %}
-          <form action="{% url 'follow-user' post.user.id %}" method="POST" class="follow-form" data-user-id="{{ post.user.id }}">
+        <form action="{% url 'follow-user' post.user.id %}" method="POST" class="follow-form">
             {% csrf_token %}
-            {% if post.user in request.user.profile.following.all %}
-              <button type="submit" class="btn-unfollow">Unfollow</button>
+            {% if post.user in request.user.following.all %}
+                <button type="submit" class="btn-unfollow follow-toggle-btn"> Unfollow</button>
             {% else %}
-              <button type="submit" class="btn-follow">Follow</button>
+                <button type="submit" class="btn-follow follow-toggle-btn"> Follow</button>
             {% endif %}
-          </form>
-        {% endif %}
+        </form>
+    {% endif %}
       </div>
       
     {% if post.image %}
@@ -135,14 +135,14 @@
         <!-- Save -->
         <form action="{% url 'save-post' post.id %}" method="POST" style="display: inline;" class="save-form">
             {% csrf_token %}
-            <button type="submit" class="save-btn" data-post-id="{{ post.id }}">
+            <button type="submit" class="save-btn action-btn" data-post-id="{{ post.id }}">
                 <i class="fa fa-bookmark"></i>
             </button>
             <span id="save-count-{{ post.id }}" class="count-text">{{ post.total_saves }}</span>
         </form>
 
         <!-- Share -->
-        <button class="share-btn" onclick="toggleShareForm({{ post.id }})">
+        <button onclick="toggleShareForm({{ post.id }})">
             <i class="fa fa-paper-plane"></i>
         </button>
     </div>
@@ -161,15 +161,15 @@
     </div>
 
 <!-- Comment Form -->
-<form action="{% url 'add-comment' post.id %}" method="POST" style="position: relative;">
+<form action="{% url 'add-comment' post.id %}" method="POST" style="position: relative;" class="comment-form">
     {% csrf_token %}
     <input type="text" name="content" id="comment-input-{{ post.id }}" placeholder="Add a comment" autocomplete="off" required>
     <div class="mention-suggestions" id="mention-suggestions-{{ post.id }}"></div>
-    <button type="submit"><i class="fa fa-comment"></i></button>
+    <button type="submit" class="action-btn"><i class="fa fa-comment"></i></button>
 </form>
 
 <!-- Comments -->
-<p><strong>Comments ({{ post.comments.count }})</strong></p>
+<p class="pc"><strong>Comments ({{ post.comments.count }})</strong></p>
 
 {% if post.comments.exists %}
     <!-- Last 2 Comments -->
@@ -203,11 +203,11 @@
     </div>
 
     <!-- Toggle View Button -->
-    <button id="toggle-btn-{{ post.id }}" onclick="toggleComments({{ post.id }})">
+    <button id="toggle-btn-{{ post.id }}"class="view" onclick="toggleComments({{ post.id }})">
         View all comments
     </button>
 {% else %}
-    <p>No comments yet. Be the first to comment!</p>
+    <p class="cs">No comments yet. Be the first to comment!</p>
 {% endif %}
 
 </div>
@@ -315,40 +315,6 @@
                 btn.innerText = "View all comments";
             }
         }
-        </script>
-        
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.follow-btn').forEach(button => {
-                button.addEventListener('click', function () {
-                    const userId = this.getAttribute('data-user-id');
-                    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                    const btn = this;
-        
-                    fetch("{% url 'toggle-follow' %}", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                            'X-CSRFToken': csrftoken
-                        },
-                        body: `user_id=${userId}`
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.followed) {
-                            btn.textContent = 'Unfollow';
-                            btn.classList.remove('btn-follow');
-                            btn.classList.add('btn-unfollow');
-                        } else {
-                            btn.textContent = 'Follow';
-                            btn.classList.remove('btn-unfollow');
-                            btn.classList.add('btn-follow');
-                        }
-                    });
-                    
-                });
-            });
-        });
         </script>
         <script>
             function toggleContent(postId) {

@@ -7,6 +7,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'users/profile.css' %}">
 </head>
+<script src="{% static 'users/js/follow.js' %}"></script>
 <body>
     <div class="container">
         <h1>Welcome, {{ user.name }}</h1>
@@ -30,13 +31,13 @@
 
         <!-- Profile Picture Section -->
         <div class="profile-pic">
-            {% if user.profile_pic %}
-                <img src="{{ user.profile_pic.url }}" alt="Profile Picture">
+            {% if user_profile.profile_pic %}
+                <img src="{{ user_profile.profile_pic.url }}" alt="Profile Picture">
             {% else %}
                 <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile">
             {% endif %}
         </div>
-
+        
         <!-- Followers, Following, Notifications -->
         <p>
             <a href="{% url 'followers-list' user.id %}">Followers: {{ user.followers.count }}</a> |

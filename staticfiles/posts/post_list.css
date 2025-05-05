@@ -79,10 +79,10 @@ p {
 button[type="submit"]:not(.btn-follow):not(.btn-unfollow),
 button[id^="toggle-btn-"],
 .share-btn {
-    padding: 15px 24px;
-    margin: 4px;
+    padding: 5px 15px;
+    margin: 2px;
     border-radius: 10px;
-    font-size: 20px;
+    font-size: 25px;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
     border: none;
@@ -162,24 +162,46 @@ hr {
     padding: 10px 0;
 }
 
-.post .post-actions a {
+/* Unified Post Action Buttons */
+.post .post-actions a,
+.post .post-actions button,
+.post .post-actions form button {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    padding: 15px 24px;
-    margin: 4px;
+    width: 45px; /* Fixed width for all buttons */
+    height: 45px; /* Fixed height for all buttons */
+    margin: 2px;
     border-radius: 10px;
-    font-size: 20px;
+    font-size: 25px;
     color: white;
     background-color: #1f1d1d;
+    border: 1px solid white;
     text-decoration: none;
     transition: background-color 0.2s ease, color 0.2s ease;
+    cursor: pointer;
 }
 
 .post .post-actions a:hover {
     background-color: #1f1d1d;
     color: white;
 }
+button.action-btn, a.action-btn, form button.action-btn {
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 45px !important;
+    height: 45px !important;
+    font-size: 25px !important;
+    background-color: #1f1d1d !important;
+    color: white !important;
+    border-radius: 10px !important;
+    border: none !important;
+    margin: 2px !important;
+    border:1px solid white !important;
+    padding: 0 !important;
+}
+
 
 label {
     color: #fff;
@@ -258,16 +280,19 @@ label {
     align-items: flex-start;
     justify-content: space-between;
     max-width: 370px;
+    color: white;
     gap: 10px;
 }
 .post-text {
     width: 300px;
     word-break: break-word;
     margin: 0;
+    color: white;
 }
 .post-content {
     display: block;
     white-space: normal;
+    color: white;
     line-height: 1.5;
 }
 .toggle-more {
@@ -277,7 +302,12 @@ label {
     display: inline-block;
     margin-top: 4px;
 }
-
+.pc{
+    color:rgb(255, 255, 255);
+}
+.cs{
+    color:white;
+}
 .btn-follow,
 .btn-unfollow {
     background-color: #1f1d1d;

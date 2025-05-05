@@ -4,12 +4,16 @@
 {% if users %}
     {% for user in users %}
     <div class="user-profile">
-        <!-- Profile Picture Fix -->
-        {% if user.profile and user.profile.image %}
+        {% if user.profile and user.profile.profile_pic %}
             <img src="{{ user.profile.profile_pic.url }}?{{ user.profile.updated_at|date:'U' }}" alt="{{ user.username }}" class="profile-pic">
         {% else %}
             <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile" class="profile-pic">
         {% endif %}
+        <!-- Other user info like name or follow button goes here -->
+    </div>
+    {% endfor %}
+{% endif %}
+
 
         <!-- User Details -->
         <h2>
