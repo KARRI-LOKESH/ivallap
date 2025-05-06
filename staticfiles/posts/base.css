@@ -77,8 +77,8 @@ nav i {
 /* Search Form */
 .search-form {
   position: fixed;
-  top: 10px;
-  right: 10px;
+  top: 80px; /* Pushes search form below 70px navbar */
+  right: 20px;
   display: none;
   flex-direction: row;
   align-items: center;
@@ -89,6 +89,7 @@ nav i {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   z-index: 1001;
 }
+
 
 .search-form input {
   padding: 8px 14px;
@@ -110,7 +111,6 @@ nav i {
   align-items: center;
   justify-content: center;
 }
-
 
 /* Username link */
 .username-link {

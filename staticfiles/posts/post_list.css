@@ -120,14 +120,6 @@ button[type="submit"]:not(.btn-follow):not(.btn-unfollow):hover {
     background-color: #1f1d1d;
 }
 
-/* Toggle */
-button[id^="toggle-btn-"] {
-    background-color: #6c757d;
-}
-button[id^="toggle-btn-"]:hover {
-    background-color: #5a6268;
-}
-
 /* Like / Save counts */
 .like-count,
 .save-count,
@@ -529,6 +521,20 @@ html, body {
 
 .suggestion-item:hover {
     background-color: #f0f0f0;
+}
+
+/* Style only the 'View all comments' button */
+.view {
+    padding: 8px 20px;
+    font-size: 16px;
+    background-color: #1f1d1d;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;       /* This keeps text on one line */
+    display: inline-block;
 }
 
 
