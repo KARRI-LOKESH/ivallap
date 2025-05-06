@@ -73,44 +73,42 @@ p {
     border: 1px solid #ddd;
 }
 
-/* Generic Buttons */
 .btn,
 .like-btn,
 button[type="submit"]:not(.btn-follow):not(.btn-unfollow),
 button[id^="toggle-btn-"],
 .share-btn {
-    padding: 5px 15px;
+    width: 45px;
+    height: 45px;
+    padding: 0;
     margin: 2px;
     border-radius: 10px;
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
     border: none;
     color: white;
+    background-color: #1f1d1d;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
-/* Like Button */
-.like-btn {
-    background-color: #1f1d1d;
-    font-size: 18px;
+.btn:hover,
+.like-btn:hover,
+.share-btn:hover,
+button[type="submit"]:hover,
+button[id^="toggle-btn-"]:hover {
+    background-color: #333;
 }
-.like-btn:hover {
-    background-color: #1f1d1d;
-}
+
 
 /* Submit Button (excluding follow/unfollow) */
 button[type="submit"]:not(.btn-follow):not(.btn-unfollow) {
     background-color: #1f1d1d;
 }
 button[type="submit"]:not(.btn-follow):not(.btn-unfollow):hover {
-    background-color: #1f1d1d;
-}
-
-/* Share */
-.share-btn {
-    background-color: #1f1d1d;
-}
-.share-btn:hover {
     background-color: #1f1d1d;
 }
 
