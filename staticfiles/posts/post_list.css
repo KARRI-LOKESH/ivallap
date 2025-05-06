@@ -73,6 +73,7 @@ p {
     border: 1px solid #ddd;
 }
 
+/* Generic Buttons */
 .btn,
 .like-btn,
 button[type="submit"]:not(.btn-follow):not(.btn-unfollow),
@@ -95,20 +96,27 @@ button[id^="toggle-btn-"],
     text-align: center;
 }
 
-.btn:hover,
-.like-btn:hover,
-.share-btn:hover,
-button[type="submit"]:hover,
-button[id^="toggle-btn-"]:hover {
-    background-color: #333;
+/* Like Button */
+.like-btn {
+    background-color: #1f1d1d;
 }
-
+.like-btn:hover {
+    background-color: #1f1d1d;
+}
 
 /* Submit Button (excluding follow/unfollow) */
 button[type="submit"]:not(.btn-follow):not(.btn-unfollow) {
     background-color: #1f1d1d;
 }
 button[type="submit"]:not(.btn-follow):not(.btn-unfollow):hover {
+    background-color: #1f1d1d;
+}
+
+/* Share */
+.share-btn {
+    background-color: #1f1d1d;
+}
+.share-btn:hover {
     background-color: #1f1d1d;
 }
 
@@ -172,7 +180,7 @@ hr {
     height: 45px; /* Fixed height for all buttons */
     margin: 2px;
     border-radius: 10px;
-    font-size: 25px;
+    font-size: 18px;
     color: white;
     background-color: #1f1d1d;
     border: 1px solid white;
