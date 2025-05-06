@@ -1,0 +1,24 @@
+.message {
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 5px;
+    max-width: 80%;
+}
+
+.my-message {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+    text-align: right;
+}
+
+.other-message {
+    background-color: #f1f0f0;
+    align-self: flex-start;
+    text-align: left;
+}
+
+#chat-box {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}

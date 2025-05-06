@@ -3,7 +3,7 @@ from .views import (
     PostListView, PostCreateView, PostDetailView, 
     PostUpdateView, PostDeleteView, like_post, 
     save_post, add_comment, delete_comment,
-    dashboard, send_story_message, inbox, chat_room,share_post,notifications_view,story_list_view
+    dashboard, send_story_message, inbox, share_post,notifications_view,story_list_view
 )
 from . import views
 urlpatterns = [
@@ -19,7 +19,6 @@ urlpatterns = [
     path('inbox/', inbox, name='inbox'),
     path('share/<int:post_id>/', share_post, name='share-post'),
     path('posts/posts/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
-    path('chat/<int:user_id>/', chat_room, name='chat-room'),
     path('notifications/', notifications_view, name='notifications'),
     path('posts/story_upload/', views.upload_story, name='story-upload'),
     path('stories/<int:story_id>/', views.story_detail_view, name='story-detail'),
@@ -31,5 +30,6 @@ urlpatterns = [
     path('send-story-message/<str:username>/', send_story_message, name='send-story-message'),
     path('send/<int:receiver_id>/', views.send_message, name='send-message'),
     path('mention-suggestions/', views.mention_suggestions, name='mention-suggestions'),
+    path('chat/<str:username>/', views.chat_view, name='chat'),
 
 ]

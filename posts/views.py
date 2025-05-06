@@ -270,17 +270,11 @@ def inbox(request):
     return render(request, 'posts/inbox.html', {'messages': received_messages})
 
 @login_required
-def chat_room(request, user_id):
-    other_user = get_object_or_404(User, id=user_id)
-    current_user = request.user
-
-    # Generate consistent room name (e.g., "1_2" or "2_1")
-    room_name = f"{min(current_user.id, other_user.id)}_{max(current_user.id, other_user.id)}"
-    
-    return render(request, 'posts/chat_room.html', {
-        'room_name': room_name,
-        'other_user': other_user,
+def chat_view(request, username):
+    return render(request, 'posts/chat.html', {
+        'username': username
     })
+
 @login_required
 def notifications_view(request):
     notifications = request.user.notifications.all().order_by('-timestamp')

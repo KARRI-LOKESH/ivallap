@@ -1,0 +1,41 @@
+{% extends 'posts/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'posts/chat.css' %}">
+{% endblock %}
+
+{% block content %}
+<body>
+<h2>Chat with {{ username }}</h2>
+<div id="chat-box" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc;"></div>
+<input type="text" id="chat-message-input" placeholder="Type your message...">
+<button id="chat-message-send">Send</button>
+</body>
+<script>
+    const username = "{{ username }}";
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/' + username + '/'
+    );
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        console.log(data);
+
+        const chatBox = document.getElementById('chat-box');
+        const messageElem = document.createElement('div');
+        messageElem.classList.add('message');
+        messageElem.classList.add(data.username === username ? 'my-message' : 'other-message');
+        messageElem.innerHTML = `<strong>${data.username}:</strong> ${data.message}`;
+        chatBox.appendChild(messageElem);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    };
+
+    document.getElementById('chat-message-send').onclick = function() {
+        const input = document.getElementById('chat-message-input');
+        const message = input.value;
+        chatSocket.send(JSON.stringify({'message': message}));
+        input.value = '';
+    };
+</script>
+{% endblock %}
