@@ -160,7 +160,7 @@ hr {
     margin-top: 25px;
     margin-bottom: 10px;
     padding: 10px 0;
-    font-size:25px;
+    font-size:18px;
 }
 
 /* Unified Post Action Buttons */
@@ -193,7 +193,7 @@ button.action-btn, a.action-btn, form button.action-btn {
     align-items: center !important;
     width: 45px !important;
     height: 45px !important;
-    font-size: 25px !important;
+    font-size: 18px !important;
     background-color: #1f1d1d !important;
     color: white !important;
     border-radius: 10px !important;
