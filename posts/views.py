@@ -272,7 +272,8 @@ def inbox(request):
 @login_required
 def chat_view(request, username):
     return render(request, 'posts/chat.html', {
-        'username': username
+        'username': username,
+        'room_name': request.user.id  # or use a room ID logic
     })
 
 @login_required
