@@ -127,34 +127,38 @@ def save_post(request, post_id):
         "saved": saved  # Return whether the post is saved by the user
     })
 
+
+User = get_user_model()
+
 @login_required
 def share_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    
-    if request.method == 'POST':
-        shared_with_username = request.POST.get('shared_with')
-        share_with_self = request.POST.get('share_with_self')
 
+    if request.method == 'POST':
+        shared_with_username = request.POST.get('shared_with', '').strip()
+        share_with_self = request.POST.get('share_with_self')
         shared_any = False
 
-        # Share with another user
+        # Share with another user (case-insensitive)
         if shared_with_username:
             try:
-                user_to_share_with = CustomUser.objects.get(username=shared_with_username)
-                post.shared_with.add(user_to_share_with)
-                Notification.objects.create(
-                user=user_to_share_with,
-                message=f"{request.user.username} shared a <a href='{reverse('post-detail', kwargs={'pk': post.id})}'>post</a> with you!"
-            )
-                shared_any = True
-            except CustomUser.DoesNotExist:
+                user_to_share_with = User.objects.get(username__iexact=shared_with_username)
+                if user_to_share_with != request.user:
+                    post.shared_with.add(user_to_share_with)
+                    Notification.objects.create(
+                        user=user_to_share_with,
+                        message=f"{request.user.username} shared a <a href='{reverse('post-detail', kwargs={'pk': post.id})}'>post</a> with you!"
+                    )
+                    shared_any = True
+                else:
+                    messages.warning(request, "You cannot share a post with yourself using username. Select 'Share to my profile' instead.")
+            except User.DoesNotExist:
                 messages.error(request, "User not found.")
                 return redirect("post-detail", pk=post_id)
 
         # Share with self
         if share_with_self:
             post.shared_with.add(request.user)
-            # Optional: notification for self
             Notification.objects.create(
                 user=request.user,
                 message="You shared a post to your profile."

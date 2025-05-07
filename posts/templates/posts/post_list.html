@@ -158,6 +158,31 @@
             <button type="submit"><i class="fa fa-paper-plane"></i></button>
             <p class="share-status" style="color: green;"></p>
         </form>
+    
+        <!-- Social Share Links -->
+        <div class="social-share">
+            <p>Or share on:</p>
+            {% with post_url=request.build_absolute_uri|add:post.get_absolute_url %}
+            <a href="https://api.whatsapp.com/send?text={{ post_url|urlencode }}" target="_blank">
+                <i class="fab fa-whatsapp"></i> 
+            </a> |
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ post_url|urlencode }}" target="_blank">
+                <i class="fab fa-facebook"></i> 
+            </a> |
+            <a href="https://twitter.com/intent/tweet?url={{ post_url|urlencode }}" target="_blank">
+                <i class="fab fa-twitter"></i> 
+            </a> |
+            <a href="https://www.instagram.com" target="_blank">
+                <i class="fab fa-instagram"></i> 
+            </a> |
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ post_url|urlencode }}" target="_blank">
+                <i class="fab fa-linkedin"></i> 
+            </a> |
+            <a href="https://pinterest.com/pin/create/button/?url={{ post_url|urlencode }}" target="_blank">
+                <i class="fab fa-pinterest"></i> 
+            </a>
+            {% endwith %}
+        </div>        
     </div>
 
 <!-- Comment Form -->

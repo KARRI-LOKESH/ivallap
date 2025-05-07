@@ -10,7 +10,7 @@
 <script src="{% static 'users/js/follow.js' %}"></script>
 <body>
     <div class="container">
-        <h1>Welcome, {{ user.name }}</h1>
+        <h1>{{ user_profile.name }}'s Profile</h1>
 
         {% if messages %}
             <ul class="messages">
@@ -40,8 +40,8 @@
         
         <!-- Followers, Following, Notifications -->
         <p>
-            <a href="{% url 'followers-list' user.id %}">Followers: {{ user.followers.count }}</a> |
-            <a href="{% url 'following-list' user.id %}">Following: {{ user.following.count }}</a> |
+            <a href="{% url 'followers-list' user_profile.id %}">Followers: {{ user_profile.followers.count }}</a> |
+            <a href="{% url 'following-list' user_profile.id %}">Following: {{ user_profile.following.count }}</a> |
         <!-- Follow Button -->
         {% if request.user != user_profile %}
         <form id="followForm" action="{% url 'follow-user' user_profile.id %}" method="POST">
