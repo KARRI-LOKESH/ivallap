@@ -469,3 +469,9 @@ def mention_suggestions(request):
     users = User.objects.filter(username__icontains=query)[:5]
     usernames = list(users.values_list('username', flat=True))
     return JsonResponse(usernames, safe=False)
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if comment.user == request.user:
+        comment.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'post-list'))

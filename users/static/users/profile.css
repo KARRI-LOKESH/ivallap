@@ -407,3 +407,202 @@ p a:hover {
         padding: 10px;
     }
 }
+/* ✅ Base Styling */
+.user-posts {
+    padding: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212;
+    color: #eaeaea;
+    max-width: 600px;
+    margin: auto;
+}
+
+/* ✅ Post Box */
+.post {
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
+}
+
+/* ✅ Post Header */
+.post-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-infoo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #eaeaea;
+}
+
+.profile-pic-smalli img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+/* ✅ Post Content */
+.post-row {
+    margin-top: 10px;
+}
+
+.post-text {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* ✅ Media (Image/Video) */
+.post img, .post video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* ✅ Post Actions */
+.post-actions {
+    .post-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 4px; /* Small gap between buttons */
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+    
+    .post-actions form,
+    .post-actions button {
+        display: flex;
+        align-items: center;
+        background: none;
+        border: none;
+        padding: 2px;
+        font-size: 18px;
+        color: #eaeaea;
+        cursor: pointer;
+    }
+    
+
+/* ✅ Save/Like Count */
+.count-text {
+    font-size: 14px;
+    margin-left: 2px;
+}
+
+/* ✅ Share Form */
+.share-form {
+    margin-top: 10px;
+    padding: 10px;
+    background: #222;
+    border-radius: 6px;
+}
+
+.share-form input[type="text"] {
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 8px;
+    border: none;
+    border-radius: 4px;
+    background: #333;
+    color: #fff;
+}
+
+.share-form label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.share-form button {
+    background: #444;
+    color: white;
+    border: 1px solid white;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.social-share {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.social-share a {
+    color: #ccc;
+    font-size: 18px;
+}
+
+/* ✅ Comments Section */
+.comment-form {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.comment-form input[type="text"] {
+    flex: 1;
+    padding: 6px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2a2a2a;
+    color: white;
+}
+
+.comment-form button {
+    background: none;
+    border: none;
+    color: #ccc;
+    margin-left: 6px;
+    font-size: 18px;
+}
+
+.comment-container {
+    margin-top: 8px;
+}
+
+.comment-card {
+    background-color: #2b2b2b;
+    padding: 6px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.comment-header {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.comment-text {
+    font-size: 13px;
+}
+
+/* ✅ Responsive Tweaks */
+@media (max-width: 600px) {
+    .post-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .post-actions {
+        justify-content: space-between;
+    }
+
+    .comment-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .comment-form input[type="text"] {
+        margin-bottom: 6px;
+    }
+}
+}

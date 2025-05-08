@@ -3,7 +3,7 @@ from .views import signup_view,contact_view,login_view, verify_otp, logout_view,
 from django.contrib.auth.views import LoginView
 from django.views.generic import TemplateView
 from django.shortcuts import render
-
+from posts.views import delete_comment
 from . import views
 urlpatterns = [
     path("entry/", TemplateView.as_view(template_name="users/entry.html"), name="landing-page"),
@@ -23,4 +23,5 @@ urlpatterns = [
     path('following/<int:user_id>/', following_list, name='following-list'),
     path('follow/<int:user_id>/', follow_unfollow, name='follow-user'),
     path('toggle-follow/', views.toggle_follow, name='toggle-follow'),
+    path('comment/delete/<int:comment_id>/', delete_comment, name='delete-comment'),
 ]

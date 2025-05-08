@@ -5,9 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     {% load static %}
+    {% load custom_filters %}
     <link rel="stylesheet" href="{% static 'users/profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 </head>
 <script src="{% static 'users/js/follow.js' %}"></script>
+<script src="{% static 'posts/post_list.js' %}"></script>
 <body>
     <div class="container">
         <h1>{{ user_profile.name }}'s Profile</h1>
@@ -38,23 +42,25 @@
             {% endif %}
         </div>
         
-        <!-- Followers, Following, Notifications -->
+        <!-- Followers, Following -->
         <p>
             <a href="{% url 'followers-list' user_profile.id %}">Followers: {{ user_profile.followers.count }}</a> |
-            <a href="{% url 'following-list' user_profile.id %}">Following: {{ user_profile.following.count }}</a> |
-        <!-- Follow Button -->
+            <a href="{% url 'following-list' user_profile.id %}">Following: {{ user_profile.following.count }}</a>
+        </p>
+
+        <!-- Follow Button and Message -->
         {% if request.user != user_profile %}
-        <form id="followForm" action="{% url 'follow-user' user_profile.id %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" id="followButton">
-                {% if is_following %}
-                    Unfollow
-                {% else %}
-                    Follow
-                {% endif %}
-            </button>
-        </form>
-        <p><a href="{% url 'send-message' user_profile.id %}">Send Message</a></p>
+            <form id="followForm" action="{% url 'follow-user' user_profile.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" id="followButton">
+                    {% if is_following %}
+                        Unfollow
+                    {% else %}
+                        Follow
+                    {% endif %}
+                </button>
+            </form>
+            <p><a href="{% url 'send-message' user_profile.id %}">Send Message</a></p>
         {% endif %}
 
         <!-- Profile Edit Form -->
@@ -64,40 +70,219 @@
             <button type="submit" name="redirect" value="create">Save & Create Post</button>
             <button type="submit" name="redirect" value="list">Save & View Posts</button>
         </form>
+
         <!-- Share Profile Section -->
-<div class="share-profile">
-    <h3>Share Profile</h3>
+        <div class="share-profile">
+            <h3>Share Profile</h3>
+            <input type="text" id="profileLink" value="{{ request.build_absolute_uri }}" readonly>
+            <button onclick="copyLink()">
+                <i class="fas fa-copy"></i> Copy Link
+            </button>
+            <div class="share-icons">
+                <a href="https://wa.me/?text={{ request.build_absolute_uri }}" target="_blank" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}" target="_blank" title="Telegram">
+                    <i class="fab fa-telegram-plane"></i>
+                </a>
+                <a href="mailto:?subject=Check out this profile&body={{ request.build_absolute_uri }}" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+            <div class="qr-section">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.build_absolute_uri }}" alt="QR Code">
+                <p>Scan to view profile</p>
+            </div>
+        </div>
 
-    <!-- Profile Link -->
-    <input type="text" id="profileLink" value="{{ request.build_absolute_uri }}" readonly>
-    <button onclick="copyLink()">
-        <i class="fas fa-copy"></i> Copy Link
+        <!-- ✅ USER POSTS SECTION -->
+        <div class="user-posts">
+            <h2>{{ user_profile.name }}'s Posts</h2>
+            
+{% for post in posts %}
+<div class="post" data-post-id="{{ post.id }}">
+    <div class="post-header">
+        <a href="{% url 'user-profile' post.user.username %}" class="user-infoo">
+            <div class="profile-pic-smalli">
+                {% if post.user.profile_pic %}
+                    <img src="{{ post.user.profile_pic.url }}" alt=" ">
+                {% else %}
+                    <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile">
+                {% endif %}
+            </div>
+            <strong class="username-link">{{ post.user.username }}</strong>
+        </a>
+        <span class="post-time">- {{ post.created_at }}</span>
+    </div>
+    
+    <!-- Post Content -->
+    <div class="post-row">
+        <!-- Post Content -->
+        <p class="post-text">
+          <span id="content-{{ post.id }}" class="post-content" data-full-text="{{ post.content|escapejs }}">
+            {{ post.content|slice:":30" }}{% if post.content|length > 30 %}...
+            {% endif %}
+          </span>
+          {% if post.content|length > 30 %}
+            <a href="javascript:void(0);" class="toggle-more" id="toggle-{{ post.id }}" onclick="toggleContent({{ post.id }})">More</a>
+          {% endif %}
+        </p>
+      
+        <!-- Follow Button -->
+        {% if request.user != post.user %}
+        <form action="{% url 'follow-user' post.user.id %}" method="POST" class="follow-form">
+            {% csrf_token %}
+            {% if post.user in request.user.following.all %}
+                <button type="submit" class="btn-unfollow follow-toggle-btn"> Unfollow</button>
+            {% else %}
+                <button type="submit" class="btn-follow follow-toggle-btn"> Follow</button>
+            {% endif %}
+        </form>
+    {% endif %}
+      </div>
+      
+    {% if post.image %}
+    <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 100%; height: auto;">
+{% endif %}
+{% if post.video %}
+    <video width="400" controls>
+        <source src="{{ post.video.url }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+{% endif %}
+
+   <!-- Post Actions -->
+<div class="post-actions">
+     <!-- Like -->
+     <form style="display: inline;" class="like-form">
+        {% csrf_token %}
+        <button type="button" class="like-btn" data-post-id="{{ post.id }}">
+            {% if request.user in post.likes.all %}
+                ❤️
+            {% else %}
+                🤍
+            {% endif %}
+        </button>
+        <span id="like-count-{{ post.id }}" class="count-text">{{ post.likes.count }}</span>
+    </form>
+
+    <!-- Save -->
+    <form action="{% url 'save-post' post.id %}" method="POST" style="display: inline;" class="save-form">
+        {% csrf_token %}
+        <button type="submit" class="save-btn action-btn" data-post-id="{{ post.id }}">
+            <i class="fa fa-bookmark"></i>
+        </button>
+        <span id="save-count-{{ post.id }}" class="count-text">{{ post.total_saves }}</span>
+    </form>
+
+    <!-- Share -->
+    <button onclick="toggleShareForm({{ post.id }})">
+        <i class="fa fa-paper-plane"></i>
     </button>
-
-    <!-- Share Buttons -->
-    <div class="share-icons">
-        <a href="https://wa.me/?text={{ request.build_absolute_uri }}" target="_blank" title="WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-        <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}" target="_blank" title="Telegram">
-            <i class="fab fa-telegram-plane"></i>
-        </a>
-        <a href="mailto:?subject=Check out this profile&body={{ request.build_absolute_uri }}" title="Email">
-            <i class="fas fa-envelope"></i>
-        </a>
-    </div>
-
-    <!-- QR Code -->
-    <div class="qr-section">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.build_absolute_uri }}" alt="QR Code">
-        <p>Scan to view profile</p>
-    </div>
 </div>
 
+    <!-- Share Form -->
+    <div id="share-form-{{ post.id }}" class="share-form" style="display: none;">
+        <form method="POST" class="share-form-ajax" data-post-id="{{ post.id }}">
+            {% csrf_token %}
+            <input type="text" name="shared_with" placeholder="Search username..." required>
+            <label>
+                <input type="checkbox" name="share_with_self"> Share to my profile
+            </label>
+            <button type="submit"><i class="fa fa-paper-plane"></i></button>
+            <p class="share-status" style="color: green;"></p>
+        </form>
+    
+        <!-- Social Share Links -->
+        <div class="social-share">
+            {% with post_url=request.build_absolute_uri|add:post.get_absolute_url %}
+            <a href="https://api.whatsapp.com/send?text={{ post_url|urlencode }}" target="_blank">
+                <i class="fab fa-whatsapp"></i> 
+            </a> |
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ post_url|urlencode }}" target="_blank">
+                <i class="fab fa-facebook"></i> 
+            </a> |
+            <a href="https://twitter.com/intent/tweet?url={{ post_url|urlencode }}" target="_blank">
+                <i class="fab fa-twitter"></i> 
+            </a> |
+            <a href="https://www.instagram.com" target="_blank">
+                <i class="fab fa-instagram"></i> 
+            </a> |
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ post_url|urlencode }}" target="_blank">
+                <i class="fab fa-linkedin"></i> 
+            </a> |
+            <a href="https://pinterest.com/pin/create/button/?url={{ post_url|urlencode }}" target="_blank">
+                <i class="fab fa-pinterest"></i> 
+            </a>
+            {% endwith %}
+        </div>        
+    </div>
+
+<!-- Comment Form -->
+<form action="{% url 'add-comment' post.id %}" method="POST" style="position: relative;" class="comment-form">
+    {% csrf_token %}
+    <input type="text" name="content" id="comment-input-{{ post.id }}" placeholder="Add a comment" autocomplete="off" required>
+    <div class="mention-suggestions" id="mention-suggestions-{{ post.id }}"></div>
+    <button type="submit" class="action-btn"><i class="fa fa-comment"></i></button>
+</form>
+
+<!-- Comments -->
+<p class="pc"><strong>Comments ({{ post.comments.count }})</strong></p>
+
+{% if post.comments.exists %}
+    <!-- Last 2 Comments -->
+    <div class="comment-container" id="limited-comments-{{ post.id }}">
+        {% for comment in post.comments.all|slice:"-2:" %}
+            <div class="comment-card">
+                <div class="comment-header">
+                    <strong>
+                        <a href="{% url 'user-profile' comment.user.username %}" class="username-linki">
+                            {{ comment.user.username }}
+                        </a>
+                    </strong>
+                </div>
+                <div class="comment-text">
+                    {{ comment.content|urlize_mentions|safe }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- All Comments Hidden Initially -->
+    <div class="comment-container" id="full-comments-{{ post.id }}" style="display: none;">
+        {% for comment in post.comments.all %}
+            <div class="comment-card">
+                <div class="comment-header">
+                    <strong>{{ comment.user.username }}</strong>
+                </div>
+                <div class="comment-text">{{ comment.content }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Toggle View Button -->
+<div style="text-align: center;">
+    <button id="toggle-btn-{{ post.id }}" class="view" onclick="toggleComments({{ post.id }})">
+        View all comments
+    </button>
+</div>
+
+    
+{% else %}
+    <p class="cs">No comments yet. Be the first to comment!</p>
+{% endif %}
+
+</div>
+<hr>
+        {% endfor %}
+
         <!-- Extra Buttons -->
-        <p><a href="{% url 'my-posts' %}" class="btn">My Posts</a></p>
+        {% if user == user_profile %}
+            <p><a href="{% url 'my-posts' %}" class="btn">My Posts</a></p>
+        {% endif %}
         <p><a href="{% url 'logout' %}">Logout</a></p>
     </div>
+
     <script>
         function copyLink() {
             const link = document.getElementById("profileLink");
@@ -106,8 +291,190 @@
             document.execCommand("copy");
             alert("Profile link copied!");
         }
+    </script>
+    <script>
+        function toggleShareForm(postId) {
+            const form = document.getElementById('share-form-' + postId);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const videos = document.querySelectorAll('video');
+    
+            videos.forEach(video => {
+                video.addEventListener('play', () => {
+                    videos.forEach(other => {
+                        if (other !== video && !other.paused) {
+                            other.pause();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const shareButtons = document.querySelectorAll('.share-btn');
+    
+            shareButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const title = this.dataset.title;
+                    const text = this.dataset.text;
+                    const url = this.dataset.url;
+    
+                    if (navigator.share) {
+                        navigator.share({
+                            title: title,
+                            text: text,
+                            url: url
+                        }).catch(error => console.log('Error sharing:', error));
+                    } else {
+                        alert('Sharing not supported on this browser. Please copy the link manually: ' + url);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        // Function to toggle the share form
+        function toggleShareForm(postId) {
+            const form = document.getElementById('share-form-' + postId);
+            // Toggle visibility of the form
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll('.share-form-ajax').forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+        
+                    const postId = form.getAttribute('data-post-id');
+                    const formData = new FormData(form);
+        
+                    fetch(`/posts/share/${postId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const statusPara = form.querySelector('.share-status');
+                        if (data.success) {
+                            statusPara.textContent = data.message;
+                        } else {
+                            statusPara.style.color = "red";
+                            statusPara.textContent = data.message;
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                    });
+                });
+            });
+        });
         </script>
-        <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
-
+        <script>
+            function toggleComments(postId) {
+                const limited = document.getElementById(`limited-comments-${postId}`);
+                const full = document.getElementById(`full-comments-${postId}`);
+                const btn = document.getElementById(`toggle-btn-${postId}`);
+            
+                if (full.style.display === "none") {
+                    limited.style.display = "none";
+                    full.style.display = "block";
+                    btn.innerText = "Hide comments";
+                } else {
+                    limited.style.display = "block";
+                    full.style.display = "none";
+                    btn.innerText = "View all comments";
+                }
+            }
+            </script>
+            <script>
+                function toggleContent(postId) {
+                  const contentSpan = document.getElementById(`content-${postId}`);
+                  const toggleLink = document.getElementById(`toggle-${postId}`);
+              
+                  const fullText = contentSpan.dataset.fullText;
+                  const shortText = fullText.slice(0, 30) + "...";
+              
+                  if (toggleLink.textContent === "More") {
+                    contentSpan.textContent = fullText;
+                    toggleLink.textContent = "Less";
+                  } else {
+                    contentSpan.textContent = shortText;
+                    toggleLink.textContent = "More";
+                  }
+                }
+              </script>
+              <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const postId = "{{ post.id }}";
+                    const input = document.getElementById(`comment-input-${postId}`);
+                    const suggestionsBox = document.getElementById(`mention-suggestions-${postId}`);
+                
+                    let currentQuery = "";
+                    let cursorPosition = 0;
+                
+                    input.addEventListener("input", function(e) {
+                        const cursor = input.selectionStart;
+                        const textBeforeCursor = input.value.substring(0, cursor);
+                        const atIndex = textBeforeCursor.lastIndexOf("@");
+                
+                        if (atIndex >= 0) {
+                            const query = textBeforeCursor.substring(atIndex + 1);
+                            currentQuery = query;
+                            cursorPosition = atIndex;
+                
+                            if (query.length > 0) {
+                                fetch(`/users/mention-suggestions/?q=${query}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        suggestionsBox.innerHTML = "";
+                                        if (data.length) {
+                                            suggestionsBox.style.display = "block";
+                                            data.forEach(username => {
+                                                const suggestion = document.createElement("div");
+                                                suggestion.textContent = "@" + username;
+                                                suggestion.classList.add("suggestion-item");
+                                                suggestion.onclick = () => {
+                                                    const value = input.value;
+                                                    const before = value.substring(0, cursorPosition);
+                                                    const after = value.substring(cursor);
+                                                    input.value = before + "@" + username + " " + after;
+                                                    suggestionsBox.style.display = "none";
+                                                    input.focus();
+                                                };
+                                                suggestionsBox.appendChild(suggestion);
+                                            });
+                                        } else {
+                                            suggestionsBox.style.display = "none";
+                                        }
+                                    });
+                            } else {
+                                suggestionsBox.style.display = "none";
+                            }
+                        } else {
+                            suggestionsBox.style.display = "none";
+                        }
+                    });
+                
+                    document.addEventListener("click", function(event) {
+                        if (!suggestionsBox.contains(event.target) && event.target !== input) {
+                            suggestionsBox.style.display = "none";
+                        }
+                    });
+                });
+                </script>
 </body>
 </html>
