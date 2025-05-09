@@ -507,13 +507,13 @@ img, video {
 .like-btn,
 .save-btn,
 .share-btn {
-    font-size: 20px;
+    font-size: 30px;
     color: #fff;
 }
 .action-pair {
     display: flex;
     align-items: center;
-    gap: 16px; /* space between button and count */
+    gap: 20px; /* space between button and count */
 }
 .count-text {
     font-size: 13px;
@@ -554,7 +554,7 @@ img, video {
     padding: 8px;
     border-radius: 20px;
     border: 1px solid #444;
-    background: #222;
+    background: #1e1d1d;
     color: #fff;
 }
 
@@ -563,12 +563,17 @@ img, video {
     padding: 6px;
     background: #2c2c2c;
     border-radius: 8px;
+    color:white;
 }
-
+.pc{
+    color:white ;
+}
 .comment-header strong {
     color: #fff;
 }
-
+.comment-container{
+    color: whitesmoke;
+}
 .comment-text {
     font-size: 14px;
     color: #ccc;
@@ -596,9 +601,9 @@ img, video {
 .view {
     background: none;
     border: none;
-    color: #0095f6;
+    color: #f6fafd;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     margin-top: 6px;
 }
 
