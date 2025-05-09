@@ -97,3 +97,34 @@ class Story(models.Model):
     @property
     def viewer_count(self):
         return self.viewers.count()
+    
+class Reel(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    video = CloudinaryField(resource_type='video')
+    caption = models.TextField(default="No caption")  # Default value added for caption
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_reels', blank=True)
+    saved_by = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='saved_reels', blank=True)
+    shared_by = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='shared_reels', blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def total_likes(self):
+        return self.likes.count()
+    
+    def total_shares(self):
+        return self.shared_by.count()
+    
+    def total_saves(self):
+        return self.saved_by.count()
+
+    # Add this method to check if the reel is liked by the current user
+    def is_liked_by(self, user):
+        return user in self.likes.all()
+
+    def is_saved_by(self, user):
+        return user in self.saved_by.all()
+
+    def __str__(self):
+        return f"Reel by {self.user.username} - {self.created_at.strftime('%Y-%m-%d')}"
+
+    class Meta:
+        ordering = ['-created_at']

@@ -1,0 +1,10 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+    <div class="reel-container">
+        <video width="100%" controls autoplay>
+            <source src="{{ post.video.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="caption">{{ post.caption }}</div>
+    </div>
+{% endblock %}

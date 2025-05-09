@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.urls import reverse_lazy,reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Post, Comment,Message,SharedPost,Notification,Story
+from .models import Post, Comment,Message,SharedPost,Notification,Story,Reel
 from users.models import CustomUser
 from posts.forms import MessageForm,StoryUploadForm
 from django.contrib import messages
@@ -50,7 +50,17 @@ class PostCreateView(LoginRequiredMixin, CreateView):
                 return self.form_invalid(form)
 
         form.instance.user = self.request.user
+        if video:
+            reel = Reel(user=self.request.user, video=video, caption=form.cleaned_data.get('content'))
+            reel.save()
+            # Optionally, you can delete the post since it's being treated as a reel
+            return redirect('reel-list')
         return super().form_valid(form)
+    def form_invalid(self, form):
+        # Add a general error message if the form is invalid
+        messages.error(self.request, "There was an error with your submission. Please fix the issues and try again.")
+        return super().form_invalid(form)
+
 
 class PostDetailView(DetailView):
     model = Post
@@ -469,3 +479,46 @@ def mention_suggestions(request):
     users = User.objects.filter(username__icontains=query)[:5]
     usernames = list(users.values_list('username', flat=True))
     return JsonResponse(usernames, safe=False)
+def reel_list(request):
+    reels = Reel.objects.all()  # Fetch all the reels
+    for reel in reels:
+        reel.is_liked = reel.is_liked_by(request.user)
+        reel.is_saved = reel.is_saved_by(request.user)
+    return render(request, 'posts/reel_list.html', {'reels': reels})
+@login_required
+def like_reel(request, reel_id):
+    if request.method == "POST":
+        reel = get_object_or_404(Reel, id=reel_id)
+
+        if request.user in reel.likes.all():
+            reel.likes.remove(request.user)
+            liked = False
+        else:
+            reel.likes.add(request.user)
+            liked = True
+
+        return JsonResponse({"liked": liked, "total_likes": reel.likes.count()})
+
+    return JsonResponse({"error": "Invalid request"}, status=400)
+def reel_save_view(request, reel_id):
+    if request.user.is_authenticated:
+        reel = Reel.objects.get(id=reel_id)
+        user = request.user
+        saved = False
+
+        if user in reel.saved_by.all():
+            reel.saved_by.remove(user)
+        else:
+            reel.saved_by.add(user)
+            saved = True
+
+        return JsonResponse({'saved': saved})
+    return JsonResponse({'error': 'Unauthorized'}, status=401)
+
+
+def reel_share_view(request, reel_id):
+    # This is a placeholder. You can enhance it later.
+    if request.user.is_authenticated:
+        # Logically, you might store shared reels in a separate model
+        return JsonResponse({'shared': True})
+    return JsonResponse({'error': 'Unauthorized'}, status=401)

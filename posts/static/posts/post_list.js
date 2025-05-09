@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     lastTap = currentTime;
                     timeout = setTimeout(() => {
                         lastTap = 0;
-                    }, 200);
+                    }, 100);
                 }
             }
         });

@@ -31,5 +31,8 @@ urlpatterns = [
     path('send/<int:receiver_id>/', views.send_message, name='send-message'),
     path('mention-suggestions/', views.mention_suggestions, name='mention-suggestions'),
     path('chat/<str:username>/', views.chat_view, name='chat'),
-
+    path('reels/', views.reel_list, name='reel-list'),
+    path('reels/<int:reel_id>/like/', views.like_reel, name='like-reel'),
+    path('reels/<int:reel_id>/save/', views.reel_save_view, name='reel-save'),
+    path('reels/<int:reel_id>/save/', views.reel_share_view, name='reel-share'),
 ]

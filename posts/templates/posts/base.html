@@ -11,7 +11,8 @@
     <script src="{% static 'posts/posts.js' %}" defer></script>
     <!-- Font Awesome (latest) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  
     {% block extra_js %}{% endblock %}
 </head>
 <body>
@@ -29,7 +30,9 @@
         <a href="{% url 'post-list' %}"><i class="fas fa-home"></i></a>
         <button type="button" id="search-toggle-button"><i class="fas fa-search"></i></button>
         <a href="{% url 'post-create' %}"><i class="fas fa-plus-square"></i></a>
-        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a>
+        <a href="{% url 'reel-list' %}">
+            <i class="fab fa-instagram"></i> Reels
+        </a>        
         <a href="{% url 'dashboard' %}"><i class="fas fa-chart-line"></i></a>
         <a href="{% url 'profile' %}" class="user-info">
             <div class="profile-pic-small">

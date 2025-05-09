@@ -1,0 +1,165 @@
+html, body {
+    scroll-snap-type: y mandatory;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    font-family: Arial, sans-serif;
+    color: white;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.reel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+}
+
+
+.reel {
+    position: relative;
+    width: 100%;
+    max-height: 100vh;
+    height: 100vh;
+    background-color: black;
+    scroll-snap-align: start;
+}
+
+.reel video {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+}
+
+.reel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.reel-actions {
+    position: absolute;
+    right: 15px;
+    bottom: 100px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    pointer-events: auto;
+}
+
+.reel-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+.reel-action i {
+    font-size: 20px;
+}
+.reel-action span {
+    margin-top: 5px;
+    font-size: 14px;
+    color: white;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    filter: invert(100%);
+    transition: transform 0.2s ease;
+}
+
+.icon:hover {
+    transform: scale(1.2);
+}
+
+.reel-caption {
+    position: absolute;
+    bottom: 40px;
+    left: 15px;
+    font-size: 15px;
+    pointer-events: auto;
+    width: 70%;
+    line-height: 1.4;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+}
+
+.like-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 100px;
+    transform: translate(-50%, -50%);
+    color: white;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.like-animation.show {
+    opacity: 1;
+}
+.reel-header {
+    position: absolute;
+    bottom: 90px;  
+    left: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10;
+}
+
+.reel-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.reel-profile-pic img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.reel-follow-form {
+    display: inline;
+}
+
+.reel-btn-follow,
+.reel-btn-unfollow {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 7px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.reel-btn-follow {
+    background-color: #0c0d0d;
+    color: white;
+    border: 1px solid white;
+}
+
+.reel-btn-unfollow {
+    background-color: #0c0d0d;
+    color: white;
+    border: 1px solid white;
+}
