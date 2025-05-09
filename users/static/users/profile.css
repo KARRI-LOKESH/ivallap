@@ -407,202 +407,228 @@ p a:hover {
         padding: 10px;
     }
 }
-/* ✅ Base Styling */
-.user-posts {
-    padding: 10px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #121212;
-    color: #eaeaea;
-    max-width: 600px;
-    margin: auto;
+.user-posts h2 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 24px;
+    color: #fafafa;
 }
 
-/* ✅ Post Box */
 .post {
     background-color: #1e1e1e;
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px auto;
+    max-width: 600px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
 }
 
-/* ✅ Post Header */
 .post-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
+.profile-pic-smalli img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ff2d55;
+    object-fit: cover;
+}
+
 .user-infoo {
     display: flex;
     align-items: center;
+    gap: 10px;
     text-decoration: none;
-    color: #eaeaea;
-}
-
-.profile-pic-smalli img {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    margin-right: 8px;
-}
-
-/* ✅ Post Content */
-.post-row {
-    margin-top: 10px;
-}
-
-.post-text {
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-
-/* ✅ Media (Image/Video) */
-.post img, .post video {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-top: 10px;
-}
-
-/* ✅ Post Actions */
-.post-actions {
-    .post-actions {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 4px; /* Small gap between buttons */
-        margin-top: 10px;
-        flex-wrap: wrap;
-    }
-    
-    .post-actions form,
-    .post-actions button {
-        display: flex;
-        align-items: center;
-        background: none;
-        border: none;
-        padding: 2px;
-        font-size: 18px;
-        color: #eaeaea;
-        cursor: pointer;
-    }
-    
-
-/* ✅ Save/Like Count */
-.count-text {
-    font-size: 14px;
-    margin-left: 2px;
-}
-
-/* ✅ Share Form */
-.share-form {
-    margin-top: 10px;
-    padding: 10px;
-    background: #222;
-    border-radius: 6px;
-}
-
-.share-form input[type="text"] {
-    width: 100%;
-    padding: 6px;
-    margin-bottom: 8px;
-    border: none;
-    border-radius: 4px;
-    background: #333;
     color: #fff;
 }
 
-.share-form label {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    margin-bottom: 6px;
+.username-link {
+    font-weight: 600;
+    font-size: 15px;
 }
 
-.share-form button {
-    background: #444;
+.post-time {
+    font-size: 12px;
+    color: #aaa;
+}
+
+.post-text {
+    margin: 10px 0;
+    font-size: 15px;
     color: white;
-    border: 1px solid white;
-    padding: 5px 12px;
-    border-radius: 5px;
+}
+
+.toggle-more {
+    color: #f6fafd;
+    font-size: 10px;
+    cursor: pointer;
+    margin-left: 6px;
+}
+.post-row a{
+    color: #fff;
+}
+img, video {
+    max-width: 100%;
+    margin-top: 12px;
+    border-radius: 10px;
+}
+
+/* ✅ Instagram-style Post Actions */
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    gap :10px;
+    padding: 4px 0;
+    border-top: 1px solid #333;
+}
+
+.actions-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.post-actions form,
+.post-actions button {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
     cursor: pointer;
 }
 
-.social-share {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 10px;
+.like-btn,
+.save-btn,
+.share-btn {
+    font-size: 20px;
+    color: #fff;
 }
-
-.social-share a {
-    color: #ccc;
-    font-size: 18px;
-}
-
-/* ✅ Comments Section */
-.comment-form {
-    margin-top: 10px;
+.action-pair {
     display: flex;
     align-items: center;
+    gap: 16px; /* space between button and count */
+}
+.count-text {
+    font-size: 13px;
+    color: #f1eaea;
+}
+
+.follow-form {
+    text-align: right;
+}
+
+.btn-follow, .btn-unfollow {
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-follow {
+    background-color: #333;
+    color: #fff;
+}
+
+.btn-unfollow {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #f3ebeb;
+}
+
+.comment-form {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
 }
 
 .comment-form input[type="text"] {
-    flex: 1;
-    padding: 6px;
-    border: none;
-    border-radius: 4px;
-    background-color: #2a2a2a;
-    color: white;
-}
-
-.comment-form button {
-    background: none;
-    border: none;
-    color: #ccc;
-    margin-left: 6px;
-    font-size: 18px;
-}
-
-.comment-container {
-    margin-top: 8px;
+    flex-grow: 1;
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid #444;
+    background: #222;
+    color: #fff;
 }
 
 .comment-card {
-    background-color: #2b2b2b;
+    margin: 4px 0;
     padding: 6px;
-    border-radius: 5px;
-    margin-bottom: 5px;
+    background: #2c2c2c;
+    border-radius: 8px;
 }
 
-.comment-header {
-    font-weight: bold;
-    margin-bottom: 2px;
+.comment-header strong {
+    color: #fff;
 }
 
 .comment-text {
-    font-size: 13px;
+    font-size: 14px;
+    color: #ccc;
 }
 
-/* ✅ Responsive Tweaks */
+.share-form {
+    margin-top: 10px;
+}
+
+.share-form input[type="text"] {
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid #555;
+    background-color: #222;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.social-share a {
+    color: white;
+    font-size: 18px;
+    margin-right: 6px;
+}
+
+.view {
+    background: none;
+    border: none;
+    color: #0095f6;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+hr {
+    border-color: #333;
+    margin: 20px 0;
+}
+
+/* ✅ Mobile Responsive */
 @media (max-width: 600px) {
-    .post-header {
-        flex-direction: column;
-        align-items: flex-start;
+    .post {
+        margin: 12px 8px;
+        padding: 12px;
     }
 
-    .post-actions {
-        justify-content: space-between;
+    .username-link {
+        font-size: 14px;
     }
 
-    .comment-form {
-        flex-direction: column;
-        align-items: stretch;
+    .post-text {
+        font-size: 14px;
     }
 
-    .comment-form input[type="text"] {
-        margin-bottom: 6px;
+    .like-btn,
+    .save-btn,
+    .share-btn {
+        font-size: 18px;
     }
-}
+
+    .count-text {
+        font-size: 11px;
+    }
 }

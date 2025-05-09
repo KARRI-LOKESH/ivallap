@@ -93,6 +93,11 @@
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.build_absolute_uri }}" alt="QR Code">
                 <p>Scan to view profile</p>
             </div>
+            <!-- Extra Buttons -->
+        {% if user == user_profile %}
+        <p><a href="{% url 'my-posts' %}" class="btn">My Posts</a></p>
+    {% endif %}
+    <p><a href="{% url 'logout' %}">Logout</a></p>
         </div>
 
         <!-- ✅ USER POSTS SECTION -->
@@ -151,35 +156,38 @@
     </video>
 {% endif %}
 
-   <!-- Post Actions -->
+<!-- ✅ Post Actions - Instagram Style -->
 <div class="post-actions">
-     <!-- Like -->
-     <form style="display: inline;" class="like-form">
-        {% csrf_token %}
-        <button type="button" class="like-btn" data-post-id="{{ post.id }}">
-            {% if request.user in post.likes.all %}
-                ❤️
-            {% else %}
-                🤍
-            {% endif %}
-        </button>
-        <span id="like-count-{{ post.id }}" class="count-text">{{ post.likes.count }}</span>
-    </form>
+    <div class="actions-group">
+        <!-- Like -->
+        <form class="like-form">
+            {% csrf_token %}
+            <button type="button" class="like-btn" data-post-id="{{ post.id }}">
+                {% if request.user in post.likes.all %}
+                    ❤️
+                {% else %}
+                    🤍
+                {% endif %}
+            </button>
+            <span id="like-count-{{ post.id }}" class="count-text">{{ post.likes.count }}</span>
+        </form>
 
-    <!-- Save -->
-    <form action="{% url 'save-post' post.id %}" method="POST" style="display: inline;" class="save-form">
-        {% csrf_token %}
-        <button type="submit" class="save-btn action-btn" data-post-id="{{ post.id }}">
-            <i class="fa fa-bookmark"></i>
-        </button>
-        <span id="save-count-{{ post.id }}" class="count-text">{{ post.total_saves }}</span>
-    </form>
+        <!-- Save -->
+        <form action="{% url 'save-post' post.id %}" method="POST" class="save-form">
+            {% csrf_token %}
+            <button type="submit" class="save-btn" data-post-id="{{ post.id }}">
+                <i class="fa fa-bookmark"></i>
+            </button>
+            <span id="save-count-{{ post.id }}" class="count-text">{{ post.total_saves }}</span>
+        </form>
 
-    <!-- Share -->
-    <button onclick="toggleShareForm({{ post.id }})">
-        <i class="fa fa-paper-plane"></i>
-    </button>
+        <!-- Share -->
+        <button type="button" class="share-btn" onclick="toggleShareForm({{ post.id }})">
+            <i class="fa fa-paper-plane"></i>
+        </button>
+    </div>
 </div>
+
 
     <!-- Share Form -->
     <div id="share-form-{{ post.id }}" class="share-form" style="display: none;">
@@ -275,12 +283,6 @@
 </div>
 <hr>
         {% endfor %}
-
-        <!-- Extra Buttons -->
-        {% if user == user_profile %}
-            <p><a href="{% url 'my-posts' %}" class="btn">My Posts</a></p>
-        {% endif %}
-        <p><a href="{% url 'logout' %}">Logout</a></p>
     </div>
 
     <script>
