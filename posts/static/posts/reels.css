@@ -22,7 +22,7 @@ body {
 
 .reel {
     position: relative;
-    width: 100%;
+    width: 97%;
     max-height: 100vh;
     height: 100vh;
     background-color: black;
@@ -64,7 +64,7 @@ body {
     cursor: pointer;
 }
 .reel-action i {
-    font-size: 20px;
+    font-size: 30px;
 }
 .reel-action span {
     margin-top: 5px;
