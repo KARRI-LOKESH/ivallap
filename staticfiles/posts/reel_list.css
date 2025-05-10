@@ -47,7 +47,7 @@ body {
 .reel-actions {
     position: absolute;
     margin-right: 10px;
-    bottom: 125px;
+    bottom: 150px;
     margin-bottom: 25px;
     justify-content: space-between;
     display: flex;
@@ -65,7 +65,7 @@ body {
     cursor: pointer;
 }
 .reel-action i {
-    font-size: 45px;
+    font-size: 55px;
     transition: color 0.3s ease;
 }
 .reel-action span {
@@ -90,7 +90,7 @@ body {
     bottom: 20px;
     margin-bottom: 30px;
     left: 25px;
-    font-size: 23px;
+    font-size: 26px;
     pointer-events: auto;
     width: 70%;
     line-height: 1.4;
@@ -127,7 +127,7 @@ body {
 .reel-header {
     position: absolute;
     bottom: 90px;  
-    left: 15px;
+    left: 20px;
     display: flex;
     align-items: center;
     gap: 15px;
@@ -192,12 +192,12 @@ body {
         right: 10px;
         margin-right: 10px;
         margin-bottom: 23px;
-        bottom: 120px;
+        bottom: 140px;
         gap: 10px;
     }
 
     .reel-action i {
-        font-size: 24px;
+        font-size: 30px;
     }
 
     .reel-action span {

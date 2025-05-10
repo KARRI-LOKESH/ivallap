@@ -1,83 +1,94 @@
 body {
-    background-color: #121212;
-    color: #fff;
+    background-color: #f1efef;
+    color: #181616;
     font-family: 'Segoe UI', sans-serif;
-    padding: 1rem;
     margin: 0;
+    padding: 1.5rem;
 }
 
+/* Headings */
 h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: #fafafa;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #080808;
 }
 
+/* Comment Form */
 .comment-form {
-    margin-bottom: 1.5rem;
     display: flex;
     flex-direction: column;
+    margin-bottom: 2rem;
 }
 
-.comment-form textarea {
-    background-color: #1e1e1e;
+.comment-form textarea,
+.comment-form input[type="text"],
+.comment-form input[type="email"] {
+    background-color: #f3eeee;
+    color: #000000;
     border: 1px solid #333;
-    color: #fff;
-    padding: 0.75rem;
-    border-radius: 8px;
-    margin-bottom: 0.75rem;
-    resize: none;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
     width: 100%;
-    font-size: 0.95rem;
+    resize: none;
 }
 
 .comment-form button {
     background-color: #3897f0;
-    color: #fff;
+    color: #151414;
     border: none;
-    padding: 0.6rem;
-    border-radius: 8px;
+    padding: 0.9rem;
     font-weight: bold;
+    border-radius: 10px;
     cursor: pointer;
     transition: background 0.3s ease;
-    font-size: 0.95rem;
+    font-size: 1.1rem;
 }
 
 .comment-form button:hover {
     background-color: #2a7cc7;
 }
 
+/* Comment List */
 .comment-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
+/* Each Comment */
 .comment-item {
     display: flex;
+    flex-direction: row;
     align-items: flex-start;
-    padding: 0.75rem 0;
+    padding: 1.5rem 0;
     border-bottom: 1px solid #2e2e2e;
 }
 
+/* Profile Picture */
 .profile-pic-smalli {
-    width: 40px;
-    height: 40px;
-    margin-right: 0.75rem;
+    width: 60px;
+    height: 60px;
     flex-shrink: 0;
+    margin-right: 1rem;
 }
 
 .profile-pic-smalli img {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
     object-fit: cover;
+    border-radius: 50%;
     border: 2px solid #444;
 }
 
-.comment-main {
-    flex-grow: 1;
+/* Comment Content */
+.comment-content {
+    flex: 1;
+    max-width: 85%;
 }
 
+/* Comment Header */
 .comment-header {
     display: flex;
     justify-content: space-between;
@@ -85,117 +96,123 @@ h2 {
     flex-wrap: wrap;
 }
 
-.comment-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
+/* Username Link */
 .username-link {
-    color: #fff;
     font-weight: bold;
-    font-size: 0.95rem;
+    font-size: 1.3rem;
     text-decoration: none;
+    color: #121111;
 }
 
 .username-link:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
-.comment-text {
-    color: #ddd;
-    font-size: 0.95rem;
-    margin-top: 0.3rem;
-    word-wrap: break-word;
+/* Comment Text */
+.comment-content p {
+    color: #f3e8e8;
+    font-size: 1.2rem;
+    margin: 0.5rem 0 0 0;
+    word-break: break-word;
+    max-width: 95%;
+    line-height: 1.5;
 }
 
+/* Like and Delete Icons */
 .comment-actions {
     display: flex;
-    gap: 0.8rem;
-    font-size: 1rem;
-    color: #bbb;
+    align-items: center;
+    gap: 1.2rem;
+    font-size: 1.8rem; /* Increased icon size */
+    color: #121111;
+    margin-top: 0.6rem;
 }
 
 .comment-actions i {
     cursor: pointer;
-    transition: color 0.3s;
+    transition: color 0.3s ease;
 }
 
 .comment-actions i:hover {
-    color: #fff;
-}/* For the red heart and owner's profile pic */
+    color: #121111;
+}
+
+/* Red Heart Icon (Liked) */
+.like-icon.liked {
+    color: #ff2a68;
+}
+
+/* Like Count */
+.like-count {
+    font-size: 0.9rem;
+    color: #0e0e0e;
+}
+
+/* Owner like indicator */
 .owner-like-indicator {
     display: flex;
     align-items: center;
-    gap: 0.3rem;
-    margin-top: 0.5rem;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
 }
 
 .owner-like-avatar {
-    width: 20px;
-    height: 20px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
-    border: 2px solid #ff2a68; /* Red border to highlight the owner */
+    border: 2px solid #ff2a68;
     object-fit: cover;
 }
 
 .liked-owner {
-    color: #ff2a68; /* Red color for the owner's heart */
-    font-size: 1rem;
+    color: #ff2a68;
+    font-size: 1.4rem;
 }
 
-/* Styling for like icon */
-.like-icon {
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.like-icon.liked {
-    color: #ff2a68; /* Red color for liked comment */
-}
-
-.like-count {
-    margin-left: 0.5rem;
-    color: #bbb;
-}
-
-
-/* Optional: Adjust for small screens */
+/* Responsive: Mobile Styles */
 @media (max-width: 600px) {
-    .owner-like-avatar {
-        width: 14px;
-        height: 14px;
+    body {
+        padding: 1rem;
     }
-    .like-count {
-        font-size: 0.8rem;
-    }
-}
 
-/* Mobile First */
-@media (max-width: 600px) {
+    h2 {
+        font-size: 1.6rem;
+    }
+
     .comment-item {
+        flex-direction: row;
         align-items: flex-start;
     }
 
-    .comment-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.2rem;
+    .profile-pic-smalli {
+        width: 52px;
+        height: 52px;
+    }
+
+    .username-link {
+        font-size: 1.2rem;
+    }
+
+    .comment-content p {
+        font-size: 1.1rem;
+        max-width: 90%;
     }
 
     .comment-actions {
-        margin-top: 0.3rem;
+        font-size: 2rem; /* Even bigger on mobile */
     }
 
-    .comment-text {
-        font-size: 0.9rem;
+    .like-count {
+        font-size: 1.2rem;
     }
 
-    .comment-form textarea {
-        font-size: 0.9rem;
-    }
-
+    .comment-form textarea,
     .comment-form button {
-        font-size: 0.9rem;
+        font-size: 1.1rem;
+    }
+
+    .owner-like-avatar {
+        width: 22px;
+        height: 22px;
     }
 }
