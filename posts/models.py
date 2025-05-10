@@ -3,6 +3,9 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.urls import reverse
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericRelation
 from cloudinary.models import CloudinaryField
 User = get_user_model()
 
@@ -34,19 +37,27 @@ class Post(models.Model):
         return f"Post {self.id} by {self.user.name} - {self.created_at.strftime('%Y-%m-%d %H:%M')}"
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
+
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True)  # Allow null initially
+    object_id = models.PositiveIntegerField(null=True)
+    content_object = GenericForeignKey('content_type', 'object_id')
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-
+    likes = models.ManyToManyField(User, related_name='liked_comments', blank=True)
     class Meta:
-        ordering = ["-created_at"]  # Show latest comments first
-        verbose_name_plural = "Comments"
-
+        ordering = ["-created_at"]
+    def is_owner_liked(self, user):
+        """Check if the post owner liked the comment."""
+        return self.likes.filter(id=user.id).exists()
+    def total_likes(self):
+        return self.likes.count()
+    def first_liker(self):
+        """Return first user who liked the comment."""
+        return self.likes.first()
     def __str__(self):
-        return f"Comment {self.id} by {self.user.name} on Post {self.post.id} - {self.created_at.strftime('%Y-%m-%d %H:%M')}"
-
+        return f"Comment {self.id} by {self.user.username} on {self.content_type} {self.object_id} - {self.created_at.strftime('%Y-%m-%d %H:%M')}"
 class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
@@ -106,7 +117,7 @@ class Reel(models.Model):
     saved_by = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='saved_reels', blank=True)
     shared_by = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='shared_reels', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    
+    comments = GenericRelation(Comment)
     def total_likes(self):
         return self.likes.count()
     

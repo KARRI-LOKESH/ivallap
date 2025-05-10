@@ -66,6 +66,7 @@ body {
 }
 .reel-action i {
     font-size: 45px;
+    transition: color 0.3s ease;
 }
 .reel-action span {
     margin-top: 5px;
@@ -86,8 +87,9 @@ body {
 
 .reel-caption {
     position: absolute;
-    bottom: 40px;
-    left: 15px;
+    bottom: 20px;
+    margin-bottom: 30px;
+    left: 25px;
     font-size: 23px;
     pointer-events: auto;
     width: 70%;
@@ -95,6 +97,16 @@ body {
     color: white;
     text-shadow: 1px 1px 2px black;
 }
+/* Style for liked heart */
+.reel-action .fa-solid.fa-heart {
+    color: rgb(233, 43, 25);
+}
+
+/* Optional: default unliked heart */
+.reel-action .fa-regular.fa-heart {
+    color: white;
+}
+
 
 .like-animation {
     position: absolute;

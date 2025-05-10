@@ -5,18 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reels</title>
-    <link rel="stylesheet" href="{% static 'posts/reels.css' %}">
+    <link rel="stylesheet" href="{% static 'posts/reel_list.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 </head>
 <body>
 
 <div class="reel-container">
     {% for reel in reels %}
     <div class="reel" data-reel-id="{{ reel.id }}">
-        <video src="{{ reel.video.url }}" loop playsinline controls>
-        </video>        
+        <video src="{{ reel.video.url }}" loop playsinline controls></video>        
+
         <div class="reel-header">
             <a href="{% url 'user-profile' reel.user.username %}" class="reel-user">
                 <div class="reel-profile-pic">
@@ -28,7 +27,7 @@
                 </div>
                 <strong>{{ reel.user.username }}</strong>
             </a>
-        
+
             {% if request.user != reel.user %}
             <form action="{% url 'follow-user' reel.user.id %}" method="POST" class="reel-follow-form">
                 {% csrf_token %}
@@ -40,42 +39,40 @@
             </form>
             {% endif %}
         </div>
-        
+        <p class="reel-caption">
+                <span id="reel-content-{{ reel.id }}" class="reel-content" data-full-text="{{ reel.caption|escapejs }}">
+                    {{ reel.caption|slice:":30" }}{% if reel.caption|length > 30 %}...{% endif %}
+                </span>
+                {% if reel.caption|length > 30 %}
+                    <a href="javascript:void(0);" class="toggle-more" id="reel-toggle-{{ reel.id }}" onclick="toggleReelContent({{ reel.id }})">More</a>
+                {% endif %}
+            </p>
         <div class="reel-overlay">
             <div class="reel-actions">
                 <div class="reel-action like-btn" data-reel-id="{{ reel.id }}" data-liked="{{ reel.is_liked }}">
                    {% if request.user in reel.likes.all %}
-                   {% csrf_token %}
                         <i class="fa-solid fa-heart"></i>
                     {% else %}
                         <i class="fa-regular fa-heart"></i>
                     {% endif %}
                     <span>{{ reel.total_likes }}</span>
                 </div>
-                <div class="reel-action comment-btn" data-reel-id="{{ reel.id }}" >
+                <div class="reel-action comment-btn" data-reel-id="{{ reel.id }}">
                     <i class="fa-regular fa-comment"></i>
                     <span>{{ reel.total_comments }}</span>
                 </div>
-                <div class="reel-action save-btn" data-reel-id="{{ reel.id }}" data-saved="{{ reel.is_saved }}">
-                    {% if reel.is_saved %}
-                        <i class="fa-solid fa-bookmark"></i>
-                    {% else %}
-                        <i class="fa-regular fa-bookmark"></i>
-                    {% endif %}
-                </div>
-                
                 <div class="reel-action share-btn" data-reel-id="{{ reel.id }}">
                     <i class="fa-solid fa-paper-plane"></i>
                 </div>
-                
-        </div>
+            </div>
 
-        <div class="like-animation">❤️</div>
+            <div class="like-animation">❤️</div>
+        </div>
     </div>
     {% endfor %}
 </div>
 <script>
-    // Pause other videos on play
+    // Pause other videos when one starts playing
     document.addEventListener('DOMContentLoaded', function () {
         const videos = document.querySelectorAll('video');
         videos.forEach(video => {
@@ -88,9 +85,8 @@
             });
         });
     });
-</script>
-<script>
-    // CSRF token helper
+
+    // CSRF Token function
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -108,41 +104,52 @@
 
     const csrftoken = getCookie('csrftoken');
 
-    // Like button functionality
-    function likeReel(reelId) {
-        fetch(`/reels/${reelId}/like/`, {
-            method: "POST",
-            headers: {
-                "X-Requested-With": "XMLHttpRequest",
-                "Content-Type": "application/json",
-                "X-CSRFToken": csrfToken,
-            },
-            credentials: "same-origin",
-        })
-        .then(response => response.json())
-        .then(data => {
-            const likeBtn = document.querySelector(`.like-btn[data-reel-id="${reelId}"]`);
-            if (likeBtn) {
-                likeBtn.setAttribute("data-liked", data.liked);
-                likeBtn.querySelector("span").textContent = data.total_likes;
-    
-                const icon = likeBtn.querySelector("i");
-                if (icon) {
-                    icon.className = data.liked ? "fa-solid fa-heart" : "fa-regular fa-heart";
-                }
-            }
-        })
-        .catch(error => console.error("Reel like error:", error));
+    // Toggle More/Less for caption
+    function toggleReelContent(id) {
+        const contentSpan = document.getElementById(`reel-content-${id}`);
+        const toggleLink = document.getElementById(`reel-toggle-${id}`);
+        const fullText = contentSpan.getAttribute("data-full-text");
+
+        if (toggleLink.innerText === "More") {
+            contentSpan.innerText = fullText;
+            toggleLink.innerText = "Less";
+        } else {
+            contentSpan.innerText = fullText.slice(0, 30) + "...";
+            toggleLink.innerText = "More";
+        }
     }
-    
-    // Save button functionality
-    $('.save-btn').click(function () {
+
+    // Like functionality
+    $(document).on('click', '.like-btn', function () {
         const btn = $(this);
         const reelId = btn.data('reel-id');
 
         $.ajax({
             type: 'POST',
-            url: `/reels/${reelId}/save/`,
+            url: `/posts/reels/${reelId}/like/`, // ✅ Update the path if your URL is prefixed
+            headers: { 'X-CSRFToken': csrftoken },
+            success: function (data) {
+                btn.attr('data-liked', data.liked);
+                btn.find('span').text(data.total_likes);
+
+                const icon = btn.find('i');
+                icon.removeClass(data.liked ? 'fa-regular fa-heart' : 'fa-solid fa-heart');
+                icon.addClass(data.liked ? 'fa-solid fa-heart' : 'fa-regular fa-heart');
+            },
+            error: function () {
+                console.error("Like failed");
+            }
+        });
+    });
+
+    // Save functionality
+    $(document).on('click', '.save-btn', function () {
+        const btn = $(this);
+        const reelId = btn.data('reel-id');
+
+        $.ajax({
+            type: 'POST',
+            url: `/posts/reels/${reelId}/save/`, // ✅ Make sure this route exists
             headers: { 'X-CSRFToken': csrftoken },
             success: function (data) {
                 btn.attr('data-saved', data.saved);
@@ -153,8 +160,21 @@
             }
         });
     });
-</script>
 
-<script src="{% static 'posts/post_list.js' %}"></script>
+    // Comment redirection
+    $(document).on('click', '.comment-btn', function () {
+        const reelId = $(this).data('reel-id');
+        window.location.href = `/posts/reels/${reelId}/comments/`; // ✅ Adjust if comments page is namespaced
+    });
+
+    // Share functionality
+    $(document).on('click', '.share-btn', function () {
+        const reelId = $(this).data('reel-id');
+        const link = `${window.location.origin}/posts/reels/${reelId}/`; // ✅ Adjust base URL
+        navigator.clipboard.writeText(link)
+            .then(() => alert("Reel link copied to clipboard!"))
+            .catch(() => alert("Failed to copy link."));
+    });
+</script>
 </body>
 </html>

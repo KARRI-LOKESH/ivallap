@@ -5,7 +5,8 @@ from django.urls import reverse_lazy,reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Post, Comment,Message,SharedPost,Notification,Story,Reel
 from users.models import CustomUser
-from posts.forms import MessageForm,StoryUploadForm
+from posts.forms import MessageForm,StoryUploadForm,CommentForm
+from django.contrib.contenttypes.models import ContentType
 from django.contrib import messages
 from django.utils.timezone import localtime
 import json
@@ -22,6 +23,15 @@ class PostListView(ListView):
     template_name = 'posts/post_list.html'
     context_object_name = 'posts'
     ordering = ['-created_at']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post_urls = {
+            post.pk: self.request.build_absolute_uri(post.get_absolute_url())
+            for post in context['posts']
+        }
+        context['post_urls'] = post_urls
+        return context
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
@@ -487,19 +497,20 @@ def reel_list(request):
     return render(request, 'posts/reel_list.html', {'reels': reels})
 @login_required
 def like_reel(request, reel_id):
-    if request.method == "POST":
-        reel = get_object_or_404(Reel, id=reel_id)
-
-        if request.user in reel.likes.all():
-            reel.likes.remove(request.user)
-            liked = False
-        else:
-            reel.likes.add(request.user)
-            liked = True
-
-        return JsonResponse({"liked": liked, "total_likes": reel.likes.count()})
-
-    return JsonResponse({"error": "Invalid request"}, status=400)
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        try:
+            reel = Reel.objects.get(id=reel_id)
+            user = request.user
+            if user in reel.likes.all():
+                reel.likes.remove(user)
+                liked = False
+            else:
+                reel.likes.add(user)
+                liked = True
+            return JsonResponse({'liked': liked, 'total_likes': reel.likes.count()})
+        except Reel.DoesNotExist:
+            return JsonResponse({'error': 'Reel not found'}, status=404)
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 def reel_save_view(request, reel_id):
     if request.user.is_authenticated:
         reel = Reel.objects.get(id=reel_id)
@@ -522,3 +533,63 @@ def reel_share_view(request, reel_id):
         # Logically, you might store shared reels in a separate model
         return JsonResponse({'shared': True})
     return JsonResponse({'error': 'Unauthorized'}, status=401)
+
+def reel_comments(request, reel_id):
+    reel = get_object_or_404(Reel, id=reel_id)
+    content_type = ContentType.objects.get_for_model(reel)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.content_type = content_type
+            comment.object_id = reel.id
+            comment.save()
+            return redirect('reel_comments', reel_id=reel.id)
+    else:
+        form = CommentForm()
+
+    # ✅ Fetch all comments for this reel manually
+    comments = Comment.objects.filter(content_type=content_type, object_id=reel.id)
+
+    return render(request, 'posts/reel_comments.html', {
+        'form': form,
+        'reel': reel,
+        'comments': comments
+    })
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    related_obj = comment.content_object  # could be Reel or Post
+
+    print(f"Deleting comment {comment_id} from object {related_obj}")
+    print(f"Comment Owner: {comment.user}, Object Owner: {related_obj.user}, Logged-in User: {request.user}")
+
+    if request.user == comment.user or request.user == related_obj.user:
+        comment.delete()
+        print("Comment deleted successfully.")
+    else:
+        print("User not authorized to delete this comment.")
+
+    # Redirect depending on object type (post or reel)
+    if hasattr(related_obj, 'title'):  # example check: Post may have title
+        return redirect('post-list')
+    else:
+        return redirect('reel_comments', reel_id=related_obj.id)
+
+@login_required
+def like_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    if request.user in comment.likes.all():
+        comment.likes.remove(request.user)
+        liked = False
+    else:
+        comment.likes.add(request.user)
+        liked = True
+
+    return JsonResponse({
+        'liked': liked,
+        'total_likes': comment.total_likes()
+    })

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from users.models import CustomUser
-from posts.models import Message,Story
+from posts.models import Message,Story,Comment
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
@@ -25,3 +25,7 @@ class StoryUploadForm(forms.ModelForm):
     class Meta:
         model = Story
         fields = ['media', 'caption']
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']

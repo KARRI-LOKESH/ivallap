@@ -1,0 +1,226 @@
+html, body {
+    scroll-snap-type: y mandatory;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    font-family: Arial, sans-serif;
+    color: white;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.reel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+}
+
+
+.reel {
+    position: relative;
+    width: 100%;
+    max-height: 100vh;
+    height: 100dvh;
+    background-color: black;
+    scroll-snap-align: start;
+}
+
+.reel video {
+    width: 100%;
+    height: 100dvh;
+    object-fit: cover;
+}
+
+.reel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.reel-actions {
+    position: absolute;
+    margin-right: 10px;
+    bottom: 125px;
+    margin-bottom: 25px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    pointer-events: auto;
+}
+
+.reel-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+}
+.reel-action i {
+    font-size: 45px;
+    transition: color 0.3s ease;
+}
+.reel-action span {
+    margin-top: 5px;
+    font-size: 14px;
+    color: white;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    filter: invert(100%);
+    transition: transform 0.2s ease;
+}
+
+.icon:hover {
+    transform: scale(1.2);
+}
+
+.reel-caption {
+    position: absolute;
+    bottom: 20px;
+    margin-bottom: 30px;
+    left: 25px;
+    font-size: 23px;
+    pointer-events: auto;
+    width: 70%;
+    line-height: 1.4;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+}
+/* Style for liked heart */
+.reel-action .fa-solid.fa-heart {
+    color: rgb(233, 43, 25);
+}
+
+/* Optional: default unliked heart */
+.reel-action .fa-regular.fa-heart {
+    color: white;
+}
+
+
+.like-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 100px;
+    transform: translate(-50%, -50%);
+    color: white;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.like-animation.show {
+    opacity: 1;
+}
+.reel-header {
+    position: absolute;
+    bottom: 90px;  
+    left: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 10;
+}
+
+.reel-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.reel-profile-pic img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.reel-follow-form {
+    display: inline;
+}
+
+.reel-btn-follow,
+.reel-btn-unfollow {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 7px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.reel-btn-follow {
+    background-color: #0c0d0d;
+    color: white;
+    border: 1px solid white;
+}
+
+.reel-btn-unfollow {
+    background-color: #0c0d0d;
+    color: white;
+    border: 1px solid white;
+}
+@media (max-width: 768px) {
+    .reel {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .reel video {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+    }
+
+    .reel-actions {
+        right: 10px;
+        margin-right: 10px;
+        margin-bottom: 23px;
+        bottom: 120px;
+        gap: 10px;
+    }
+
+    .reel-action i {
+        font-size: 24px;
+    }
+
+    .reel-action span {
+        font-size: 12px;
+    }
+
+    .reel-caption {
+        bottom: 35px;
+        font-size: 13px;
+    }
+
+    .reel-header {
+        bottom: 90px;
+    }
+
+    .reel-profile-pic img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .reel-btn-follow,
+    .reel-btn-unfollow {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+}

@@ -35,4 +35,7 @@ urlpatterns = [
     path('reels/<int:reel_id>/like/', views.like_reel, name='like-reel'),
     path('reels/<int:reel_id>/save/', views.reel_save_view, name='reel-save'),
     path('reels/<int:reel_id>/save/', views.reel_share_view, name='reel-share'),
+    path('reels/<int:reel_id>/comments/', views.reel_comments, name='reel_comments'),
+    path('comments/delete/<int:comment_id>/', views.delete_comment, name='delete_comment'),
+    path('comment/<int:comment_id>/like/', views.like_comment, name='like_comment'),
 ]
