@@ -72,6 +72,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_invalid(form)
 
 from django.contrib.contenttypes.models import ContentType
+from django.urls import reverse
 
 class PostDetailView(DetailView):
     model = Post
@@ -81,6 +82,7 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         post = self.object
 
+        # Get comments related to this post
         post_type = ContentType.objects.get_for_model(Post)
         comments = Comment.objects.filter(
             content_type=post_type,
@@ -90,12 +92,13 @@ class PostDetailView(DetailView):
         # Build full post URL
         post_url = self.request.build_absolute_uri(post.get_absolute_url())
 
+        # Pass post URL to template context
         context['post'] = post
         context['comments'] = comments
-        context['post_url'] = post_url  # ✅ Add this line
+        print("Post URL: ", post_url)
+        context['post_url'] = post_url
 
         return context
-
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post

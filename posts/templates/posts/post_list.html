@@ -160,26 +160,26 @@
         </form>
     
         <!-- Social Share Links -->
-        <div class="social-share">
-            <a href="https://api.whatsapp.com/send?text={{ post_url|urlencode }}" target="_blank">
-                <i class="fab fa-whatsapp"></i> 
-            </a> |
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{ post_url|urlencode }}" target="_blank">
-                <i class="fab fa-facebook"></i> 
-            </a> |
-            <a href="https://twitter.com/intent/tweet?url={{ post_url|urlencode }}" target="_blank">
-                <i class="fab fa-twitter"></i> 
-            </a> |
-            <a href="https://www.instagram.com" target="_blank">
-                <i class="fab fa-instagram"></i> 
-            </a> |
-            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ post_url|urlencode }}" target="_blank">
-                <i class="fab fa-linkedin"></i> 
-            </a> |
-            <a href="https://pinterest.com/pin/create/button/?url={{ post_url|urlencode }}" target="_blank">
-                <i class="fab fa-pinterest"></i> 
-            </a>
-        </div>        
+<div class="social-share">
+    <a href="https://api.whatsapp.com/send?text=http://127.0.0.1:8000{{ post.get_absolute_url|urlencode }}" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a> |
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ post_url|urlencode }}" target="_blank">
+        <i class="fab fa-facebook"></i> 
+    </a> |
+    <a href="https://twitter.com/intent/tweet?url={{ post_url|urlencode }}" target="_blank">
+        <i class="fab fa-twitter"></i> 
+    </a> |
+    <a href="https://www.instagram.com" target="_blank">
+        <i class="fab fa-instagram"></i> 
+    </a> |
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ post_url|urlencode }}" target="_blank">
+        <i class="fab fa-linkedin"></i> 
+    </a> |
+    <a href="https://pinterest.com/pin/create/button/?url={{ post_url|urlencode }}" target="_blank">
+        <i class="fab fa-pinterest"></i> 
+    </a>
+</div>        
     </div>
 
 <!-- Comment Form -->
