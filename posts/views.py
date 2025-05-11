@@ -71,7 +71,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         messages.error(self.request, "There was an error with your submission. Please fix the issues and try again.")
         return super().form_invalid(form)
 
-
 from django.contrib.contenttypes.models import ContentType
 
 class PostDetailView(DetailView):
@@ -88,9 +87,15 @@ class PostDetailView(DetailView):
             object_id=post.id
         )
 
+        # Build full post URL
+        post_url = self.request.build_absolute_uri(post.get_absolute_url())
+
         context['post'] = post
         context['comments'] = comments
+        context['post_url'] = post_url  # ✅ Add this line
+
         return context
+
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
