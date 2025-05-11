@@ -72,18 +72,23 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_invalid(form)
 
 
+from django.contrib.contenttypes.models import ContentType
+
 class PostDetailView(DetailView):
     model = Post
     template_name = 'posts/post_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        comments = Comment.objects.filter(post=self.object)
-        
-        print("Comments for Post:", self.object.id)
-        for comment in comments:
-            print(f"User: {comment.user}, Content: {comment.content}")
+        post = self.object
 
+        post_type = ContentType.objects.get_for_model(Post)
+        comments = Comment.objects.filter(
+            content_type=post_type,
+            object_id=post.id
+        )
+
+        context['post'] = post
         context['comments'] = comments
         return context
 
@@ -228,7 +233,7 @@ def add_comment(request, post_id):
                             notification_type='mention',
                             post=post,
                             message=f"{request.user.username} mentioned you in a comment.",
-                            link=f"/post/{post.id}/"
+                            link=f"post/{post.id}/"
                         )
                 except User.DoesNotExist:
                     pass  # Ignore mentions of non-existent users

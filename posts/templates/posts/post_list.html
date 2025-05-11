@@ -161,7 +161,7 @@
     
         <!-- Social Share Links -->
         <div class="social-share">
-            {% with post_url=request.build_absolute_uri|add:post.get_absolute_url %}
+            {% with post_url=request.build_absolute_uri(post.get_absolute_url) %}
             <a href="https://api.whatsapp.com/send?text={{ post_url|urlencode }}" target="_blank">
                 <i class="fab fa-whatsapp"></i> 
             </a> |
