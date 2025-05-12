@@ -514,15 +514,29 @@ def like_reel(request, reel_id):
         try:
             reel = Reel.objects.get(id=reel_id)
             user = request.user
+            liked = False
+
             if user in reel.likes.all():
                 reel.likes.remove(user)
                 liked = False
             else:
                 reel.likes.add(user)
                 liked = True
+
+                # ✅ Send notification if user is not the reel owner
+                if reel.user != user:
+                    Notification.objects.create(
+                        user=reel.user,  # recipient
+                        sender=user,     # actor
+                        notification_type='reel_like',
+                        message=f"{user.username} liked your reel.",
+                        link=f"/reels/{reel.id}/"  # adjust URL if different
+                    )
+
             return JsonResponse({'liked': liked, 'total_likes': reel.likes.count()})
         except Reel.DoesNotExist:
             return JsonResponse({'error': 'Reel not found'}, status=404)
+
     return JsonResponse({'error': 'Invalid request'}, status=400)
 def reel_save_view(request, reel_id):
     if request.user.is_authenticated:
@@ -591,18 +605,34 @@ def delete_comment(request, comment_id):
     else:
         return redirect('reel_comments', reel_id=related_obj.id)
 
+
 @login_required
 def like_comment(request, comment_id):
-    comment = get_object_or_404(Comment, id=comment_id)
-
-    if request.user in comment.likes.all():
-        comment.likes.remove(request.user)
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        comment = get_object_or_404(Comment, id=comment_id)
+        user = request.user
         liked = False
-    else:
-        comment.likes.add(request.user)
-        liked = True
 
-    return JsonResponse({
-        'liked': liked,
-        'total_likes': comment.total_likes()
-    })
+        if user in comment.likes.all():
+            comment.likes.remove(user)
+            liked = False
+        else:
+            comment.likes.add(user)
+            liked = True
+
+            # ✅ Send notification to comment owner (avoid self-notification)
+            if comment.user != user:
+                Notification.objects.create(
+                    user=comment.user,
+                    sender=user,
+                    notification_type='comment_like',
+                    message=f"{user.username} liked your comment.",
+                    link=f"/post/{comment.post.id}/"  # or link to the specific comment
+                )
+
+        return JsonResponse({
+            'liked': liked,
+            'total_likes': comment.total_likes()
+        })
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)

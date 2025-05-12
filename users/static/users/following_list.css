@@ -1,154 +1,167 @@
-/* General Styling */
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #4CAF50, #2E8B57);
     margin: 0;
     padding: 0;
-    text-align: center;
-    animation: fadeIn 1s ease-in-out;
+    background-color: #fafafa;
+    color: #333;
 }
 
-/* Heading */
 h2 {
-    color: white;
-    font-size: 24px;
-    margin-top: 20px;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    margin: 20px 0;
+    font-size: 1.8em;
 }
 
-/* Following List */
 ul {
     list-style: none;
     padding: 0;
-    margin: 20px auto;
+    margin: 0 auto;
     width: 90%;
     max-width: 600px;
 }
 
-li {
-    background: white;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+/* Each following item */
+.following-item {
     display: flex;
     align-items: center;
+    background: #fff;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+}
+
+.following-item:hover {
+    transform: scale(1.01);
+}
+
+.profile-pic {
+    flex-shrink: 0;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.following-info {
+    display: flex;
     justify-content: space-between;
-    transition: transform 0.3s ease-in-out;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
-li:hover {
-    transform: scale(1.05);
-}
-
-/* Profile Link */
-li a {
+.following-info a {
+    font-weight: 600;
+    font-size: 1.1em;
+    color: #222;
     text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-    color: #2E8B57;
-    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
-li a:hover {
-    color: #FF6347;
-    transform: scale(1.1);
+.following-info a:hover {
+    color: #0095f6;
 }
 
-/* Follow/Unfollow Button */
-button {
-    background: #FF6347;
-    color: white;
+.following-info form {
+    margin-left: auto;
+}
+
+.following-info button {
+    padding: 6px 14px;
     border: none;
-    padding: 8px 15px;
     border-radius: 5px;
+    font-size: 0.95em;
     cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
-}
-
-button:hover {
-    background: #E63946;
-    transform: scale(1.1);
-}
-
-/* Back Link */
-a.back-btn {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: #008CBA;
+    transition: 0.3s ease;
+    background-color: #0095f6;
     color: white;
+}
+
+.following-info button.unfollow-btn {
+    background-color: #ed4956;
+}
+
+.following-info button:hover {
+    opacity: 0.9;
+}
+
+/* Back link */
+a.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 25px;
+    font-size: 1.1em;
+    color: #333;
     text-decoration: none;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
-a.back-btn:hover {
-    background: #0056b3;
-    transform: translateY(-2px);
+a.back-link:hover {
+    color: #0095f6;
+}
+a.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1.2em;
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+    background-color: #0095f6;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    width: 200px;
+    margin: 30px auto;
 }
 
-/* Additional Styling for All <a> Links */
-a {
+a.back-link:hover {
     color: white;
+    background-color: #007bb5;
     text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
-}
-
-a:hover {
-    color: #FFD700;
     transform: scale(1.05);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    h2 {
-        font-size: 22px; /* Slightly larger font for tablets */
-    }
+a.back-link:focus {
+    outline: none;
+}
 
-    li {
+/* Mobile-Friendly */
+@media (max-width: 600px) {
+    a.back-link {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.1em;
+    }
+}
+
+
+/* Mobile Friendly */
+@media (max-width: 600px) {
+    .following-item {
         flex-direction: column;
-        text-align: center;
-        padding: 18px;
-    }
-
-    button {
-        margin-top: 10px;
-    }
-
-    .container {
-        width: 95%; /* Full width on smaller devices */
+        align-items: flex-start;
         padding: 15px;
     }
-}
 
-@media (max-width: 600px) {
-    h2 {
-        font-size: 20px; /* Adjusted font size for mobile screens */
-    }
-
-    li {
+    .following-info {
         flex-direction: column;
-        text-align: center;
-        padding: 15px; /* Adjusted padding for mobile */
+        align-items: flex-start;
+        gap: 10px;
+        width: 100%;
     }
 
-    button {
-        font-size: 16px;
-        padding: 10px 20px; /* Slightly larger buttons for easier tapping */
+    .following-info button {
+        width: 100%;
     }
 
-    .back-btn {
-        font-size: 14px;
-        padding: 12px 20px; /* Increased padding for mobile */
+    h2 {
+        font-size: 1.5em;
     }
-}
-
-/* Fade In Animation */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
 }

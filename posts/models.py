@@ -24,7 +24,10 @@ class Post(models.Model):
     class Meta:
         ordering = ["-created_at"]  # Show latest posts first
         verbose_name_plural = "Posts"
-    
+        
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs={'pk': self.pk})
+
     def total_likes(self):
         """Return total number of likes on a post."""
         return self.likes.count()
@@ -35,8 +38,6 @@ class Post(models.Model):
 
     def __str__(self):
         return f"Post {self.id} by {self.user.name} - {self.created_at.strftime('%Y-%m-%d %H:%M')}"
-    def get_absolute_url(self):
-        return reverse('post-detail', kwargs={'pk': self.pk})
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
