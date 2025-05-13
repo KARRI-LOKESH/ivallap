@@ -38,4 +38,5 @@ urlpatterns = [
     path('reels/<int:reel_id>/comments/', views.reel_comments, name='reel_comments'),
     path('comments/delete/<int:comment_id>/', views.delete_comment, name='delete_comment'),
     path('comment/<int:comment_id>/like/', views.like_comment, name='like_comment'),
+    path('comment/<int:comment_id>/reply/', views.reply_to_comment, name='reply_to_comment'),
 ]

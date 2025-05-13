@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.utils.timezone import localtime
 import json
 import re
+from django.views.decorators.csrf import csrf_exempt
 from cloudinary.uploader import upload
 from django.utils import timezone
 from django.http import HttpResponse
@@ -604,8 +605,6 @@ def delete_comment(request, comment_id):
         return redirect('post-list')
     else:
         return redirect('reel_comments', reel_id=related_obj.id)
-
-
 @login_required
 def like_comment(request, comment_id):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -615,24 +614,61 @@ def like_comment(request, comment_id):
 
         if user in comment.likes.all():
             comment.likes.remove(user)
-            liked = False
         else:
             comment.likes.add(user)
             liked = True
 
-            # ✅ Send notification to comment owner (avoid self-notification)
+            # ✅ Notification
             if comment.user != user:
                 Notification.objects.create(
                     user=comment.user,
                     sender=user,
                     notification_type='comment_like',
                     message=f"{user.username} liked your comment.",
-                    link=f"/post/{comment.post.id}/"  # or link to the specific comment
+                    link=f"/posts/{comment.post.id}/",
+                    image=user.profile.profile_pic.url if user.profile.profile_pic else ""
                 )
 
         return JsonResponse({
             'liked': liked,
-            'total_likes': comment.total_likes()
+            'total_likes': comment.likes.count()
         })
 
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+@login_required
+@csrf_exempt
+def reply_to_comment(request, comment_id):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        data = json.loads(request.body)
+        reply_text = data.get('reply')
+
+        parent_comment = get_object_or_404(Comment, id=comment_id)
+
+        # 🟡 Get content_object from parent
+        content_type = parent_comment.content_type
+        object_id = parent_comment.object_id
+        content_object = parent_comment.content_object
+
+        # ✅ Create reply (linked to same object as parent)
+        reply = Comment.objects.create(
+            user=request.user,
+            parent=parent_comment,
+            content=reply_text,
+            content_type=content_type,
+            object_id=object_id
+        )
+
+        # ✅ Send notification to parent comment's user
+        if parent_comment.user != request.user:
+            Notification.objects.create(
+                user=parent_comment.user,
+                sender=request.user,
+                notification_type='comment_reply',
+                message=f"{request.user.username} replied to your comment.",
+                link=f"/posts/{object_id}/",  # Adjust URL logic if needed
+                image=request.user.profile.profile_pic.url if hasattr(request.user, 'profile') and request.user.profile.profile_pic else ""
+            )
+
+        return JsonResponse({'success': True})
+    
     return JsonResponse({'error': 'Invalid request'}, status=400)

@@ -1,8 +1,11 @@
 {% load static %}
-<h2>Comments</h2>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <link rel="stylesheet" href="{% static 'posts/reel_comments.css' %}">
 
+<h2>Comments</h2>
+
+<!-- Main Comment Form -->
 <form method="post" class="comment-form">
     {% csrf_token %}
     {{ form.as_p }}
@@ -11,9 +14,11 @@
 
 <hr>
 
+<!-- Comment List -->
 <ul class="comment-list">
     {% for comment in comments %}
         <li class="comment-item">
+            <!-- Main Comment Header -->
             <div class="post-header">
                 <a href="{% url 'user-profile' comment.user.username %}" class="user-infoo">
                     <div class="profile-pic-smalli">
@@ -26,26 +31,16 @@
                     <strong class="username-link">{{ comment.user.username }}</strong>
                 </a>
             </div>
+
+            <!-- Main Comment Content -->
             <div class="comment-content">
                 <div class="comment-header">
                     <span class="comment-actions">
-                        <!-- Like button -->
-                        {% if request.user in comment.likes.all %}
-                            <i class="fa-solid fa-heart like-icon liked" data-comment-id="{{ comment.id }}"></i>
-                            
-                            <!-- Post owner's like indicator -->
-                            {% if comment.post.user == request.user %}
-                                <div class="owner-like-indicator">
-                                    <img src="{{ comment.post.user.profile_pic.url }}" class="owner-like-avatar" alt="Owner Like">
-                                    <i class="fa-solid fa-heart liked-owner"></i>
-                                </div>
-                            {% endif %}
-                        {% else %}
-                            <i class="fa-regular fa-heart like-icon" data-comment-id="{{ comment.id }}"></i>
-                        {% endif %}
-
+                        <!-- Like -->
+                        <i class="{% if request.user in comment.likes.all %}fa-solid liked{% else %}fa-regular{% endif %} fa-heart like-icon" data-comment-id="{{ comment.id }}"></i>
                         <span class="like-count" id="like-count-{{ comment.id }}">{{ comment.total_likes }}</span>
 
+                        <!-- Delete -->
                         {% if comment.user == request.user %}
                             <a href="{% url 'delete_comment' comment.id %}" class="delete-icon">
                                 <i class="fa-solid fa-trash"></i>
@@ -53,7 +48,25 @@
                         {% endif %}
                     </span>
                 </div>
+
+                <!-- Comment Text -->
                 <p>{{ comment.content }}</p>
+
+                <!-- Reply Form -->
+                <form method="post" class="reply-form" data-comment-id="{{ comment.id }}">
+                    {% csrf_token %}
+                    <input type="text" name="reply" placeholder="Reply..." required>
+                    <button type="submit">Reply</button>
+                </form>
+
+                <!-- Replies -->
+                <div class="replies">
+                    {% for reply in comment.replies.all %}
+                        <div class="reply">
+                            <strong>{{ reply.user.username }}</strong>: {{ reply.content }}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </li>
     {% empty %}
@@ -61,19 +74,19 @@
     {% endfor %}
 </ul>
 
+<!-- JS for Like & Reply -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    // Like Comment
     document.querySelectorAll('.like-icon').forEach(icon => {
         icon.addEventListener('click', function () {
             const commentId = this.getAttribute('data-comment-id');
-
             fetch(`/posts/comment/${commentId}/like/`, {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `comment_id=${commentId}`
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
             })
             .then(response => response.json())
             .then(data => {
@@ -86,6 +99,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     this.classList.remove('fa-solid', 'liked');
                     this.classList.add('fa-regular');
+                }
+            });
+        });
+    });
+
+    // Submit Reply
+    document.querySelectorAll('.reply-form').forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const commentId = this.getAttribute('data-comment-id');
+            const input = this.querySelector('input[name="reply"]');
+            const replyText = input.value;
+
+            fetch(`/posts/comment/${commentId}/reply/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({
+                    reply: replyText
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload(); // Reload to see the new reply
                 }
             });
         });
