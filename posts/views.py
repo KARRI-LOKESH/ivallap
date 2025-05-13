@@ -579,7 +579,7 @@ def reel_comments(request, reel_id):
         form = CommentForm()
 
     # ✅ Fetch all comments for this reel manually
-    comments = Comment.objects.filter(content_type=content_type, object_id=reel.id)
+    comments = Comment.objects.filter(content_type=content_type, object_id=reel.id,parent__isnull=True ).order_by('-created_at')
 
     return render(request, 'posts/reel_comments.html', {
         'form': form,
@@ -644,28 +644,28 @@ def reply_to_comment(request, comment_id):
 
         parent_comment = get_object_or_404(Comment, id=comment_id)
 
-        # 🟡 Get content_object from parent
+        # Get content_object from parent
         content_type = parent_comment.content_type
         object_id = parent_comment.object_id
-        content_object = parent_comment.content_object
 
-        # ✅ Create reply (linked to same object as parent)
+        # Create reply (linked to parent and same object)
         reply = Comment.objects.create(
+            parent=parent_comment,  
             user=request.user,
-            parent=parent_comment,
             content=reply_text,
             content_type=content_type,
             object_id=object_id
         )
+        
 
-        # ✅ Send notification to parent comment's user
+        # Send notification
         if parent_comment.user != request.user:
             Notification.objects.create(
                 user=parent_comment.user,
                 sender=request.user,
                 notification_type='comment_reply',
                 message=f"{request.user.username} replied to your comment.",
-                link=f"/posts/{object_id}/",  # Adjust URL logic if needed
+                link=f"/posts/{object_id}/",
                 image=request.user.profile.profile_pic.url if hasattr(request.user, 'profile') and request.user.profile.profile_pic else ""
             )
 

@@ -4,8 +4,6 @@
 <link rel="stylesheet" href="{% static 'posts/reel_comments.css' %}">
 
 <h2>Comments</h2>
-
-<!-- Main Comment Form -->
 <form method="post" class="comment-form">
     {% csrf_token %}
     {{ form.as_p }}
@@ -14,11 +12,9 @@
 
 <hr>
 
-<!-- Comment List -->
 <ul class="comment-list">
     {% for comment in comments %}
         <li class="comment-item">
-            <!-- Main Comment Header -->
             <div class="post-header">
                 <a href="{% url 'user-profile' comment.user.username %}" class="user-infoo">
                     <div class="profile-pic-smalli">
@@ -32,15 +28,12 @@
                 </a>
             </div>
 
-            <!-- Main Comment Content -->
             <div class="comment-content">
                 <div class="comment-header">
                     <span class="comment-actions">
-                        <!-- Like -->
                         <i class="{% if request.user in comment.likes.all %}fa-solid liked{% else %}fa-regular{% endif %} fa-heart like-icon" data-comment-id="{{ comment.id }}"></i>
                         <span class="like-count" id="like-count-{{ comment.id }}">{{ comment.total_likes }}</span>
 
-                        <!-- Delete -->
                         {% if comment.user == request.user %}
                             <a href="{% url 'delete_comment' comment.id %}" class="delete-icon">
                                 <i class="fa-solid fa-trash"></i>
@@ -48,36 +41,37 @@
                         {% endif %}
                     </span>
                 </div>
-
-                <!-- Comment Text -->
                 <p>{{ comment.content }}</p>
 
-                <!-- Reply Form -->
-                <form method="post" class="reply-form" data-comment-id="{{ comment.id }}">
-                    {% csrf_token %}
-                    <input type="text" name="reply" placeholder="Reply..." required>
-                    <button type="submit">Reply</button>
-                </form>
+                <!-- 🔽 Show Replies Toggle -->
+                {% if comment.replies.exists %}
+                    <button class="reply-toggle" onclick="toggleReplies(this)">Show replies</button>
+                {% endif %}
 
                 <!-- Replies -->
-                <div class="replies">
+                <div class="replies" style="display:none;">
                     {% for reply in comment.replies.all %}
                         <div class="reply">
                             <strong>{{ reply.user.username }}</strong>: {{ reply.content }}
                         </div>
                     {% endfor %}
                 </div>
+
+                <!-- ✅ Reply Form -->
+                <form method="post" class="reply-form" data-comment-id="{{ comment.id }}">
+                    {% csrf_token %}
+                    <input type="text" name="reply" placeholder="Reply...">
+                    <button type="submit">Reply</button>
+                </form>
             </div>
         </li>
     {% empty %}
         <li>No comments yet.</li>
     {% endfor %}
 </ul>
-
-<!-- JS for Like & Reply -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // Like Comment
+    // Like comment
     document.querySelectorAll('.like-icon').forEach(icon => {
         icon.addEventListener('click', function () {
             const commentId = this.getAttribute('data-comment-id');
@@ -104,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Submit Reply
+    // Reply to comment
     document.querySelectorAll('.reply-form').forEach(form => {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -126,10 +120,22 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    location.reload(); // Reload to see the new reply
+                    location.reload(); // Reload to show reply under correct comment
                 }
             });
         });
     });
 });
+
+// Toggle replies
+function toggleReplies(button) {
+    const replies = button.nextElementSibling;
+    if (replies.style.display === 'none') {
+        replies.style.display = 'block';
+        button.textContent = 'Hide replies';
+    } else {
+        replies.style.display = 'none';
+        button.textContent = 'Show replies';
+    }
+}
 </script>
