@@ -58,11 +58,12 @@
                     <span>{{ reel.total_likes }}</span>
                 </div>
                 <div class="reel-action comment-btn" data-reel-id="{{ reel.id }}">
-                    <i class="fa-regular fa-comment"></i>
-                    <span>{{ reel.total_comments }}</span>
-                </div>
+                <i class="fa-regular fa-comment"></i>
+                <span>{{ reel.comments.count }}</span>
+            </div>
                 <div class="reel-action share-btn" data-reel-id="{{ reel.id }}">
                     <i class="fa-solid fa-paper-plane"></i>
+                    <span>{{ reel.share.count }}</span>
                 </div>
             </div>
 

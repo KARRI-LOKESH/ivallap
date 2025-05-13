@@ -8,7 +8,7 @@ body {
 
 h2 {
     text-align: center;
-    font-size: 2.3em;
+    font-size: 2.5em;
     margin: 30px 0;
     font-weight: 700;
 }
@@ -17,27 +17,27 @@ ul {
     list-style: none;
     padding: 0;
     margin: 0 auto;
-    width: 92%;
-    max-width: 700px;
+    width: 98%;
+    max-width: 1000px;
 }
 
 .follower-item {
     display: flex;
     align-items: center;
     background-color: #fff;
-    padding: 25px;
-    margin: 14px 0;
-    border-radius: 16px;
+    padding: 30px;
+    margin: 12px 0;
+    border-radius: 18px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .profile-pic {
     flex-shrink: 0;
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     overflow: hidden;
-    margin-right: 22px;
+    margin-right: 25px;
 }
 
 .profile-pic img {
@@ -56,7 +56,7 @@ ul {
 
 .follower-info a {
     font-weight: 700;
-    font-size: 1.6em;
+    font-size: 1.7em;
     color: #222;
     text-decoration: none;
 }
@@ -69,9 +69,9 @@ ul {
     background-color: #0095f6;
     color: white;
     border: none;
-    border-radius: 12px;
-    padding: 18px 30px;
-    font-size: 1.3em;
+    border-radius: 14px;
+    padding: 20px 40px;
+    font-size: 1.5em;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.3s ease;
@@ -91,31 +91,36 @@ ul {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        padding: 28px;
+        padding: 30px;
+        margin: 14px 0;
     }
 
     .profile-pic {
-        width: 110px;
-        height: 110px;
+        width: 120px;
+        height: 120px;
         margin-bottom: 18px;
     }
 
     .follower-info {
         flex-direction: column;
-        gap: 18px;
+        gap: 20px;
     }
 
     .follower-info a {
-        font-size: 1.7em;
+        font-size: 1.3em;
     }
 
     .follower-info button {
         width: 100%;
-        font-size: 1.4em;
-        padding: 20px 0;
+        font-size: 1.6em;
+        padding: 22px 0;
+    }
+
+    ul {
+        width: 100%;
+        padding: 0 8px;
     }
 }
-
 a.back-link {
     display: block;
     text-align: center;
