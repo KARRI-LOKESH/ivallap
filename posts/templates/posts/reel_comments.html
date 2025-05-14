@@ -42,22 +42,50 @@
                     </span>
                 </div>
                 <p>{{ comment.content }}</p>
+                <button class="see-translation" onclick="translateComment(this)">See Translation</button>
 
-                <!-- 🔽 Show Replies Toggle -->
                 {% if comment.replies.exists %}
                     <button class="reply-toggle" onclick="toggleReplies(this)">Show replies</button>
                 {% endif %}
 
-                <!-- Replies -->
+                <!-- ✅ Replies Section -->
                 <div class="replies" style="display:none;">
                     {% for reply in comment.replies.all %}
                         <div class="reply">
-                            <strong>{{ reply.user.username }}</strong>: {{ reply.content }}
+                            <a href="{% url 'user-profile' reply.user.username %}" class="user-infoo">
+                                <div class="profile-pic-smalli">
+                                    {% if reply.user.profile_pic %}
+                                        <img src="{{ reply.user.profile_pic.url }}" alt="{{ reply.user.username }}">
+                                    {% else %}
+                                        <img src="{% static 'users/images/default-profile.png' %}" alt="Default">
+                                    {% endif %}
+                                </div>
+                                <strong class="username-link">{{ reply.user.username }}</strong>
+                            </a>
+                            <p>{{ reply.content }}</p>
+                            <button class="see-translation" onclick="translateComment(this)">See Translation</button>
+                            <span class="comment-actions">
+                                <i class="{% if request.user in reply.likes.all %}fa-solid liked{% else %}fa-regular{% endif %} fa-heart like-icon" data-comment-id="{{ reply.id }}"></i>
+                                <span class="like-count" id="like-count-{{ reply.id }}">{{ reply.total_likes }}</span>
+
+                                {% if reply.user == request.user %}
+                                    <a href="{% url 'delete_comment' reply.id %}" class="delete-icon">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                {% endif %}
+                            </span>
+
+                            <!-- ✅ Re-reply Form -->
+                            <form method="post" class="reply-form" data-comment-id="{{ reply.id }}">
+                                {% csrf_token %}
+                                <input type="text" name="reply" placeholder="Reply to {{ reply.user.username }}...">
+                                <button type="submit">Reply</button>
+                            </form>
                         </div>
                     {% endfor %}
                 </div>
 
-                <!-- ✅ Reply Form -->
+                <!-- ✅ Reply to main comment -->
                 <form method="post" class="reply-form" data-comment-id="{{ comment.id }}">
                     {% csrf_token %}
                     <input type="text" name="reply" placeholder="Reply...">
@@ -69,9 +97,10 @@
         <li>No comments yet.</li>
     {% endfor %}
 </ul>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // Like comment
+    // Like for comments and replies
     document.querySelectorAll('.like-icon').forEach(icon => {
         icon.addEventListener('click', function () {
             const commentId = this.getAttribute('data-comment-id');
@@ -86,19 +115,14 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 const countSpan = document.getElementById(`like-count-${commentId}`);
                 countSpan.textContent = data.total_likes;
-
-                if (data.liked) {
-                    this.classList.remove('fa-regular');
-                    this.classList.add('fa-solid', 'liked');
-                } else {
-                    this.classList.remove('fa-solid', 'liked');
-                    this.classList.add('fa-regular');
-                }
+                this.classList.toggle('fa-solid');
+                this.classList.toggle('fa-regular');
+                this.classList.toggle('liked', data.liked);
             });
         });
     });
 
-    // Reply to comment
+    // Submit replies
     document.querySelectorAll('.reply-form').forEach(form => {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -113,21 +137,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     'Content-Type': 'application/json',
                     'X-Requested-With': 'XMLHttpRequest'
                 },
-                body: JSON.stringify({
-                    reply: replyText
-                })
+                body: JSON.stringify({ reply: replyText })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    location.reload(); // Reload to show reply under correct comment
+                    location.reload();
                 }
             });
         });
     });
 });
 
-// Toggle replies
 function toggleReplies(button) {
     const replies = button.nextElementSibling;
     if (replies.style.display === 'none') {
@@ -137,5 +158,22 @@ function toggleReplies(button) {
         replies.style.display = 'none';
         button.textContent = 'Show replies';
     }
+}
+
+function translateComment(button) {
+    const pTag = button.previousElementSibling;
+    const originalText = pTag.textContent;
+
+    fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${encodeURIComponent(originalText)}`)
+    .then(res => res.json())
+    .then(data => {
+        const translated = data[0][0][0];
+        pTag.innerText = translated;
+        button.innerText = "Translated";
+        button.disabled = true;
+    })
+    .catch(() => {
+        alert("Translation failed. Try again later.");
+    });
 }
 </script>
