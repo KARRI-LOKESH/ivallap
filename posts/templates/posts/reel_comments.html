@@ -100,10 +100,12 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // Like for comments and replies
-    document.querySelectorAll('.like-icon').forEach(icon => {
-        icon.addEventListener('click', function () {
-            const commentId = this.getAttribute('data-comment-id');
+    // ✅ Like for comments and replies using event delegation
+    document.body.addEventListener('click', function (e) {
+        if (e.target.classList.contains('like-icon')) {
+            const icon = e.target;
+            const commentId = icon.getAttribute('data-comment-id');
+
             fetch(`/posts/comment/${commentId}/like/`, {
                 method: 'POST',
                 headers: {
@@ -114,12 +116,14 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 const countSpan = document.getElementById(`like-count-${commentId}`);
-                countSpan.textContent = data.total_likes;
-                this.classList.toggle('fa-solid');
-                this.classList.toggle('fa-regular');
-                this.classList.toggle('liked', data.liked);
+                if (countSpan) {
+                    countSpan.textContent = data.total_likes;
+                }
+                icon.classList.toggle('fa-solid', data.liked);
+                icon.classList.toggle('fa-regular', !data.liked);
+                icon.classList.toggle('liked', data.liked);
             });
-        });
+        }
     });
 
     // Submit replies
