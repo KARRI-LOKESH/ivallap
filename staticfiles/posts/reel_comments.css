@@ -1,218 +1,242 @@
+/* General */
 body {
-    background-color: #f1efef;
-    color: #181616;
     font-family: 'Segoe UI', sans-serif;
-    margin: 0;
-    padding: 1.5rem;
+    background-color: #000;
+    color: #fff;
+    padding: 16px;
+    font-size: 1.6rem;
 }
 
-/* Headings */
+/* Header */
 h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    color: #080808;
+    font-size: 2.6rem;
+    margin-bottom: 1.8rem;
+    color: #fff;
 }
 
 /* Comment Form */
 .comment-form {
     display: flex;
     flex-direction: column;
-    margin-bottom: 2rem;
+    margin-bottom: 2.4rem;
 }
 
-.comment-form textarea,
-.comment-form input[type="text"],
-.comment-form input[type="email"] {
-    background-color: #f3eeee;
-    color: #000000;
-    border: 1px solid #333;
-    padding: 1rem;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-    width: 100%;
-    resize: none;
+.comment-form input,
+.comment-form textarea {
+    font-size: 1.6rem;
+    padding: 18px;
+    border: none;
+    border-radius: 12px;
+    background: #222;
+    color: #fff;
+    margin-bottom: 1.2rem;
 }
 
 .comment-form button {
+    padding: 18px;
     background-color: #3897f0;
-    color: #151414;
+    color: white;
     border: none;
-    padding: 0.9rem;
+    border-radius: 12px;
     font-weight: bold;
-    border-radius: 10px;
+    font-size: 1.6rem;
     cursor: pointer;
-    transition: background 0.3s ease;
-    font-size: 1.1rem;
 }
 
 .comment-form button:hover {
-    background-color: #2a7cc7;
+    background-color: #3183d4;
 }
 
 /* Comment List */
 .comment-list {
     list-style: none;
     padding: 0;
-    margin: 0;
 }
 
-/* Each Comment */
 .comment-item {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 1.5rem 0;
-    border-bottom: 1px solid #2e2e2e;
+    padding: 20px 0;
+    border-bottom: 1px solid #333;
 }
 
-/* Profile Picture */
-.profile-pic-smalli {
-    width: 60px;
-    height: 60px;
-    flex-shrink: 0;
-    margin-right: 1rem;
+/* User Info */
+.user-infoo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    gap: 16px;
 }
 
 .profile-pic-smalli img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 66px;
+    height: 66px;
     border-radius: 50%;
-    border: 2px solid #444;
+    object-fit: cover;
+}
+
+.username-link {
+    font-size: 1.8rem;
+    font-weight: 600;
 }
 
 /* Comment Content */
 .comment-content {
-    flex: 1;
-    max-width: 85%;
+    padding-left: 74px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-/* Comment Header */
-.comment-header {
+.comment-content-text {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
 }
 
-/* Username Link */
-.username-link {
-    font-weight: bold;
-    font-size: 1.3rem;
-    text-decoration: none;
-    color: #121111;
-}
-
-.username-link:hover {
-    text-decoration: none;
-}
-
-/* Comment Text */
-.comment-content p {
-    color: #f3e8e8;
-    font-size: 1.2rem;
-    margin: 0.5rem 0 0 0;
+.comment-content-text p {
+    font-size: 1.7rem;
+    margin: 0;
+    color: #eee;
+    flex: 1;
     word-break: break-word;
-    max-width: 95%;
-    line-height: 1.5;
 }
 
-/* Like and Delete Icons */
+/* See Translation */
+.see-translation {
+    font-size: 1.5rem;
+    color: #aaa;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 10px;
+    margin: 0;
+    text-align: left;
+    display: inline-block;
+}
+
+.see-translation:hover {
+    color: #ddd;
+}
+
+/* Actions */
 .comment-actions {
     display: flex;
     align-items: center;
-    gap: 1.2rem;
-    font-size: 1.8rem; /* Increased icon size */
-    color: #121111;
-    margin-top: 0.6rem;
+    gap: 28px;
+    padding-top: 6px;
 }
 
 .comment-actions i {
+    font-size: 2.4rem;
     cursor: pointer;
-    transition: color 0.3s ease;
+    color: #fff;
 }
 
-.comment-actions i:hover {
-    color: #121111;
+.comment-actions i.liked {
+    color: red;
 }
 
-/* Red Heart Icon (Liked) */
-.like-icon.liked {
-    color: #ff2a68;
+.delete-icon i {
+    font-size: 2.3rem;
+    color: #f44336;
 }
 
-/* Like Count */
-.like-count {
-    font-size: 0.9rem;
-    color: #0e0e0e;
+/* Reply Form */
+.reply-form {
+    margin-top: 16px;
 }
 
-/* Owner like indicator */
-.owner-like-indicator {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-top: 0.4rem;
+.reply-form input {
+    padding: 16px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    background: #1c1c1c;
+    color: #fff;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
 }
 
-.owner-like-avatar {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 2px solid #ff2a68;
-    object-fit: cover;
+.reply-form button {
+    padding: 14px 20px;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 10px;
+    background-color: #3897f0;
+    color: #fff;
+    font-weight: bold;
 }
 
-.liked-owner {
-    color: #ff2a68;
-    font-size: 1.4rem;
+.reply-form button:hover {
+    background-color: #3183d4;
 }
 
-/* Responsive: Mobile Styles */
-@media (max-width: 600px) {
+/* Replies */
+.replies {
+    margin-left: 28px;
+    padding-left: 20px;
+    border-left: 2px solid #444;
+    margin-top: 14px;
+}
+
+.reply {
+    margin-top: 18px;
+}
+
+/* Reply Toggle */
+.reply-toggle {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 1.5rem;
+    margin-top: 4px;
+    text-align: left;
+    display: inline-block;
+}
+
+.reply-toggle:hover {
+    color: #ccc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
     body {
-        padding: 1rem;
+        font-size: 1.7rem;
     }
 
     h2 {
+        font-size: 2.4rem;
+    }
+
+    .comment-form input,
+    .reply-form input {
         font-size: 1.6rem;
     }
 
-    .comment-item {
-        flex-direction: row;
-        align-items: flex-start;
+    .comment-form button,
+    .reply-form button {
+        font-size: 1.6rem;
+        padding: 16px;
     }
 
-    .profile-pic-smalli {
-        width: 52px;
-        height: 52px;
+    .profile-pic-smalli img {
+        width: 60px;
+        height: 60px;
     }
 
     .username-link {
-        font-size: 1.2rem;
+        font-size: 1.8rem;
     }
 
-    .comment-content p {
-        font-size: 1.1rem;
-        max-width: 90%;
+    .comment-actions i,
+    .delete-icon i {
+        font-size: 2.2rem;
     }
 
-    .comment-actions {
-        font-size: 2rem; /* Even bigger on mobile */
-    }
-
-    .like-count {
-        font-size: 1.2rem;
-    }
-
-    .comment-form textarea,
-    .comment-form button {
-        font-size: 1.1rem;
-    }
-
-    .owner-like-avatar {
-        width: 22px;
-        height: 22px;
+    .see-translation,
+    .reply-toggle {
+        font-size: 1.6rem;
     }
 }

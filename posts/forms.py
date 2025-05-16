@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from users.models import CustomUser
-from posts.models import Message,Story,Comment
+from posts.models import Message,Story,Comment,Post
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
@@ -30,3 +30,12 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['content', 'image', 'video', 'filter', 'location']
+        widgets = {
+            'filter': forms.Select(choices=Post.FILTER_CHOICES, attrs={'class': 'form-control'}),
+            'location': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Add location (optional)'}),
+        }

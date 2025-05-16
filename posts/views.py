@@ -5,7 +5,7 @@ from django.urls import reverse_lazy,reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Post, Comment,Message,SharedPost,Notification,Story,Reel
 from users.models import CustomUser
-from posts.forms import MessageForm,StoryUploadForm,CommentForm
+from posts.forms import MessageForm,StoryUploadForm,CommentForm,PostForm
 from django.contrib.contenttypes.models import ContentType
 from django.contrib import messages
 from django.utils.timezone import localtime
@@ -36,7 +36,7 @@ class PostListView(ListView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['content', 'image', 'video']
+    form_class = PostForm  # ✅ Use form_class instead of fields
     template_name = 'posts/post_form.html'
     success_url = reverse_lazy('post-list')
 
@@ -48,27 +48,27 @@ class PostCreateView(LoginRequiredMixin, CreateView):
             form.add_error('video', "You can't upload both an image and a video in the same post.")
             return self.form_invalid(form)
 
-        # Image type validation
-        if image:
-            if not image.content_type.startswith('image/'):
-                form.add_error('image', 'Uploaded file is not a valid image.')
-                return self.form_invalid(form)
+        if image and not image.content_type.startswith('image/'):
+            form.add_error('image', 'Uploaded file is not a valid image.')
+            return self.form_invalid(form)
 
-        # Video type validation (optional)
-        if video:
-            if not video.content_type.startswith('video/'):
-                form.add_error('video', 'Uploaded file is not a valid video.')
-                return self.form_invalid(form)
+        if video and not video.content_type.startswith('video/'):
+            form.add_error('video', 'Uploaded file is not a valid video.')
+            return self.form_invalid(form)
 
         form.instance.user = self.request.user
+
         if video:
+            # Handle reel creation separately
             reel = Reel(user=self.request.user, video=video, caption=form.cleaned_data.get('content'))
             reel.save()
-            # Optionally, you can delete the post since it's being treated as a reel
+            messages.success(self.request, "Reel uploaded successfully.")
             return redirect('reel-list')
+
+        messages.success(self.request, "Post created successfully.")
         return super().form_valid(form)
+
     def form_invalid(self, form):
-        # Add a general error message if the form is invalid
         messages.error(self.request, "There was an error with your submission. Please fix the issues and try again.")
         return super().form_invalid(form)
 
@@ -103,13 +103,17 @@ class PostDetailView(DetailView):
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ['content', 'image','video']
+    fields = ['content', 'image', 'video', 'filter', 'location']  # ✅ include new fields
     template_name = 'posts/post_form.html'
     success_url = reverse_lazy('post-list')
 
     def get_queryset(self):
+        # Only allow the user to edit their own posts
         return Post.objects.filter(user=self.request.user)
 
+    def form_valid(self, form):
+        # Optional: ensure location and filter are trimmed or validated if needed
+        return super().form_valid(form)
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'posts/post_confirm_delete.html'

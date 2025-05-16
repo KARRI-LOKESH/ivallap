@@ -1,154 +1,157 @@
-/* General Styling */
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #4CAF50, #2E8B57);
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fafafa;
     margin: 0;
     padding: 0;
-    text-align: center;
-    animation: fadeIn 1s ease-in-out;
+    color: #222;
 }
 
-/* Heading */
 h2 {
-    color: white;
-    font-size: 24px;
-    margin-top: 20px;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    font-size: 2.5em;
+    margin: 30px 0;
+    font-weight: 700;
 }
 
-/* Following List */
 ul {
     list-style: none;
     padding: 0;
-    margin: 20px auto;
-    width: 90%;
-    max-width: 600px;
+    margin: 0 auto;
+    width: 98%;
+    max-width: 1000px;
 }
 
-li {
-    background: white;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+.following-item {
     display: flex;
     align-items: center;
+    background-color: #fff;
+    padding: 30px;
+    margin: 12px 0;
+    border-radius: 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.profile-pic {
+    flex-shrink: 0;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 25px;
+}
+
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.following-info {
+    display: flex;
     justify-content: space-between;
-    transition: transform 0.3s ease-in-out;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
-li:hover {
-    transform: scale(1.05);
-}
-
-/* Profile Link */
-li a {
+.following-info a {
+    font-weight: 700;
+    font-size: 1.3em;
+    color: #222;
     text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-    color: #2E8B57;
-    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
-li a:hover {
-    color: #FF6347;
-    transform: scale(1.1);
+.following-info a:hover {
+    color: #0095f6;
 }
 
-/* Follow/Unfollow Button */
-button {
-    background: #FF6347;
+.following-info button {
+    background-color: #0095f6;
     color: white;
     border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
+    border-radius: 14px;
+    padding: 20px 40px;
+    font-size: 1.5em;
+    font-weight: 600;
     cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+    transition: background 0.3s ease;
 }
 
-button:hover {
-    background: #E63946;
-    transform: scale(1.1);
+.following-info button.unfollow-btn {
+    background-color: #ed4956;
 }
 
-/* Back Link */
-a.back-btn {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: #008CBA;
-    color: white;
+.following-info button:hover {
+    opacity: 0.95;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .following-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 30px;
+        margin: 14px 0;
+    }
+
+    .profile-pic {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 18px;
+    }
+
+    .following-info {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .following-info a {
+        font-size: 1.8em;
+    }
+
+    .following-info button {
+        width: 100%;
+        font-size: 1.6em;
+        padding: 22px 0;
+    }
+
+    ul {
+        width: 100%;
+        padding: 0 8px;
+    }
+}
+a.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1.2em;
+    color: #333;
     text-decoration: none;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+    padding: 10px;
+    background-color: #0095f6;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    width: 200px;
+    margin: 30px auto;
 }
 
-a.back-btn:hover {
-    background: #0056b3;
-    transform: translateY(-2px);
-}
-
-/* Additional Styling for All <a> Links */
-a {
+a.back-link:hover {
     color: white;
+    background-color: #007bb5;
     text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
-}
-
-a:hover {
-    color: #FFD700;
     transform: scale(1.05);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    h2 {
-        font-size: 22px; /* Slightly larger font for tablets */
-    }
-
-    li {
-        flex-direction: column;
-        text-align: center;
-        padding: 18px;
-    }
-
-    button {
-        margin-top: 10px;
-    }
-
-    .container {
-        width: 95%; /* Full width on smaller devices */
-        padding: 15px;
-    }
+a.back-link:focus {
+    outline: none;
 }
 
+/* Mobile-Friendly */
 @media (max-width: 600px) {
-    h2 {
-        font-size: 20px; /* Adjusted font size for mobile screens */
+    a.back-link {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.1em;
     }
-
-    li {
-        flex-direction: column;
-        text-align: center;
-        padding: 15px; /* Adjusted padding for mobile */
-    }
-
-    button {
-        font-size: 16px;
-        padding: 10px 20px; /* Slightly larger buttons for easier tapping */
-    }
-
-    .back-btn {
-        font-size: 14px;
-        padding: 12px 20px; /* Increased padding for mobile */
-    }
-}
-
-/* Fade In Animation */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
 }

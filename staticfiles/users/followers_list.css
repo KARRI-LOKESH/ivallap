@@ -1,159 +1,157 @@
-/* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #4CAF50, #2E8B57);
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fafafa;
     margin: 0;
     padding: 0;
-    text-align: center;
-    animation: fadeIn 1s ease-in-out;
+    color: #222;
 }
 
-/* Container */
-.container {
-    width: 90%;
-    max-width: 600px;
-    margin: 20px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Heading */
 h2 {
-    color: #333;
-    font-size: 24px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 2.5em;
+    margin: 30px 0;
+    font-weight: 700;
 }
 
-/* Followers List */
 ul {
     list-style: none;
     padding: 0;
+    margin: 0 auto;
+    width: 98%;
+    max-width: 1000px;
 }
 
-li {
-    background: #f9f9f9;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 8px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+.follower-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    transition: transform 0.3s ease-in-out;
+    background-color: #fff;
+    padding: 30px;
+    margin: 12px 0;
+    border-radius: 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-li:hover {
+.profile-pic {
+    flex-shrink: 0;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 25px;
+}
+
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.follower-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.follower-info a {
+    font-weight: 700;
+    font-size: 1.7em;
+    color: #222;
+    text-decoration: none;
+}
+
+.follower-info a:hover {
+    color: #0095f6;
+}
+
+.follower-info button {
+    background-color: #0095f6;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 20px 40px;
+    font-size: 1.5em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.follower-info button.unfollow-btn {
+    background-color: #ed4956;
+}
+
+.follower-info button:hover {
+    opacity: 0.95;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .follower-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 30px;
+        margin: 14px 0;
+    }
+
+    .profile-pic {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 18px;
+    }
+
+    .follower-info {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .follower-info a {
+        font-size: 1.3em;
+    }
+
+    .follower-info button {
+        width: 100%;
+        font-size: 1.6em;
+        padding: 22px 0;
+    }
+
+    ul {
+        width: 100%;
+        padding: 0 8px;
+    }
+}
+a.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1.2em;
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+    background-color: #0095f6;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    width: 200px;
+    margin: 30px auto;
+}
+
+a.back-link:hover {
+    color: white;
+    background-color: #007bb5;
+    text-decoration: none;
     transform: scale(1.05);
 }
 
-/* Profile Link */
-li a {
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-    color: #2E8B57;
-    transition: color 0.3s ease-in-out;
+a.back-link:focus {
+    outline: none;
 }
 
-li a:hover {
-    color: #FF6347;
-}
-
-/* Follow & Unfollow Buttons */
-button {
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
-}
-
-.follow-btn {
-    background: #008CBA;
-    color: white;
-}
-
-.unfollow-btn {
-    background: #FF6347;
-    color: white;
-}
-
-button:hover {
-    transform: scale(1.1);
-}
-
-/* Back Button */
-.back-btn {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: #555;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
-}
-
-.back-btn:hover {
-    background: #333;
-    transform: translateY(-2px);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    h2 {
-        font-size: 22px; /* Slightly larger font on tablet size */
+/* Mobile-Friendly */
+@media (max-width: 600px) {
+    a.back-link {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.1em;
     }
-
-    li {
-        flex-direction: column;
-        text-align: center;
-        padding: 18px; /* Increased padding to make content easier to read */
-    }
-
-    button {
-        padding: 12px 20px; /* Larger buttons on smaller screens */
-    }
-
-    .back-btn {
-        padding: 12px 24px;
-        font-size: 16px; /* Slightly larger font for easier tap on mobile */
-    }
-}
-
-@media (max-width: 480px) {
-    h2 {
-        font-size: 20px; /* Adjusted heading size */
-    }
-
-    .container {
-        width: 95%;
-        padding: 15px; /* Reduced padding for smaller devices */
-    }
-
-    li {
-        flex-direction: column;
-        text-align: center;
-        padding: 12px; /* Reduced padding for mobile */
-    }
-
-    button {
-        padding: 12px 18px;
-        font-size: 16px; /* Increased font size for readability */
-    }
-
-    .back-btn {
-        padding: 12px 20px;
-        font-size: 14px; /* Adjusted font size for back button */
-    }
-}
-
-/* Fade In Animation */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
 }

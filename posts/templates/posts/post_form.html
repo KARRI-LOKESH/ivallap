@@ -3,308 +3,174 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'posts/post_form.css' %}">
-{% block extra_css %}{% endblock %}
 
 <div class="container">
-    <h2>{% if object %}Edit Post{% else %}Create Post{% endif %}</h2>
+  <h2>{% if object %}Edit Post{% else %}Create Post{% endif %}</h2>
 
-    <form method="post" enctype="multipart/form-data" class="formy">
-        {% csrf_token %}
-        {{ form.as_p }}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
 
-        {% if form.non_field_errors %}
-            <ul class="errorlist">
-                {% for error in form.non_field_errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+    {{ form.non_field_errors }}
 
-        <!-- Preview area -->
-        <div id="mediaPreviewContainer" style="margin: 15px 0;">
-            <h3>Preview</h3>
-            <!-- Image preview -->
-            <img id="imagePreview" src="#" alt="Image preview" style="max-width: 100%; display:none; filter: none;"/>
-            <!-- Video preview -->
-            <video id="videoPreview" controls style="max-width: 100%; display:none; filter: none;"></video>
-        </div>
-<div id="locationContainer" style="margin: 15px 0; display: none;">
-  <label for="id_location">Add Location (optional):</label>
-  <input type="text" id="id_location" name="location" placeholder="Enter location here" />
+    <!-- Post Content -->
+    <label for="{{ form.content.id_for_label }}">{{ form.content.label }}</label><br>
+    {{ form.content }}<br><br>
+
+    <!-- Image Upload -->
+    <label for="{{ form.image.id_for_label }}">{{ form.image.label }}</label><br>
+    {{ form.image }}<br><br>
+
+    <!-- Video Upload -->
+    <label for="{{ form.video.id_for_label }}">{{ form.video.label }}</label><br>
+    {{ form.video }}<br><br>
+
+    <!-- Location -->
+    <label for="{{ form.location.id_for_label }}">{{ form.location.label }}</label><br>
+    {{ form.location }}<br><br>
+
+    <!-- Preview Section -->
+    <div id="mediaPreviewContainer" style="margin: 15px 0;">
+      <h3>Preview</h3>
+      <img id="imagePreview" src="#" alt="Image preview" style="max-width: 100%; display:none;" />
+      <video id="videoPreview" controls style="max-width: 100%; display:none;"></video>
+    </div>
+
+    <!-- Filters Section -->
+    <div id="filterOptions" style="margin: 15px 0;">
+      <h3>Choose a Filter</h3>
+      <div id="filtersContainer" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+    </div>
+
+    <!-- Hidden Filter Field -->
+    <input type="hidden" name="filter" id="selectedFilter" value="none">
+
+    <!-- Submit -->
+    <button type="submit">Save</button>
+    <a href="{% url 'post-list' %}" class="back-link">Back to Posts</a>
+  </form>
 </div>
 
-        <!-- Filters Section -->
-        <div id="filterOptions" style="margin: 15px 0;">
-    <h3>Choose a filter</h3>
-    <div id="filtersContainer" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
-</div>
-
+<!-- JavaScript -->
 <script>
-  const filters = [
-    {name: 'Normal', filter: 'none'},
-     // AI-style combined filters:
-    {name: 'Vibrant Pop', filter: 'contrast(130%) brightness(110%) saturate(180%)'},
-    {name: 'Warm Glow', filter: 'sepia(40%) contrast(120%) brightness(105%)'},
-    {name: 'Moody B&W', filter: 'grayscale(80%) contrast(140%) brightness(90%)'},
-    {name: 'Shadow Glow', filter: 'drop-shadow(8px 8px 6px rgba(0,0,0,0.5)) brightness(110%)'},
-    {name: 'Cool Tone', filter: 'hue-rotate(180deg) saturate(150%) brightness(90%)'},
-    {name: 'Retro Warmth', filter: 'brightness(90%) contrast(140%) saturate(150%) sepia(30%)'},
-    {name: 'Dreamy Soft', filter: 'brightness(110%) contrast(120%) blur(1px)'},
-    {name: 'Ultra Vivid', filter: 'contrast(160%) saturate(200%) brightness(115%)'},
-    {name: 'Classic Film', filter: 'sepia(100%) contrast(150%) brightness(85%) grayscale(20%)'},
-    {name: 'Neon Glow', filter: 'invert(20%) hue-rotate(20deg) saturate(250%)'},
-    {name: 'Radiant Light', filter: 'brightness(150%) contrast(120%) drop-shadow(4px 4px 6px #000)'},
-    {name: 'Grayscale', filter: 'grayscale(100%)'},
-    {name: 'Sepia', filter: 'sepia(100%)'},
-    {name: 'Blur', filter: 'blur(2px)'},
-    {name: 'High Contrast', filter: 'contrast(150%)'},
-    {name: 'Bright', filter: 'brightness(120%)'},
-    {name: 'Invert', filter: 'invert(100%)'},
-    {name: 'Hue Rotate', filter: 'hue-rotate(90deg)'},
-    {name: 'Saturate', filter: 'saturate(200%)'},
-    {name: 'Opacity 50%', filter: 'opacity(50%)'},
-    {name: 'Drop Shadow', filter: 'drop-shadow(5px 5px 5px gray)'},
-    {name: 'Dark', filter: 'brightness(50%)'},
-    {name: 'Low Contrast', filter: 'contrast(50%)'},
-    {name: 'Light Sepia', filter: 'sepia(50%)'},
-    {name: 'Light Grayscale', filter: 'grayscale(50%)'},
-    {name: 'Light Blur', filter: 'blur(1px)'},
-    {name: 'Light Invert', filter: 'invert(50%)'},
-    {name: 'Hue Rotate 45°', filter: 'hue-rotate(45deg)'},
-    {name: 'Saturate 150%', filter: 'saturate(150%)'},
-    {name: 'Opacity 75%', filter: 'opacity(75%)'},
-    {name: 'Small Drop Shadow', filter: 'drop-shadow(2px 2px 2px gray)'},
-    {name: 'Slightly Bright', filter: 'brightness(110%)'},
-    {name: 'Slightly Contrast', filter: 'contrast(110%)'},
-    {name: 'Very Light Sepia', filter: 'sepia(25%)'},
-    {name: 'Very Light Grayscale', filter: 'grayscale(25%)'},
-  ];
+const filters = [
+  { name: 'Normal', filter: 'none' },
+  { name: 'Vibrant Pop', filter: 'contrast(130%) brightness(110%) saturate(180%)' },
+  { name: 'Warm Glow', filter: 'sepia(40%) contrast(120%) brightness(105%)' },
+  { name: 'Moody B&W', filter: 'grayscale(80%) contrast(140%) brightness(90%)' },
+  { name: 'Shadow Glow', filter: 'drop-shadow(8px 8px 6px rgba(0,0,0,0.5)) brightness(110%)' },
+  { name: 'Cool Tone', filter: 'hue-rotate(180deg) saturate(150%) brightness(90%)' },
+  { name: 'Retro Warmth', filter: 'brightness(90%) contrast(140%) saturate(150%) sepia(30%)' },
+  { name: 'Dreamy Soft', filter: 'brightness(110%) contrast(120%) blur(1px)' },
+  { name: 'Ultra Vivid', filter: 'contrast(160%) saturate(200%) brightness(115%)' },
+  { name: 'Classic Film', filter: 'sepia(100%) contrast(150%) brightness(85%) grayscale(20%)' },
+  { name: 'Neon Glow', filter: 'invert(20%) hue-rotate(20deg) saturate(250%)' },
+  { name: 'Radiant Light', filter: 'brightness(150%) contrast(120%) drop-shadow(4px 4px 6px #000)' },
+  { name: 'Grayscale', filter: 'grayscale(100%)' },
+  { name: 'Sepia', filter: 'sepia(100%)' },
+  { name: 'Blur', filter: 'blur(2px)' },
+  { name: 'High Contrast', filter: 'contrast(150%)' },
+  { name: 'Bright', filter: 'brightness(120%)' },
+  { name: 'Invert', filter: 'invert(100%)' },
+  { name: 'Hue Rotate', filter: 'hue-rotate(90deg)' },
+  { name: 'Saturate', filter: 'saturate(200%)' },
+  { name: 'Drop Shadow', filter: 'drop-shadow(5px 5px 5px gray)' }
+];
 
-  const container = document.getElementById('filtersContainer');
-
-  filters.forEach(({name, filter}, i) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'filter-btn';
-    if (i === 0) btn.classList.add('active-filter');
-    btn.dataset.filter = filter;
-    btn.textContent = name;
-
-    btn.addEventListener('click', () => {
-      // Remove active from others
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-filter'));
-      btn.classList.add('active-filter');
-
-      // Apply filter to preview image/video
-      const preview = document.getElementById('previewImage');  // replace with your preview element id
-      if (preview) {
-        preview.style.filter = filter;
-      }
-
-      // Save filter to hidden input or your form field
-      const filterInput = document.getElementById('id_filter'); // your hidden input for filter
-      if (filterInput) {
-        filterInput.value = filter;
-      }
-    });
-
-    container.appendChild(btn);
-  });
-</script>
-
-
-        <!-- Hidden filter input -->
-        <input type="hidden" name="filter" id="selectedFilter" value="none">
-
-        <button type="submit">Save</button>
-
-        <a href="{% url 'post-list' %}" class="back-link">Back to Posts</a>
-    </form>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const imageInput = document.querySelector('#id_image');
-            const videoInput = document.querySelector('#id_video');
-            const imagePreview = document.getElementById('imagePreview');
-            const videoPreview = document.getElementById('videoPreview');
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const selectedFilterInput = document.getElementById('selectedFilter');
-
-            // Disable conflicting inputs
-            if (imageInput && videoInput) {
-                imageInput.addEventListener('change', () => {
-                    videoInput.disabled = imageInput.files.length > 0;
-                    if (imageInput.files.length > 0) {
-                        showPreview(imageInput.files[0], 'image');
-                    } else {
-                        clearPreview();
-                    }
-                });
-
-                videoInput.addEventListener('change', () => {
-                    imageInput.disabled = videoInput.files.length > 0;
-                    if (videoInput.files.length > 0) {
-                        showPreview(videoInput.files[0], 'video');
-                    } else {
-                        clearPreview();
-                    }
-                });
-            }
-
-            // Show preview function
-            function showPreview(file, type) {
-                const url = URL.createObjectURL(file);
-                if (type === 'image') {
-                    videoPreview.style.display = 'none';
-                    videoPreview.pause();
-                    videoPreview.src = '';
-                    imagePreview.src = url;
-                    imagePreview.style.display = 'block';
-                    imagePreview.style.filter = selectedFilterInput.value;
-                } else if (type === 'video') {
-                    imagePreview.style.display = 'none';
-                    imagePreview.src = '';
-                    videoPreview.src = url;
-                    videoPreview.style.display = 'block';
-                    videoPreview.style.filter = selectedFilterInput.value;
-                }
-            }
-
-            // Clear preview
-            function clearPreview() {
-                imagePreview.style.display = 'none';
-                imagePreview.src = '';
-                videoPreview.style.display = 'none';
-                videoPreview.pause();
-                videoPreview.src = '';
-            }
-
-            // Filter button click handler
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // Remove active class from all buttons
-                    filterButtons.forEach(btn => btn.classList.remove('active-filter'));
-                    // Add active class to clicked button
-                    button.classList.add('active-filter');
-                    // Set hidden input value
-                    const filterValue = button.getAttribute('data-filter');
-                    selectedFilterInput.value = filterValue;
-
-                    // Apply filter to preview if visible
-                    if (imagePreview.style.display === 'block') {
-                        imagePreview.style.filter = filterValue;
-                    }
-                    if (videoPreview.style.display === 'block') {
-                        videoPreview.style.filter = filterValue;
-                    }
-                });
-            });
-
-            // If editing existing post, apply filter to preview (optional)
-            // You can add logic here to load existing image/video and filter
-
-        });
-    </script>
-
-    <style>
-        .filter-btn {
-            padding: 6px 12px;
-            border: 1px solid #ccc;
-            background: #f8f8f8;
-            cursor: pointer;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .filter-btn:hover {
-            background: #eaeaea;
-        }
-        .active-filter {
-            border-color: #007bff;
-            background: #d0e7ff;
-            font-weight: bold;
-        }
-         .filter-btn {
-            opacity: 0;
-            transform: translateY(10px);
-            animation: fadeInUp 0.4s ease forwards;
-        }
-
-        .filter-btn:nth-child(n) {
-            animation-delay: calc(0.03s * var(--i));
-        }
-
-        @keyframes fadeInUp {
-            to {
-            opacity: 1;
-            transform: translateY(0);
-            }
-        }
-        #previewImage {
-  transition: filter 0.5s ease, transform 0.4s ease;
-}
-    </style>
-</div>
-<script>
-    const notice = document.createElement('div');
-notice.textContent = `${name} applied`;
-notice.style.position = 'fixed';
-notice.style.bottom = '20px';
-notice.style.left = '50%';
-notice.style.transform = 'translateX(-50%)';
-notice.style.padding = '10px 20px';
-notice.style.background = '#333';
-notice.style.color = '#fff';
-notice.style.borderRadius = '8px';
-notice.style.opacity = '0';
-notice.style.transition = 'opacity 0.5s';
-document.body.appendChild(notice);
-setTimeout(() => notice.style.opacity = '1', 100);
-setTimeout(() => {
-  notice.style.opacity = '0';
-  setTimeout(() => document.body.removeChild(notice), 500);
-}, 1200);
-
-
-filters.forEach(({name, filter}, i) => {
+const container = document.getElementById('filtersContainer');
+filters.forEach(({ name, filter }) => {
   const btn = document.createElement('button');
+  btn.type = 'button';
   btn.className = 'filter-btn';
-  btn.style.setProperty('--i', i); // for animation delay
-  // rest same as before...
+  btn.dataset.filter = filter;
+  btn.textContent = name;
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-filter'));
+    btn.classList.add('active-filter');
+    document.getElementById('selectedFilter').value = filter;
+
+    const imagePreview = document.getElementById('imagePreview');
+    const videoPreview = document.getElementById('videoPreview');
+    if (imagePreview.style.display === 'block') imagePreview.style.filter = filter;
+    if (videoPreview.style.display === 'block') videoPreview.style.filter = filter;
+  });
+  container.appendChild(btn);
 });
 
-preview.style.filter = filter;
-preview.style.transform = 'scale(1.01)';  // slight zoom effect
-setTimeout(() => {
-  preview.style.transform = 'scale(1)';
-}, 200);
+// Media preview
+document.addEventListener('DOMContentLoaded', function () {
+  const imageInput = document.querySelector('#id_image');
+  const videoInput = document.querySelector('#id_video');
+  const imagePreview = document.getElementById('imagePreview');
+  const videoPreview = document.getElementById('videoPreview');
 
-imageInput.addEventListener('change', () => {
-  videoInput.disabled = imageInput.files.length > 0;
-  const locationContainer = document.getElementById('locationContainer');
+  if (imageInput && videoInput) {
+    imageInput.addEventListener('change', () => {
+      videoInput.disabled = imageInput.files.length > 0;
+      if (imageInput.files.length > 0) showPreview(imageInput.files[0], 'image');
+      else clearPreview();
+    });
+    videoInput.addEventListener('change', () => {
+      imageInput.disabled = videoInput.files.length > 0;
+      if (videoInput.files.length > 0) showPreview(videoInput.files[0], 'video');
+      else clearPreview();
+    });
+  }
 
-  if (imageInput.files.length > 0) {
-    showPreview(imageInput.files[0], 'image');
-    locationContainer.style.display = 'block';  // Show location input
-  } else {
-    clearPreview();
-    locationContainer.style.display = 'none';   // Hide location input
-    document.getElementById('id_location').value = ''; // Clear location input
+  function showPreview(file, type) {
+    const url = URL.createObjectURL(file);
+    const filter = document.getElementById('selectedFilter').value;
+    if (type === 'image') {
+      videoPreview.style.display = 'none';
+      imagePreview.src = url;
+      imagePreview.style.display = 'block';
+      imagePreview.style.filter = filter;
+    } else {
+      imagePreview.style.display = 'none';
+      videoPreview.src = url;
+      videoPreview.style.display = 'block';
+      videoPreview.style.filter = filter;
+    }
+  }
+
+  function clearPreview() {
+    imagePreview.style.display = 'none';
+    videoPreview.style.display = 'none';
+    imagePreview.src = '';
+    videoPreview.src = '';
   }
 });
-
-
-videoInput.addEventListener('change', () => {
-  imageInput.disabled = videoInput.files.length > 0;
-  const locationContainer = document.getElementById('locationContainer');
-
-  if (videoInput.files.length > 0) {
-    showPreview(videoInput.files[0], 'video');
-    locationContainer.style.display = 'none';   // Hide location input for videos
-    document.getElementById('id_location').value = ''; // Clear location input
-  } else {
-    clearPreview();
-  }
-});
-
 </script>
+
+<!-- Styles -->
+<style>
+.filter-btn {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background: #f8f8f8;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.4s ease forwards;
+  margin-bottom: 5px;
+}
+.filter-btn:hover {
+  background: #eaeaea;
+}
+.active-filter {
+  border-color: #007bff;
+  background: #d0e7ff;
+  font-weight: bold;
+}
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+#imagePreview, #videoPreview {
+  transition: filter 0.5s ease;
+}
+</style>
 {% endblock %}
