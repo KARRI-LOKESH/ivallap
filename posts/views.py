@@ -11,6 +11,9 @@ from django.contrib import messages
 from django.utils.timezone import localtime
 import json
 import re
+import cloudinary.uploader
+from django.core.files.base import ContentFile
+import base64
 from django.views.decorators.csrf import csrf_exempt
 from cloudinary.uploader import upload
 from django.utils import timezone
@@ -33,47 +36,74 @@ class PostListView(ListView):
         }
         context['post_urls'] = post_urls
         return context
-
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    form_class = PostForm  # ✅ Use form_class instead of fields
+    form_class = PostForm
     template_name = 'posts/post_form.html'
     success_url = reverse_lazy('post-list')
 
     def form_valid(self, form):
         image = self.request.FILES.get('image')
         video = self.request.FILES.get('video')
+        cropped_data = self.request.POST.get('cropped_image')
+        selected_filter = self.request.POST.get('filter', 'none')
 
+        # Prevent both image and video upload simultaneously
         if image and video:
             form.add_error('video', "You can't upload both an image and a video in the same post.")
             return self.form_invalid(form)
 
+        # Validate image type if provided
         if image and not image.content_type.startswith('image/'):
             form.add_error('image', 'Uploaded file is not a valid image.')
             return self.form_invalid(form)
 
+        # Validate video type if provided
         if video and not video.content_type.startswith('video/'):
             form.add_error('video', 'Uploaded file is not a valid video.')
             return self.form_invalid(form)
 
         form.instance.user = self.request.user
+        form.instance.filter = selected_filter or 'none'
+
+        # Save form without commit
+        instance = form.save(commit=False)
+
+        if cropped_data:
+            try:
+                format, imgstr = cropped_data.split(';base64,')
+                ext = format.split('/')[-1]
+                # Decode base64 image to bytes
+                img_bytes = base64.b64decode(imgstr)
+
+                # Upload directly to Cloudinary
+                upload_result = cloudinary.uploader.upload(
+                    img_bytes,
+                    folder="your_folder_name",  # optional
+                    resource_type="image",
+                    public_id=None,
+                    overwrite=True,
+                )
+                # Assign the Cloudinary public_id or URL to the CloudinaryField
+                instance.image = upload_result['public_id']
+            except Exception as e:
+                form.add_error('image', f'Error uploading cropped image: {e}')
+                return self.form_invalid(form)
+        else:
+            if image:
+                # Directly assign uploaded file (this will be handled by CloudinaryField storage)
+                instance.image = image
+
+        instance.save()
 
         if video:
-            # Handle reel creation separately
             reel = Reel(user=self.request.user, video=video, caption=form.cleaned_data.get('content'))
             reel.save()
             messages.success(self.request, "Reel uploaded successfully.")
             return redirect('reel-list')
 
         messages.success(self.request, "Post created successfully.")
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, "There was an error with your submission. Please fix the issues and try again.")
-        return super().form_invalid(form)
-
-from django.contrib.contenttypes.models import ContentType
-from django.urls import reverse
+        return redirect(self.success_url)
 
 class PostDetailView(DetailView):
     model = Post
@@ -101,19 +131,41 @@ class PostDetailView(DetailView):
 
         return context
 
+
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ['content', 'image', 'video', 'filter', 'location']  # ✅ include new fields
+    fields = ['content', 'video', 'filter', 'location']
     template_name = 'posts/post_form.html'
     success_url = reverse_lazy('post-list')
 
     def get_queryset(self):
-        # Only allow the user to edit their own posts
         return Post.objects.filter(user=self.request.user)
 
     def form_valid(self, form):
-        # Optional: ensure location and filter are trimmed or validated if needed
-        return super().form_valid(form)
+        cropped_data = self.request.POST.get('cropped_image')
+        instance = form.save(commit=False)
+
+        if cropped_data:
+            try:
+                format, imgstr = cropped_data.split(';base64,')
+                ext = format.split('/')[-1]
+                img_bytes = base64.b64decode(imgstr)
+
+                # Upload to Cloudinary
+                upload_result = cloudinary.uploader.upload(
+                    img_bytes,
+                    folder="post_images",  # optional
+                    resource_type="image",
+                    overwrite=True,
+                )
+                instance.image = upload_result['public_id']
+            except Exception as e:
+                form.add_error('image', f'Error uploading cropped image: {e}')
+                return self.form_invalid(form)
+
+        instance.save()
+        messages.success(self.request, "Post updated successfully.")
+        return redirect(self.success_url)
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'posts/post_confirm_delete.html'

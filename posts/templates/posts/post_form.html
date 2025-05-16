@@ -3,22 +3,19 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'posts/post_form.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
 <div class="container">
   <h2>{% if object %}Edit Post{% else %}Create Post{% endif %}</h2>
 
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-
     {{ form.non_field_errors }}
 
     <!-- Post Content -->
     <label for="{{ form.content.id_for_label }}">{{ form.content.label }}</label><br>
     {{ form.content }}<br><br>
-
-    <!-- Image Upload -->
-    <label for="{{ form.image.id_for_label }}">{{ form.image.label }}</label><br>
-    {{ form.image }}<br><br>
 
     <!-- Video Upload -->
     <label for="{{ form.video.id_for_label }}">{{ form.video.label }}</label><br>
@@ -27,6 +24,19 @@
     <!-- Location -->
     <label for="{{ form.location.id_for_label }}">{{ form.location.label }}</label><br>
     {{ form.location }}<br><br>
+
+    <!-- Filter Field (Hidden) -->
+    <input type="hidden" name="filter" id="selectedFilter" value="none">
+
+    <!-- Image Upload -->
+    <label for="imageInput">Upload Image</label><br>
+    <input type="file" id="imageInput" name="image" accept="image/*"><br><br>
+
+    <!-- Crop Section -->
+    <div id="cropContainer" style="display:none;">
+      <img id="cropImage">
+      <button type="button" id="cropBtn">Crop</button>
+    </div>
 
     <!-- Preview Section -->
     <div id="mediaPreviewContainer" style="margin: 15px 0;">
@@ -41,8 +51,8 @@
       <div id="filtersContainer" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
     </div>
 
-    <!-- Hidden Filter Field -->
-    <input type="hidden" name="filter" id="selectedFilter" value="none">
+    <!-- Hidden Cropped Image -->
+    <input type="hidden" name="cropped_image" id="croppedImageData">
 
     <!-- Submit -->
     <button type="submit">Save</button>
@@ -50,7 +60,6 @@
   </form>
 </div>
 
-<!-- JavaScript -->
 <script>
 const filters = [
   { name: 'Normal', filter: 'none' },
@@ -96,41 +105,42 @@ filters.forEach(({ name, filter }) => {
   container.appendChild(btn);
 });
 
-// Media preview
 document.addEventListener('DOMContentLoaded', function () {
-  const imageInput = document.querySelector('#id_image');
+  const imageInput = document.querySelector('#imageInput');
   const videoInput = document.querySelector('#id_video');
   const imagePreview = document.getElementById('imagePreview');
   const videoPreview = document.getElementById('videoPreview');
 
-  if (imageInput && videoInput) {
-    imageInput.addEventListener('change', () => {
-      videoInput.disabled = imageInput.files.length > 0;
-      if (imageInput.files.length > 0) showPreview(imageInput.files[0], 'image');
-      else clearPreview();
-    });
-    videoInput.addEventListener('change', () => {
-      imageInput.disabled = videoInput.files.length > 0;
-      if (videoInput.files.length > 0) showPreview(videoInput.files[0], 'video');
-      else clearPreview();
-    });
-  }
+  imageInput.addEventListener('change', function () {
+    videoInput.disabled = imageInput.files.length > 0;
+    if (imageInput.files.length > 0) {
+      const file = imageInput.files[0];
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        cropImage.src = event.target.result;
+        cropContainer.style.display = 'block';
+        if (cropper) cropper.destroy();
+        cropper = new Cropper(cropImage, {
+          aspectRatio: 1,
+          viewMode: 1,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 
-  function showPreview(file, type) {
-    const url = URL.createObjectURL(file);
-    const filter = document.getElementById('selectedFilter').value;
-    if (type === 'image') {
-      videoPreview.style.display = 'none';
-      imagePreview.src = url;
-      imagePreview.style.display = 'block';
-      imagePreview.style.filter = filter;
-    } else {
+  videoInput.addEventListener('change', function () {
+    imageInput.disabled = videoInput.files.length > 0;
+    if (videoInput.files.length > 0) {
+      const url = URL.createObjectURL(videoInput.files[0]);
       imagePreview.style.display = 'none';
       videoPreview.src = url;
       videoPreview.style.display = 'block';
-      videoPreview.style.filter = filter;
+      videoPreview.style.filter = document.getElementById('selectedFilter').value;
+    } else {
+      clearPreview();
     }
-  }
+  });
 
   function clearPreview() {
     imagePreview.style.display = 'none';
@@ -139,10 +149,40 @@ document.addEventListener('DOMContentLoaded', function () {
     videoPreview.src = '';
   }
 });
+
+// Cropper logic
+let cropper;
+const imageInputReal = document.getElementById('imageInput');
+const cropImage = document.getElementById('cropImage');
+const cropContainer = document.getElementById('cropContainer');
+const cropBtn = document.getElementById('cropBtn');
+const croppedImageData = document.getElementById('croppedImageData');
+const imagePreview = document.getElementById('imagePreview');
+
+cropBtn.addEventListener('click', function () {
+  const canvas = cropper.getCroppedCanvas();
+  canvas.toBlob(function (blob) {
+    const file = new File([blob], "cropped.png", { type: "image/png" });
+
+    const reader = new FileReader();
+    reader.onloadend = function () {
+      imagePreview.src = reader.result;
+      imagePreview.style.display = 'block';
+      imagePreview.style.filter = document.getElementById('selectedFilter').value;
+      croppedImageData.value = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+  cropContainer.style.display = 'none';
+});
 </script>
 
-<!-- Styles -->
 <style>
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
 .filter-btn {
   padding: 6px 12px;
   border: 1px solid #ccc;
@@ -171,6 +211,35 @@ document.addEventListener('DOMContentLoaded', function () {
 }
 #imagePreview, #videoPreview {
   transition: filter 0.5s ease;
+  max-height: 400px;
+  object-fit: contain;
 }
+#cropImage {
+  max-width: 100%;
+  display: block;
+  margin-bottom: 10px;
+}
+#cropBtn {
+  padding: 8px 16px;
+  background-color:rgb(239, 243, 248);
+  color:black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align:center;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#cropBtn:hover {
+  background-color:rgb(244, 239, 239);
+  transform: scale(1.05);
+}
+
+#cropBtn:active {
+  background-color:rgb(242, 245, 248);
+  transform: scale(0.98);
+}
+
 </style>
 {% endblock %}
