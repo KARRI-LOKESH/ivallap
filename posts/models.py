@@ -166,3 +166,11 @@ class Reel(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+class Report(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reel = models.ForeignKey(Reel, on_delete=models.CASCADE, related_name='reports')
+    reason = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Report by {self.user.username} on Reel {self.reel.id}"

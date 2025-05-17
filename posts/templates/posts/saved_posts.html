@@ -1,0 +1,141 @@
+{% load static %}
+{% load humanize %}
+{% load custom_filters %}
+<link rel="stylesheet" href="{% static 'posts/saved_posts.css' %}">
+{% for post in saved_posts %}
+<div class="post" data-post-id="{{ post.id }}">
+    <div class="post-header">
+        <a href="{% url 'user-profile' post.user.username %}" class="user-info">
+            <div class="profile-pic-smalli">
+                {% if post.user.profile_pic %}
+                    <img src="{{ post.user.profile_pic.url }}" alt="Profile Picture">
+                {% else %}
+                    <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile">
+                {% endif %}
+            </div>
+            <strong class="username-link">{{ post.user.username }}</strong>
+        </a>
+        <span class="post-time">- {{ post.created_at|naturaltime }}</span>
+    </div>
+
+    <div class="post-row">
+        <p class="post-text">
+            <span id="content-{{ post.id }}" class="post-content" data-full-text="{{ post.content|escapejs }}">
+                {{ post.content|slice:":30" }}{% if post.content|length > 30 %}...{% endif %}
+            </span>
+            {% if post.content|length > 30 %}
+                <a href="javascript:void(0);" class="toggle-more" id="toggle-{{ post.id }}" onclick="toggleContent({{ post.id }})">More</a>
+            {% endif %}
+        </p>
+    </div>
+
+    {% if post.image %}
+    <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">
+    {% endif %}
+    
+    {% if post.video %}
+    <video width="100%" controls style="border-radius: 8px; margin-top: 10px;">
+        <source src="{{ post.video.url }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    {% endif %}
+
+    <div class="post-actions" style="margin-top: 10px;">
+        <div class="actions-group" style="display: flex; gap: 12px; align-items: center;">
+            <!-- Like -->
+            <form class="like-form" method="POST" action="{% url 'like-post' post.id %}" data-post-id="{{ post.id }}">
+                {% csrf_token %}
+                <button type="submit" class="like-btn" style="background:none; border:none; cursor:pointer; font-size: 20px;">
+                    {% if request.user in post.likes.all %}
+                        ❤️
+                    {% else %}
+                        🤍
+                    {% endif %}
+                </button>
+                <span id="like-count-{{ post.id }}" class="count-text">{{ post.likes.count }}</span>
+            </form>
+
+            <!-- Save -->
+            <form action="{% url 'save-post' post.id %}" method="POST" class="save-form">
+                {% csrf_token %}
+                <button type="submit" class="save-btn" style="background:none; border:none; cursor:pointer; font-size: 18px;">
+                    <i class="fa fa-bookmark"></i>
+                </button>
+                <span id="save-count-{{ post.id }}" class="count-text">{{ post.total_saves }}</span>
+            </form>
+
+            <!-- Share -->
+            <button type="button" class="share-btn" onclick="toggleShareForm({{ post.id }})" style="background:none; border:none; cursor:pointer; font-size: 18px;">
+                <i class="fa fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Share Form -->
+    <div id="share-form-{{ post.id }}" class="share-form" style="display: none; margin-top: 10px;">
+        <form method="POST" class="share-form-ajax" data-post-id="{{ post.id }}">
+            {% csrf_token %}
+            <input type="text" name="shared_with" placeholder="Search username..." required autocomplete="off">
+            <label><input type="checkbox" name="share_with_self"> Share to my profile</label>
+            <button type="submit"><i class="fa fa-paper-plane"></i></button>
+            <p class="share-status" style="color: green;"></p>
+        </form>
+
+        <!-- Social Share Links -->
+        <div class="social-share" style="margin-top: 8px;">
+            {% with post_url=request.build_absolute_uri|add:post.get_absolute_url %}
+                <a href="https://api.whatsapp.com/send?text={{ post_url|urlencode }}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a> |
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ post_url|urlencode }}" target="_blank" rel="noopener"><i class="fab fa-facebook"></i></a> |
+                <a href="https://twitter.com/intent/tweet?url={{ post_url|urlencode }}" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a> |
+                <a href="https://www.instagram.com" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a> |
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ post_url|urlencode }}" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a> |
+                <a href="https://pinterest.com/pin/create/button/?url={{ post_url|urlencode }}" target="_blank" rel="noopener"><i class="fab fa-pinterest"></i></a>
+            {% endwith %}
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <form action="{% url 'add-comment' post.id %}" method="POST" style="position: relative; margin-top: 10px;" class="comment-form">
+        {% csrf_token %}
+        <input type="text" name="content" id="comment-input-{{ post.id }}" placeholder="Add a comment" autocomplete="off" required style="width: 80%; padding: 5px;">
+        <button type="submit" class="action-btn" style="background:none; border:none; cursor:pointer; font-size: 18px;">
+            <i class="fa fa-comment"></i>
+        </button>
+    </form>
+
+    <p class="pc" style="margin-top: 10px;"><strong>Comments ({{ post.comments.count }})</strong></p>
+
+    {% if post.comments.exists %}
+        <div class="comment-container" id="limited-comments-{{ post.id }}">
+            {% for comment in post.comments.all|slice:"-2:" %}
+                <div class="comment-card" style="border-top: 1px solid #eee; padding: 5px 0;">
+                    <div class="comment-header" style="font-weight: bold;">
+                        <a href="{% url 'user-profile' comment.user.username %}" class="username-linki">{{ comment.user.username }}</a>
+                    </div>
+                    <div class="comment-text">{{ comment.content|urlize_mentions|safe }}</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="comment-container" id="full-comments-{{ post.id }}" style="display: none;">
+            {% for comment in post.comments.all %}
+                <div class="comment-card" style="border-top: 1px solid #eee; padding: 5px 0;">
+                    <div class="comment-header" style="font-weight: bold;">
+                        <a href="{% url 'user-profile' comment.user.username %}" class="username-linki">{{ comment.user.username }}</a>
+                    </div>
+                    <div class="comment-text">{{ comment.content|urlize_mentions|safe }}</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div style="text-align: center; margin-top: 10px;">
+            <button id="toggle-btn-{{ post.id }}" class="view" onclick="toggleComments({{ post.id }})">View all comments</button>
+        </div>
+    {% else %}
+        <p class="cs" style="color: #666; margin-top: 10px;">No comments yet. Be the first to comment!</p>
+    {% endif %}
+</div>
+{% empty %}
+<p>No saved posts found.</p>
+{% endfor %}
+<script src="{% static 'posts/post_list.js' %}"></script>

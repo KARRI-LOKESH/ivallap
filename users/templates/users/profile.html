@@ -96,6 +96,8 @@
             <!-- Extra Buttons -->
         {% if user == user_profile %}
         <p><a href="{% url 'my-posts' %}" class="btn">My Posts</a></p>
+        <p><a href="{% url 'saved' %}">Saved</a></p>
+
     {% endif %}
     <p><a href="{% url 'logout' %}">Logout</a></p>
         </div>

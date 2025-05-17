@@ -89,6 +89,19 @@ ul.errorlist {
     background-color: #273c86;
     transform: scale(1.03);
 }
+#mediaPreviewContainer {
+  margin: 15px 0;
+}
+
+#imagePreview,
+#videoPreview {
+  max-width: 300px; /* Set reasonable size */
+  max-height: 300px;
+  display: none;
+  object-fit: contain;
+  border-radius: 10px;
+  cursor: default !important; /* Prevent cursor changing */
+}
 
 @media (max-width: 600px) {
     h2 {

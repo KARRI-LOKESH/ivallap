@@ -182,6 +182,112 @@ body {
     color: white;
     border: 1px solid white;
 }
+/* Three dots icon (⋮) below share button */
+.more-options-btn {
+    position: relative;
+    cursor: pointer;
+    color: white;
+    font-size: 20px; /* Reduced icon size */
+    margin-top: 10px;
+}
+
+/* Container of the dropdown */
+.reel-more-menu {
+    position: absolute;
+    bottom: 70px;        /* Place it above the icon */
+    right: 0;
+    background-color: #1c1c1c;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 0;
+    width: 180px;
+    max-height: 220px;   /* Prevent dropdown from going below reel */
+    overflow-y: auto;    /* Scroll if many items */
+    display: none;
+    z-index: 999;
+}
+
+
+/* Menu Items */
+.reel-more-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.reel-more-menu li {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.reel-more-menu li:hover {
+    background-color: #333;
+}
+
+.reel-more-menu i {
+    font-size: 16px;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-box {
+    background: #1c1c1c;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 300px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-box textarea {
+    width: 100%;
+    padding: 10px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.modal-actions button {
+    padding: 6px 12px;
+    background: #555;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.modal-actions button:hover {
+    background: #777;
+}
+
 @media (max-width: 768px) {
     .reel {
         width: 100vw;

@@ -1,0 +1,342 @@
+/* General Reset & Fonts */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f9f9f9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.post {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  padding: 15px 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  word-wrap: break-word;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #111;
+  gap: 10px;
+}
+
+.profile-pic-smalli {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid #ddd;
+}
+
+.profile-pic-smalli img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.username-link {
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+
+.username-link:hover {
+  color: #007bff;
+}
+
+.post-time {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.post-row {
+  margin: 10px 0;
+}
+
+.post-text {
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #222;
+}
+
+.toggle-more {
+  color: #007bff;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 8px;
+  user-select: none;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.toggle-more:hover {
+  text-decoration: underline;
+}
+
+img[alt="Post Image"] {
+  border-radius: 8px;
+  margin-top: 10px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+video {
+  border-radius: 8px;
+  margin-top: 10px;
+  max-height: 350px;
+  width: 100%;
+  display: block;
+}
+
+.post-actions {
+  margin-top: 12px;
+  border-top: 1px solid #eee;
+  padding-top: 12px;
+}
+
+.actions-group {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.like-btn,
+.save-btn,
+.share-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  transition: transform 0.15s ease;
+  user-select: none;
+}
+
+.like-btn:hover,
+.save-btn:hover,
+.share-btn:hover {
+  transform: scale(1.2);
+}
+
+.count-text {
+  font-size: 0.9rem;
+  color: #555;
+  user-select: none;
+  margin-left: 4px;
+}
+
+.share-form {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.share-form input[type="text"] {
+  width: 65%;
+  padding: 6px 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-right: 10px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.share-form input[type="text"]:focus {
+  border-color: #007bff;
+}
+
+.share-form label {
+  font-size: 0.9rem;
+  color: #444;
+  user-select: none;
+  margin-right: 10px;
+}
+
+.share-form button {
+  font-size: 18px;
+  cursor: pointer;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.share-form button:hover {
+  background-color: #0056b3;
+}
+
+.social-share {
+  font-size: 20px;
+  margin-top: 10px;
+  color: #555;
+}
+
+.social-share a {
+  color: #555;
+  margin: 0 6px;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.social-share a:hover {
+  color: #007bff;
+}
+
+.comment-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.comment-form input[type="text"] {
+  flex-grow: 1;
+  font-size: 1rem;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.comment-form input[type="text"]:focus {
+  border-color: #007bff;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  color: #007bff;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+.action-btn:hover {
+  color: #0056b3;
+}
+
+.pc {
+  margin-top: 15px;
+  font-weight: 600;
+  color: #444;
+}
+
+.comment-container {
+  max-height: 280px;
+  overflow-y: auto;
+  margin-top: 8px;
+  padding-right: 6px;
+  border-top: 1px solid #ddd;
+}
+
+.comment-card {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.comment-header {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.username-linki {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.2s ease;
+}
+
+.username-linki:hover {
+  color: #007bff;
+}
+
+.comment-text {
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: #555;
+  white-space: pre-wrap;
+}
+
+.view {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #007bff;
+  font-weight: 600;
+  margin-top: 10px;
+  user-select: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.view:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/* Responsive */
+
+@media (max-width: 650px) {
+  .post {
+    margin: 15px 12px;
+    padding: 15px 15px;
+  }
+  
+  .post-header {
+    gap: 8px;
+  }
+  
+  .profile-pic-smalli {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .post-text {
+    font-size: 0.95rem;
+  }
+  
+  .actions-group {
+    gap: 10px;
+  }
+  
+  .like-btn,
+  .save-btn,
+  .share-btn {
+    font-size: 18px;
+  }
+  
+  .comment-form input[type="text"] {
+    font-size: 0.95rem;
+  }
+  
+  .action-btn {
+    font-size: 20px;
+  }
+  
+  .social-share {
+    font-size: 18px;
+  }
+}

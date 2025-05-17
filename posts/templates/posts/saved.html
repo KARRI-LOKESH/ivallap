@@ -1,0 +1,75 @@
+{% load static %}
+{% block content %}
+<style>
+  .saved-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0;
+  }
+
+  .saved-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #222;
+    padding: 10px 16px;
+    border-radius: 25px;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+
+  .saved-links a:hover {
+    background-color: #444;
+    transform: scale(1.05);
+  }
+
+  .saved-links i {
+    font-size: 20px;
+  }
+
+  .saved-links a.active {
+    background-color: #555;
+    color: #ffcc00;
+  }
+</style>
+
+<div class="saved-links">
+  <a href="javascript:void(0);" id="btn-posts" onclick="loadSaved('posts');" class="saved-posts-icon active" title="Saved Posts">
+    <i class="fa-solid fa-bookmark"></i> Saved Posts
+  </a>
+  <a href="javascript:void(0);" id="btn-reels" onclick="loadSaved('reels');" class="saved-reels-icon" title="Saved Reels">
+    <i class="fa-solid fa-film"></i> Saved Reels
+  </a>
+</div>
+
+<div id="saved-content"></div>
+
+<script>
+  function loadSaved(type) {
+    const url = `/posts/saved-${type}/`;
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to load");
+        return res.text();
+      })
+      .then(html => {
+        document.getElementById('saved-content').innerHTML = html;
+
+        // Set active class
+        document.getElementById('btn-posts').classList.remove('active');
+        document.getElementById('btn-reels').classList.remove('active');
+        document.getElementById('btn-' + type).classList.add('active');
+      })
+      .catch(err => {
+        document.getElementById('saved-content').innerHTML = `<p style="color:red;">Failed to load saved ${type}.</p>`;
+      });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => loadSaved('posts'));
+</script>
+{% endblock %}

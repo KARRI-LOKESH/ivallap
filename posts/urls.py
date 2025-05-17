@@ -33,10 +33,18 @@ urlpatterns = [
     path('chat/<str:username>/', views.chat_view, name='chat'),
     path('reels/', views.reel_list, name='reel-list'),
     path('reels/<int:reel_id>/like/', views.like_reel, name='like-reel'),
-    path('reels/<int:reel_id>/save/', views.reel_save_view, name='reel-save'),
-    path('reels/<int:reel_id>/save/', views.reel_share_view, name='reel-share'),
+    path('share-reel/', views.share_reel, name='share-reel'),
     path('reels/<int:reel_id>/comments/', views.reel_comments, name='reel_comments'),
     path('comments/delete/<int:comment_id>/', views.delete_comment, name='delete_comment'),
     path('comment/<int:comment_id>/like/', views.like_comment, name='like_comment'),
     path('comment/<int:comment_id>/reply/', views.reply_to_comment, name='reply_to_comment'),
+    path('posts/reels/<int:reel_id>/save/', views.save_reel, name='save_reel'),
+    path('reels/<int:reel_id>/report/', views.report_reel, name='report-reel'),
+    path('reports/', views.view_reports, name='view-reports'),
+    path('unsave/', views.unsave_post, name='unsave-post'),
+    path('saved/', views.saved_content, name='saved'),  
+    path('saved-posts/', views.saved_posts_view, name='saved-posts'),
+    path('saved-reels/', views.saved_reels_view, name='saved-reels'),
+
+
 ]

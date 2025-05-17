@@ -17,6 +17,7 @@ import base64
 from django.views.decorators.csrf import csrf_exempt
 from cloudinary.uploader import upload
 from django.utils import timezone
+from django.views.decorators.http import require_POST
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.http import JsonResponse # Ensure Post model is imported
@@ -204,19 +205,17 @@ def like_post(request, post_id):
 def save_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
-    # Check if the post is already saved by the user
     if request.user in post.saved_by.all():
-        post.saved_by.remove(request.user)  # Remove the user from saved posts
+        post.saved_by.remove(request.user)
         saved = False
     else:
-        post.saved_by.add(request.user)  # Add the user to saved posts
+        post.saved_by.add(request.user)
         saved = True
 
     return JsonResponse({
-        "total_saves": post.saved_by.count(),  # Return the updated save count
-        "saved": saved  # Return whether the post is saved by the user
+        "total_saves": post.saved_by.count(),
+        "saved": saved
     })
-
 
 User = get_user_model()
 
@@ -595,29 +594,25 @@ def like_reel(request, reel_id):
             return JsonResponse({'error': 'Reel not found'}, status=404)
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
-def reel_save_view(request, reel_id):
-    if request.user.is_authenticated:
-        reel = Reel.objects.get(id=reel_id)
-        user = request.user
-        saved = False
 
-        if user in reel.saved_by.all():
-            reel.saved_by.remove(user)
-        else:
-            reel.saved_by.add(user)
-            saved = True
+@login_required
+@require_POST
+def share_reel(request):
+    reel_id = request.POST.get('reel_id')
+    user_ids = request.POST.getlist('user_ids[]')  # JS sends array
 
-        return JsonResponse({'saved': saved})
-    return JsonResponse({'error': 'Unauthorized'}, status=401)
+    reel = get_object_or_404(Reel, id=reel_id)
 
+    # Example: Assuming Reel model has a ManyToMany field `shared_with` for users
+    users_to_share = User.objects.filter(id__in=user_ids)
 
-def reel_share_view(request, reel_id):
-    # This is a placeholder. You can enhance it later.
-    if request.user.is_authenticated:
-        # Logically, you might store shared reels in a separate model
-        return JsonResponse({'shared': True})
-    return JsonResponse({'error': 'Unauthorized'}, status=401)
+    # Add those users to the reel's shared_with field
+    for user in users_to_share:
+        reel.shared_with.add(user)
 
+    reel.save()
+
+    return JsonResponse({'success': True, 'message': 'Reel shared successfully.'})
 def reel_comments(request, reel_id):
     reel = get_object_or_404(Reel, id=reel_id)
     content_type = ContentType.objects.get_for_model(reel)
@@ -728,3 +723,61 @@ def reply_to_comment(request, comment_id):
         return JsonResponse({'success': True})
     
     return JsonResponse({'error': 'Invalid request'}, status=400)
+@login_required
+@csrf_exempt
+def save_reel(request, reel_id):
+    reel = get_object_or_404(Reel, id=reel_id)
+    if request.user in reel.saved_by.all():
+        reel.saved_by.remove(request.user)
+        return JsonResponse({'saved': False})
+    else:
+        reel.saved_by.add(request.user)
+        return JsonResponse({'saved': True})
+from .models import Reel, Report 
+@login_required
+def report_reel(request, reel_id):
+    if request.method == 'POST':
+        reason = request.POST.get('reason')
+        reel = get_object_or_404(Reel, id=reel_id)
+        report = Report.objects.create(user=request.user, reel=reel, reason=reason)
+        return JsonResponse({'success': True, 'message': 'Report submitted successfully.'})
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'}, status=400)
+
+from django.contrib.admin.views.decorators import staff_member_required
+@staff_member_required
+def view_reports(request):
+    reports = Report.objects.select_related('user', 'reel').order_by('-created_at')
+    return render(request, 'posts/view_reports.html', {'reports': reports})
+
+@csrf_exempt
+def unsave_post(request):
+    if request.method == 'POST' and request.user.is_authenticated:
+        post_id = request.POST.get('post_id')
+        try:
+            post = Post.objects.get(id=post_id)
+            post.saved_by.remove(request.user)
+            return JsonResponse({'status': 'unsaved'})
+        except Post.DoesNotExist:
+            return JsonResponse({'error': 'Post not found'}, status=404)
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+@login_required
+def saved_content(request):
+    user = request.user
+    saved_posts = Post.objects.filter(saved_by=user)
+
+    # Separate image posts and video reels
+    image_posts = saved_posts.filter(video='').distinct()
+    video_reels = saved_posts.exclude(video='').distinct()
+
+    return render(request, 'posts/saved.html', {
+        'image_posts': image_posts,
+        'video_reels': video_reels
+    })
+@login_required
+def saved_posts_view(request):
+    saved_posts = Post.objects.filter(saved_by=request.user, video__isnull=True)
+    return render(request, 'posts/saved_posts.html', {'saved_posts': saved_posts})
+@login_required
+def saved_reels_view(request):
+    saved_reels = Post.objects.filter(saved_by=request.user, video__isnull=False)
+    return render(request, 'posts/saved_reels.html', {'saved_reels': saved_reels})

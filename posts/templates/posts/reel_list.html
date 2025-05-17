@@ -39,62 +39,106 @@
             </form>
             {% endif %}
         </div>
+
         <p class="reel-caption">
-                <span id="reel-content-{{ reel.id }}" class="reel-content" data-full-text="{{ reel.caption|escapejs }}">
-                    {{ reel.caption|slice:":30" }}{% if reel.caption|length > 30 %}...{% endif %}
-                </span>
-                {% if reel.caption|length > 30 %}
-                    <a href="javascript:void(0);" class="toggle-more" id="reel-toggle-{{ reel.id }}" onclick="toggleReelContent({{ reel.id }})">More</a>
-                {% endif %}
-            </p>
-        <div class="reel-overlay">
-    <div class="reel-actions">
-        <div class="reel-action like-btn" data-reel-id="{{ reel.id }}" data-liked="{{ reel.is_liked }}">
-            {% if request.user in reel.likes.all %}
-                <i class="fa-solid fa-heart"></i>
-            {% else %}
-                <i class="fa-regular fa-heart"></i>
+            <span id="reel-content-{{ reel.id }}" class="reel-content" data-full-text="{{ reel.caption|escapejs }}">
+                {{ reel.caption|slice:":30" }}{% if reel.caption|length > 30 %}...{% endif %}
+            </span>
+            {% if reel.caption|length > 30 %}
+                <a href="javascript:void(0);" class="toggle-more" id="reel-toggle-{{ reel.id }}" onclick="toggleReelContent({{ reel.id }})">More</a>
             {% endif %}
-            <span>{{ reel.total_likes }}</span>
-        </div>
+        </p>
 
-        <div class="reel-action comment-btn" data-reel-id="{{ reel.id }}">
-            <i class="fa-regular fa-comment"></i>
-            <span>{{ reel.comments.count }}</span>
-        </div>
+        <div class="reel-overlay">
+            <div class="reel-actions">
+                <div class="reel-action like-btn" data-reel-id="{{ reel.id }}" data-liked="{{ reel.is_liked }}">
+                    {% if request.user in reel.likes.all %}
+                        <i class="fa-solid fa-heart"></i>
+                    {% else %}
+                        <i class="fa-regular fa-heart"></i>
+                    {% endif %}
+                    <span>{{ reel.total_likes }}</span>
+                </div>
 
-        <div class="reel-action share-btn" data-reel-id="{{ reel.id }}">
-            <i class="fa-solid fa-paper-plane"></i>
-            <span>{{ reel.share.count }}</span>
-        </div>
+                <div class="reel-action comment-btn" data-reel-id="{{ reel.id }}">
+                    <i class="fa-regular fa-comment"></i>
+                    <span>{{ reel.comments.count }}</span>
+                </div>
 
-        <!-- Three dots menu -->
-        <div class="reel-action more-options-btn" data-reel-id="{{ reel.id }}">
-            <i class="fa-solid fa-ellipsis-vertical"></i>
+                <div class="reel-action share-btn" data-reel-id="{{ reel.id }}">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>{{ reel.share.count }}</span>
+                </div>
 
-            <!-- Dropdown menu -->
-            <div class="reel-more-menu" id="more-menu-{{ reel.id }}">
-                <ul>
-                    <li class="save-btn" data-reel-id="{{ reel.id }}">
-                        <i class="fa-regular fa-bookmark"></i> Save
-                    </li>
-                    <li onclick="copyReelLink({{ reel.id }})">
-                        <i class="fa-solid fa-link"></i> Copy Link
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-flag"></i> Report
-                    </li>
-                </ul>
+                <!-- Three dots menu -->
+                <div class="more-options-btn" data-reel-id="{{ reel.id }}">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </div>
+
+                <div class="reel-more-menu" id="more-menu-{{ reel.id }}">
+                    <ul>
+                        <li class="save-btn" data-reel-id="{{ reel.id }}">
+                            <i class="fa-regular fa-bookmark"></i> Save
+                        </li>
+                        <li onclick="copyReelLink({{ reel.id }})">
+                            <i class="fa-solid fa-link"></i> Copy Link
+                        </li>
+                        <li onclick="reportReel({{ reel.id }})">
+                            <i class="fa-solid fa-flag"></i> Report
+                        </li>
+                        <li onclick="downloadReel('{{ reel.video.url }}')">
+                            <i class="fa-solid fa-download"></i> Download
+                        </li>
+                        <li onclick="muteReel({{ reel.id }})">
+                            <i class="fa-solid fa-volume-xmark"></i> Mute
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="like-animation">❤️</div>
             </div>
         </div>
     </div>
-
-    <div class="like-animation">❤️</div>
-</div>
-
-    </div>
     {% endfor %}
 </div>
+
+<!-- Move modals outside the loop -->
+
+<!-- Report Modal -->
+<div id="report-modal" class="modal-overlay" style="display: none;">
+  <div class="modal-box">
+    <h3>Report Reel</h3>
+    <textarea id="report-reason" placeholder="Reason..." rows="4"></textarea>
+    <div class="modal-actions">
+      <button onclick="submitReport()">Submit</button>
+      <button onclick="closeReportModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Share Modal -->
+<div id="share-modal" class="modal-overlay" style="display: none;">
+  <div class="modal-box">
+    <h3>Share Reel</h3>
+    <input type="hidden" id="share-reel-id">
+    <div id="user-list">
+      {% for user in request.user.following.all %}
+        <div class="user-item">
+          <label>
+            <input type="checkbox" class="share-user" value="{{ user.id }}">
+            {{ user.username }}
+          </label>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="modal-actions">
+      <button onclick="submitShare()">Share</button>
+      <button onclick="closeShareModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <script>
     // Pause other videos when one starts playing
     document.addEventListener('DOMContentLoaded', function () {
@@ -193,18 +237,46 @@
 
     // Share functionality
     $(document).on('click', '.share-btn', function () {
-        const reelId = $(this).data('reel-id');
-        const link = `${window.location.origin}/posts/reels/${reelId}/`; // ✅ Adjust base URL
-        navigator.clipboard.writeText(link)
-            .then(() => alert("Reel link copied to clipboard!"))
-            .catch(() => alert("Failed to copy link."));
+    const reelId = $(this).data('reel-id');
+    $('#share-reel-id').val(reelId);
+    $('#share-modal').fadeIn();
+});
+
+function closeShareModal() {
+    $('#share-modal').fadeOut();
+}
+function submitShare() {
+    const reelId = $('#share-reel-id').val();
+    let userIds = [];
+    $('.share-user:checked').each(function() {
+        userIds.push($(this).val());
     });
 
-    // Toggle more menu
+    $.ajax({
+        url: '/posts/share-reel/',
+        type: 'POST',
+        data: {
+            reel_id: reelId,
+            'user_ids[]': userIds,
+            csrfmiddlewaretoken: '{{ csrf_token }}'  // pass CSRF token properly
+        },
+        success: function(response) {
+            alert(response.message);
+            closeShareModal();
+        },
+        error: function() {
+            alert('Error sharing reel.');
+        }
+    });
+}
+
+
+
+// Toggle dropdown
 $(document).on('click', '.more-options-btn', function (e) {
     e.stopPropagation();
     const reelId = $(this).data('reel-id');
-    $('.reel-more-menu').not(`#more-menu-${reelId}`).hide(); // hide others
+    $('.reel-more-menu').not(`#more-menu-${reelId}`).hide();
     $(`#more-menu-${reelId}`).toggle();
 });
 
@@ -213,7 +285,23 @@ $(document).on('click', function () {
     $('.reel-more-menu').hide();
 });
 
-// Copy link function
+// 1. Save / Unsave
+$(document).on('click', '.save-btn', function () {
+    const reelId = $(this).data('reel-id');
+    $.ajax({
+        url: `/posts/reels/${reelId}/save/`,
+        method: 'POST',
+        headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+        success: function (response) {
+            alert(response.saved ? "Reel saved!" : "Reel removed from saved!");
+        },
+        error: function () {
+            alert("Failed to save the reel.");
+        }
+    });
+});
+
+// 2. Copy Link
 function copyReelLink(reelId) {
     const link = `${window.location.origin}/posts/reels/${reelId}/`;
     navigator.clipboard.writeText(link)
@@ -221,6 +309,109 @@ function copyReelLink(reelId) {
         .catch(() => alert("Failed to copy link."));
 }
 
+// 3. Report
+function reportReel(reelId) {
+    const confirmReport = confirm("Are you sure you want to report this reel?");
+    if (!confirmReport) return;
+
+    $.ajax({
+        url: `/posts/reels/${reelId}/report/`,
+        method: 'POST',
+        headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+        success: () => alert("Reported successfully."),
+        error: () => alert("Failed to report.")
+    });
+}
+
+// 4. Share (basic Web Share API fallback)
+function shareReel(reelId) {
+    const link = `${window.location.origin}/posts/reels/${reelId}/`;
+    if (navigator.share) {
+        navigator.share({
+            title: 'Check out this reel!',
+            url: link
+        }).catch(() => alert("Failed to share."));
+    } else {
+        prompt("Copy this link to share:", link);
+    }
+}
+
+// 5. Download
+function downloadReel(videoUrl) {
+    const a = document.createElement('a');
+    a.href = videoUrl;
+    a.download = 'reel.mp4';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+// 6. Mute
+function muteReel(reelId) {
+    const video = document.querySelector(`#reel-video-${reelId}`);
+    if (video) {
+        video.muted = !video.muted;
+        alert(video.muted ? "Muted" : "Unmuted");
+    } else {
+        alert("Video not found.");
+    }
+}
+function reportReel(reelId) {
+    $('#report-modal').data('reel-id', reelId).show();
+}
+
+function closeReportModal() {
+    $('#report-modal').hide();
+}
+
+function submitReport() {
+    const reelId = $('#report-modal').data('reel-id');
+    const reason = $('#report-reason').val();
+
+    $.ajax({
+        url: `/posts/reels/${reelId}/report/`,
+        type: 'POST',
+        data: {
+            reason: reason,
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function(response) {
+            alert(response.message);
+            closeReportModal();
+            $('#report-reason').val('');
+        },
+        error: function(xhr) {
+            alert('Failed to submit report.');
+        }
+    });
+}
+
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const reelId = urlParams.get('reel_id');
+      if (reelId) {
+        const reelElem = document.querySelector(`.reel[data-reel-id='${reelId}']`);
+        if (reelElem) {
+          // Scroll to reel
+          reelElem.scrollIntoView({ behavior: "smooth", block: "center" });
+
+          // Highlight reel briefly
+          reelElem.classList.add('highlighted-reel');
+          setTimeout(() => {
+            reelElem.classList.remove('highlighted-reel');
+          }, 3000);
+
+          // Play the video
+          const video = reelElem.querySelector('video');
+          if (video) {
+            video.play();
+            // Optionally you can add fullscreen logic here if you want
+          }
+        }
+      }
+    });
+  </script>
 </body>
 </html>
