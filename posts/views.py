@@ -723,16 +723,23 @@ def reply_to_comment(request, comment_id):
         return JsonResponse({'success': True})
     
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
 @login_required
-@csrf_exempt
 def save_reel(request, reel_id):
-    reel = get_object_or_404(Reel, id=reel_id)
-    if request.user in reel.saved_by.all():
-        reel.saved_by.remove(request.user)
-        return JsonResponse({'saved': False})
-    else:
-        reel.saved_by.add(request.user)
-        return JsonResponse({'saved': True})
+    if request.method == 'POST':
+        try:
+            reel = Reel.objects.get(id=reel_id)
+            if request.user in reel.saved_by.all():
+                reel.saved_by.remove(request.user)
+                saved = False
+            else:
+                reel.saved_by.add(request.user)
+                saved = True
+            return JsonResponse({'saved': saved})
+        except Reel.DoesNotExist:
+            return JsonResponse({'error': 'Reel not found'}, status=404)
+    return JsonResponse({'error': 'Invalid method'}, status=400)
 from .models import Reel, Report 
 @login_required
 def report_reel(request, reel_id):
