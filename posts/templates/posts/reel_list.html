@@ -48,27 +48,50 @@
                 {% endif %}
             </p>
         <div class="reel-overlay">
-            <div class="reel-actions">
-                <div class="reel-action like-btn" data-reel-id="{{ reel.id }}" data-liked="{{ reel.is_liked }}">
-                   {% if request.user in reel.likes.all %}
-                        <i class="fa-solid fa-heart"></i>
-                    {% else %}
-                        <i class="fa-regular fa-heart"></i>
-                    {% endif %}
-                    <span>{{ reel.total_likes }}</span>
-                </div>
-                <div class="reel-action comment-btn" data-reel-id="{{ reel.id }}">
-                <i class="fa-regular fa-comment"></i>
-                <span>{{ reel.comments.count }}</span>
-            </div>
-                <div class="reel-action share-btn" data-reel-id="{{ reel.id }}">
-                    <i class="fa-solid fa-paper-plane"></i>
-                    <span>{{ reel.share.count }}</span>
-                </div>
-            </div>
-
-            <div class="like-animation">❤️</div>
+    <div class="reel-actions">
+        <div class="reel-action like-btn" data-reel-id="{{ reel.id }}" data-liked="{{ reel.is_liked }}">
+            {% if request.user in reel.likes.all %}
+                <i class="fa-solid fa-heart"></i>
+            {% else %}
+                <i class="fa-regular fa-heart"></i>
+            {% endif %}
+            <span>{{ reel.total_likes }}</span>
         </div>
+
+        <div class="reel-action comment-btn" data-reel-id="{{ reel.id }}">
+            <i class="fa-regular fa-comment"></i>
+            <span>{{ reel.comments.count }}</span>
+        </div>
+
+        <div class="reel-action share-btn" data-reel-id="{{ reel.id }}">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span>{{ reel.share.count }}</span>
+        </div>
+
+        <!-- Three dots menu -->
+        <div class="reel-action more-options-btn" data-reel-id="{{ reel.id }}">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+
+            <!-- Dropdown menu -->
+            <div class="reel-more-menu" id="more-menu-{{ reel.id }}">
+                <ul>
+                    <li class="save-btn" data-reel-id="{{ reel.id }}">
+                        <i class="fa-regular fa-bookmark"></i> Save
+                    </li>
+                    <li onclick="copyReelLink({{ reel.id }})">
+                        <i class="fa-solid fa-link"></i> Copy Link
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-flag"></i> Report
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="like-animation">❤️</div>
+</div>
+
     </div>
     {% endfor %}
 </div>
@@ -176,6 +199,28 @@
             .then(() => alert("Reel link copied to clipboard!"))
             .catch(() => alert("Failed to copy link."));
     });
+
+    // Toggle more menu
+$(document).on('click', '.more-options-btn', function (e) {
+    e.stopPropagation();
+    const reelId = $(this).data('reel-id');
+    $('.reel-more-menu').not(`#more-menu-${reelId}`).hide(); // hide others
+    $(`#more-menu-${reelId}`).toggle();
+});
+
+// Hide dropdown when clicking outside
+$(document).on('click', function () {
+    $('.reel-more-menu').hide();
+});
+
+// Copy link function
+function copyReelLink(reelId) {
+    const link = `${window.location.origin}/posts/reels/${reelId}/`;
+    navigator.clipboard.writeText(link)
+        .then(() => alert("Link copied to clipboard!"))
+        .catch(() => alert("Failed to copy link."));
+}
+
 </script>
 </body>
 </html>
