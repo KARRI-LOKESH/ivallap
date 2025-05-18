@@ -10,15 +10,16 @@
         <p>{{ post.content }}</p>
         
         {% if post.image %}
-            <img src="{{ post.image.url }}" alt="Post Image" class="post-image">
-        {% endif %}
-        
-        {% if post.video %}
-            <video class="post-video" controls>
-                <source src="{{ post.video.url }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        {% endif %}
+    <img src="{{ post.image.url }}" alt="Post Image" 
+         style="max-width: 100%; height: auto; filter: {{ post.filter }};">
+{% endif %}
+
+{% if post.video %}
+    <video width="400" controls style="filter: {{ post.filter }};">
+        <source src="{{ post.video.url }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+{% endif %}
         
         <p>Created at: {{ post.created_at }}</p>
         <a href="{% url 'post-list' %}" class="back-button">Back to Posts</a>

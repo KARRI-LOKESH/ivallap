@@ -4,23 +4,27 @@
   .saved-links {
     display: flex;
     justify-content: center;
-    gap: 30px;
-    margin: 20px 0;
+    flex-wrap: wrap; /* stack in small screen */
+    gap: 20px;
+    margin: 20px auto;
+    padding: 0 10px;
   }
 
   .saved-links a {
     text-decoration: none;
     color: #fff;
-    font-weight: 500;
-    font-size: 18px;
+    font-weight: 600;
+    font-size: 20px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    gap: 10px;
     background-color: #222;
-    padding: 10px 16px;
-    border-radius: 25px;
+    padding: 14px 24px;
+    border-radius: 30px;
     transition: background-color 0.3s, transform 0.2s;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    min-width: 160px;
   }
 
   .saved-links a:hover {
@@ -29,14 +33,23 @@
   }
 
   .saved-links i {
-    font-size: 20px;
+    font-size: 22px;
   }
 
   .saved-links a.active {
     background-color: #555;
     color: #ffcc00;
   }
+
+  @media screen and (max-width: 480px) {
+    .saved-links a {
+      width: 100%;
+      font-size: 22px;
+      padding: 16px 20px;
+    }
+  }
 </style>
+
 
 <div class="saved-links">
   <a href="javascript:void(0);" id="btn-posts" onclick="loadSaved('posts');" class="saved-posts-icon active" title="Saved Posts">

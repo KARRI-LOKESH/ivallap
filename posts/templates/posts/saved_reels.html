@@ -1,58 +1,53 @@
 {% load static %}
 {% block content %}
 <head>
-    <link rel="stylesheet" href="{% static 'posts/saved_reels.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    {% block extra_head %}{% endblock %}
+  <link rel="stylesheet" href="{% static 'posts/saved_reels.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
 <div class="reel-container">
   {% for reel in saved_reels %}
   <div class="reel" data-reel-id="{{ reel.id }}">
-    <a href="{% url 'reel-list' %}?reel_id={{ reel.id }}" class="reel-link" style="display:block;">
-      <video src="{{ reel.video.url }}" loop playsinline muted preload="metadata" controls></video>
-    </a>
 
-    <!-- Header -->
+    <!-- Video Display -->
+    <video src="{{ reel.video.url }}" loop playsinline muted preload="metadata" controls></video>
+
+    <!-- Uploader Info (No Links) -->
     <div class="reel-header">
-      <a href="{% url 'user-profile' reel.user.username %}" class="reel-user">
-        <div class="reel-profile-pic">
-          {% if reel.user.profile_pic %}
-            <img src="{{ reel.user.profile_pic.url }}" alt="Profile">
-          {% else %}
-            <img src="{% static 'users/images/default-profile.png' %}" alt="Default">
-          {% endif %}
-        </div>
-        <strong>{{ reel.user.username }}</strong>
-      </a>
-
-      {% if request.user != reel.user %}
-      <form action="{% url 'follow-user' reel.user.id %}" method="POST" class="reel-follow-form">
-        {% csrf_token %}
-        {% if reel.user in request.user.following.all %}
-          <button type="submit" class="reel-btn-unfollow">Following</button>
+      <div class="reel-profile-pic">
+        {% if reel.user.profile_pic %}
+          <img src="{{ reel.user.profile_pic.url }}" alt="Profile">
         {% else %}
-          <button type="submit" class="reel-btn-follow">Follow</button>
+          <img src="{% static 'users/images/default-profile.png' %}" alt="Default">
         {% endif %}
-      </form>
-      {% endif %}
+      </div>
+      <strong style="color:white;">{{ reel.user.username }}</strong>
     </div>
 
-    <!-- Caption -->
+    <!-- Caption (no toggle, no JS) -->
     <p class="reel-caption">
-      <span id="reel-content-{{ reel.id }}" class="reel-content" data-full-text="{{ reel.caption|escapejs }}">
-        {{ reel.caption|slice:":30" }}{% if reel.caption|length > 30 %}...{% endif %}
-      </span>
-      {% if reel.caption|length > 30 %}
-        <a href="javascript:void(0);" class="toggle-more" id="reel-toggle-{{ reel.id }}" onclick="toggleReelContent({{ reel.id }})">More</a>
-      {% endif %}
+      {{ reel.caption }}
     </p>
-
-    <!-- Overlay actions and more ... (same as your original) -->
 
   </div>
   {% empty %}
   <p style="text-align:center; color:gray;">No saved reels found.</p>
   {% endfor %}
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const videos = document.querySelectorAll('video');
+
+    videos.forEach(video => {
+      video.addEventListener('play', () => {
+        videos.forEach(v => {
+          if (v !== video) {
+            v.pause();
+          }
+        });
+      });
+    });
+  });
+</script>
+
 {% endblock %}

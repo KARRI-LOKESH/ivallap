@@ -273,17 +273,19 @@ function submitShare() {
 
 
 // Toggle dropdown
-$(document).on('click', '.more-options-btn', function (e) {
-    e.stopPropagation();
-    const reelId = $(this).data('reel-id');
-    $('.reel-more-menu').not(`#more-menu-${reelId}`).hide();
-    $(`#more-menu-${reelId}`).toggle();
+$('.more-options-btn').on('click', function () {
+    const menu = $(this).next('.reel-more-menu');
+    $('.reel-more-menu').not(menu).removeClass('show'); // Hide others
+    menu.toggleClass('show');
 });
 
-// Hide dropdown when clicking outside
-$(document).on('click', function () {
-    $('.reel-more-menu').hide();
+// Click outside to close
+$(document).on('click', function (e) {
+    if (!$(e.target).closest('.more-options-btn, .reel-more-menu').length) {
+        $('.reel-more-menu').removeClass('show');
+    }
 });
+
 
 // 1. Save / Unsave
 $(document).on('click', '.save-btn', function () {

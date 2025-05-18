@@ -15,16 +15,16 @@
                 
                 <!-- Display Image -->
                 {% if post.image %}
-                    <img src="{{ post.image.url }}" alt="Post Image" class="post-image">
-                {% endif %}
+    <img src="{{ post.image.url }}" alt="Post Image" 
+         style="max-width: 100%; height: auto; filter: {{ post.filter }};">
+{% endif %}
 
-                <!-- Display Video -->
-                {% if post.video %}
-                    <video controls class="post-video">
-                        <source src="{{ post.video.url }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                {% endif %}
+{% if post.video %}
+    <video width="400" controls style="filter: {{ post.filter }};">
+        <source src="{{ post.video.url }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+{% endif %}
 
                 <!-- Post Content -->
                 <p>{{ post.content }}</p>

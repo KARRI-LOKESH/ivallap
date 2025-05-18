@@ -187,28 +187,44 @@ body {
     position: relative;
     cursor: pointer;
     color: white;
-    font-size: 20px; /* Reduced icon size */
-    margin-top: 10px;
+    font-size: 26px; /* Increased icon size */
+    margin-top: 14px;
+    transition: transform 0.2s ease;
 }
 
-/* Container of the dropdown */
+.more-options-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Dropdown Container */
 .reel-more-menu {
     position: absolute;
-    bottom: 70px;        /* Place it above the icon */
+    bottom: 80px;
     right: 0;
     background-color: #1c1c1c;
     color: white;
-    border-radius: 10px;
-    padding: 10px 0;
-    width: 180px;
-    max-height: 220px;   /* Prevent dropdown from going below reel */
-    overflow-y: auto;    /* Scroll if many items */
+    border-radius: 12px;
+    padding: 12px 0;
+    width: 220px;
+    /* Remove scrolling */
+    max-height: none;
+    overflow: visible;
     display: none;
     z-index: 999;
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    transition: all 0.25s ease;
 }
 
 
-/* Menu Items */
+/* Show animation */
+.reel-more-menu.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Menu List */
 .reel-more-menu ul {
     list-style: none;
     margin: 0;
@@ -216,13 +232,16 @@ body {
 }
 
 .reel-more-menu li {
-    padding: 10px 15px;
+    width: 100%; /* Ensure full width */
+    box-sizing: border-box; /* Include padding in width */
+    padding: 12px 16px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 14px;
+    gap: 12px;
+    font-size: 16px;
     cursor: pointer;
     transition: background 0.2s ease;
+    border-radius: 0; /* optional for sharp edges */
 }
 
 .reel-more-menu li:hover {
@@ -230,8 +249,15 @@ body {
 }
 
 .reel-more-menu i {
-    font-size: 16px;
+    font-size: 18px;
+    color: #ccc;
+    transition: color 0.2s;
 }
+
+.reel-more-menu li:hover i {
+    color: #fff;
+}
+
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
