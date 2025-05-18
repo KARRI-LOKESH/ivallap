@@ -5,6 +5,7 @@ body {
   color: #333;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 /* Post Card */
@@ -12,10 +13,12 @@ body {
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 15px 20px;
+  padding: 15px 25px;          /* More padding for bigger screens */
   margin: 20px auto;
-  max-width: 600px;
+  width: 90%;                 /* Take 90% of viewport width */
+  max-width: 1100px;          /* Max width on large screens */
   word-wrap: break-word;
+  box-sizing: border-box;     /* Include padding in width */
 }
 
 /* Post Header */
@@ -104,7 +107,7 @@ img[alt="Post Image"] {
   border-radius: 8px;
 }
 
-/* Post Video - centered and larger */
+/* Post Video - centered and responsive */
 video {
   display: block;
   margin: 10px auto 0 auto; /* Centered horizontally */
@@ -112,6 +115,7 @@ video {
   width: 100%;
   height: auto;
   border-radius: 8px;
+  object-fit: contain; /* Prevent cropping */
 }
 
 /* Actions */
@@ -317,61 +321,54 @@ video {
 /* Mobile Responsive Adjustments */
 @media (max-width: 650px) {
   .post {
-    margin: 15px 5px; /* Smaller side margin on mobile */
-    padding: 12px;
+    margin: 15px 10px; /* Smaller side margin on mobile */
+    padding: 12px 15px;
+    width: 95%;
   }
-   img[alt="Post Image"],
-  video {
-    width: 100%;
-    max-width: 100%;
-  }
-}
   .post-header {
     gap: 8px;
   }
-
   .profile-pic-smalli {
     width: 36px;
     height: 36px;
   }
-
   .post-text {
     font-size: 0.95rem;
   }
-
   .actions-group {
     gap: 10px;
   }
-
   .like-btn,
   .save-btn,
   .share-btn {
     font-size: 18px;
   }
-
   .comment-form input[type="text"] {
     font-size: 0.95rem;
   }
-
   .action-btn {
     font-size: 20px;
   }
-
   .social-share {
     font-size: 18px;
   }
-
   .share-form input[type="text"] {
     width: 100%;
     margin: 0 0 10px 0;
   }
-
   .share-form {
     display: flex;
     flex-direction: column;
   }
-
   .share-form button {
     width: 100%;
+  }
+}
+
+/* Wider screens adjustment */
+@media (min-width: 1300px) {
+  .post {
+    width: 70%;
+    max-width: 1100px;
   }
 }
