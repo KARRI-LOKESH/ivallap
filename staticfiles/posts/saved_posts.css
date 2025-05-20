@@ -5,18 +5,23 @@ body {
   color: #333;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
+/* Post Card */
 .post {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
-  padding: 15px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px 25px;          /* More padding for bigger screens */
   margin: 20px auto;
-  max-width: 600px;
+  width: 90%;                 /* Take 90% of viewport width */
+  max-width: 1100px;          /* Max width on large screens */
   word-wrap: break-word;
+  box-sizing: border-box;     /* Include padding in width */
 }
 
+/* Post Header */
 .post-header {
   display: flex;
   align-items: center;
@@ -25,6 +30,7 @@ body {
   margin-bottom: 8px;
 }
 
+/* User Info */
 .user-info {
   display: flex;
   align-items: center;
@@ -49,6 +55,7 @@ body {
   display: block;
 }
 
+/* Username & Time */
 .username-link {
   font-weight: 600;
   font-size: 1rem;
@@ -64,6 +71,7 @@ body {
   color: #777;
 }
 
+/* Post Text */
 .post-row {
   margin: 10px 0;
 }
@@ -74,6 +82,7 @@ body {
   color: #222;
 }
 
+/* Toggle Read More */
 .toggle-more {
   color: #007bff;
   cursor: pointer;
@@ -88,22 +97,28 @@ body {
   text-decoration: underline;
 }
 
+/* Post Image */
 img[alt="Post Image"] {
-  border-radius: 8px;
-  margin-top: 10px;
+  display: block;
+  margin: 10px auto 0 auto; /* Centered horizontally */
   max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-video {
-  border-radius: 8px;
-  margin-top: 10px;
-  max-height: 350px;
   width: 100%;
-  display: block;
+  height: auto;
+  border-radius: 8px;
 }
 
+/* Post Video - centered and responsive */
+video {
+  display: block;
+  margin: 10px auto 0 auto; /* Centered horizontally */
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: contain; /* Prevent cropping */
+}
+
+/* Actions */
 .post-actions {
   margin-top: 12px;
   border-top: 1px solid #eee;
@@ -140,6 +155,7 @@ video {
   margin-left: 4px;
 }
 
+/* Share Form */
 .share-form {
   margin-top: 10px;
   padding: 10px 12px;
@@ -185,6 +201,7 @@ video {
   background-color: #0056b3;
 }
 
+/* Social Share */
 .social-share {
   font-size: 20px;
   margin-top: 10px;
@@ -202,6 +219,7 @@ video {
   color: #007bff;
 }
 
+/* Comment Form */
 .comment-form {
   display: flex;
   align-items: center;
@@ -239,12 +257,14 @@ video {
   color: #0056b3;
 }
 
+/* Post Caption */
 .pc {
   margin-top: 15px;
   font-weight: 600;
   color: #444;
 }
 
+/* Comment Container */
 .comment-container {
   max-height: 280px;
   overflow-y: auto;
@@ -280,6 +300,7 @@ video {
   white-space: pre-wrap;
 }
 
+/* View More Comments */
 .view {
   background: none;
   border: none;
@@ -297,46 +318,57 @@ video {
   color: #0056b3;
 }
 
-/* Responsive */
-
+/* Mobile Responsive Adjustments */
 @media (max-width: 650px) {
   .post {
-    margin: 15px 12px;
-    padding: 15px 15px;
+    margin: 15px 10px; /* Smaller side margin on mobile */
+    padding: 12px 15px;
+    width: 95%;
   }
-  
   .post-header {
     gap: 8px;
   }
-  
   .profile-pic-smalli {
     width: 36px;
     height: 36px;
   }
-  
   .post-text {
     font-size: 0.95rem;
   }
-  
   .actions-group {
     gap: 10px;
   }
-  
   .like-btn,
   .save-btn,
   .share-btn {
     font-size: 18px;
   }
-  
   .comment-form input[type="text"] {
     font-size: 0.95rem;
   }
-  
   .action-btn {
     font-size: 20px;
   }
-  
   .social-share {
     font-size: 18px;
+  }
+  .share-form input[type="text"] {
+    width: 100%;
+    margin: 0 0 10px 0;
+  }
+  .share-form {
+    display: flex;
+    flex-direction: column;
+  }
+  .share-form button {
+    width: 100%;
+  }
+}
+
+/* Wider screens adjustment */
+@media (min-width: 1300px) {
+  .post {
+    width: 70%;
+    max-width: 1100px;
   }
 }

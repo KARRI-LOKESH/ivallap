@@ -1,331 +1,84 @@
-/* saved_reels.css */
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #121212;
-  color: #e0e0e0;
-  margin: 0;
-  padding: 0;
-}
-
+/* Reel container - removes side constraints */
 .reel-container {
-  max-width: 720px;
-  margin: 20px auto;
-  padding: 0 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.reel {
-  position: relative;
-  background: #1e1e1e;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 8px #222;
-  transition: box-shadow 0.3s ease;
-}
-
-.reel:hover {
-  box-shadow: 0 0 16px #ff004d;
-}
-
-.reel video {
   width: 100%;
-  display: block;
-  border-radius: 12px 12px 0 0;
-  background: black;
+  padding: 0;
+  margin: 0;
+  background-color: #000;
 }
 
+/* Each reel takes full width */
+.reel {
+  width: 100vw; /* Full viewport width */
+  margin: 0 auto 1rem auto;
+  background-color: #111;
+  overflow: hidden;
+}
+
+/* Make video fill the full screen width */
+.reel video {
+  width: 100vw;
+  height: auto;
+  object-fit: contain; /* Or use cover if you want to fill screen */
+  background-color: #000;
+  display: block;
+}
+
+
+/* Reel header (profile + username) */
 .reel-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
-  background: #222;
-  border-radius: 0 0 12px 12px;
+  padding: 0.8rem;
+  background-color: #111;
 }
 
-.reel-user {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #eee;
-  text-decoration: none;
+/* Profile picture */
+.reel-profile-pic {
+  width: 40px;
+  height: 40px;
+  margin-right: 0.8rem;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .reel-profile-pic img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #ff004d;
-}
-
-.reel-btn-follow, .reel-btn-unfollow {
-  padding: 6px 14px;
-  font-size: 0.9rem;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.25s ease;
-  user-select: none;
-}
-
-.reel-btn-follow {
-  background-color: #ff004d;
-  color: white;
-}
-
-.reel-btn-follow:hover {
-  background-color: #e60043;
-}
-
-.reel-btn-unfollow {
-  background-color: #444;
-  color: #ccc;
-}
-
-.reel-btn-unfollow:hover {
-  background-color: #666;
-}
-
-.reel-caption {
-  padding: 10px 12px;
-  font-size: 1rem;
-  line-height: 1.3;
-  background: #181818;
-  color: #ddd;
-}
-
-.reel-caption .toggle-more {
-  color: #ff004d;
-  cursor: pointer;
-  margin-left: 6px;
-  font-weight: 600;
-  user-select: none;
-}
-
-.reel-overlay {
-  position: absolute;
-  bottom: 48px;
-  right: 15px;
-  display: flex;
-  gap: 12px;
-  z-index: 20;
-}
-
-.reel-actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: rgba(24, 24, 24, 0.85);
-  padding: 8px 14px;
-  border-radius: 24px;
-  box-shadow: 0 0 8px rgba(255, 0, 77, 0.6);
-  user-select: none;
-}
-
-.reel-action {
-  color: #ccc;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 1.1rem;
-  transition: color 0.2s ease;
-}
-
-.reel-action:hover {
-  color: #ff004d;
-}
-
-.reel-action i {
-  pointer-events: none;
-}
-
-.more-options-btn {
-  color: #bbb;
-  cursor: pointer;
-  font-size: 1.3rem;
-  transition: color 0.2s ease;
-}
-
-.more-options-btn:hover {
-  color: #ff004d;
-}
-
-.reel-more-menu {
-  position: absolute;
-  bottom: 60px;
-  right: 10px;
-  background: #1a1a1a;
-  border-radius: 10px;
-  box-shadow: 0 0 12px rgba(255, 0, 77, 0.7);
-  width: 160px;
-  user-select: none;
-  z-index: 50;
-}
-
-.reel-more-menu ul {
-  list-style: none;
-  margin: 0;
-  padding: 8px 0;
-}
-
-.reel-more-menu li {
-  padding: 10px 16px;
-  color: #eee;
-  font-size: 0.95rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.reel-more-menu li:hover {
-  background-color: #ff004d;
-  color: white;
-}
-
-.like-animation {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  font-size: 4rem;
-  color: #ff004d;
-  pointer-events: none;
-  animation: like-pop 0.6s forwards;
-  z-index: 30;
-  user-select: none;
-  opacity: 0;
-}
-
-@keyframes like-pop {
-  0% {
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.4);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0;
-  }
-}
-
-/* Modal Styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  user-select: none;
-}
-
-.modal-box {
-  background: #222;
-  border-radius: 12px;
-  padding: 20px 30px;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 0 20px #ff004d;
-  color: #ddd;
-}
-
-.modal-box h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  font-weight: 700;
-}
-
-#report-reason {
   width: 100%;
-  border-radius: 8px;
-  border: 1px solid #444;
-  padding: 10px;
-  background: #121212;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Caption text */
+.reel-caption {
   color: #ddd;
-  resize: none;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  padding: 0 1rem 1rem;
+  word-break: break-word;
 }
 
-.modal-actions {
-  margin-top: 15px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.modal-actions button {
-  background-color: #ff004d;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 24px;
-  font-weight: 600;
-  cursor: pointer;
-  color: white;
-  transition: background-color 0.3s ease;
-}
-
-.modal-actions button:hover {
-  background-color: #e60043;
-}
-
-/* User list in share modal */
-#user-list {
-  max-height: 200px;
-  overflow-y: auto;
-  margin-bottom: 10px;
-}
-
-.user-item {
-  margin-bottom: 8px;
-  font-size: 1rem;
-  color: #eee;
-}
-
-.user-item label {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.user-item input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  .reel-container {
-    margin: 10px 5px;
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .reel {
+    margin-bottom: 1rem;
+    border-radius: 0;
   }
-  
+
   .reel-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+    padding: 0.6rem;
   }
-  
-  .reel-actions {
-    padding: 6px 10px;
-    gap: 10px;
+
+  .reel-caption {
+    font-size: 0.9rem;
+    padding: 0 0.8rem 1rem;
   }
-  
-  .reel-action {
-    font-size: 1rem;
+
+  .reel-profile-pic {
+    width: 36px;
+    height: 36px;
+    margin-right: 0.6rem;
   }
+}
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
