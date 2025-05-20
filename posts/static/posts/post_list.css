@@ -405,29 +405,6 @@ label {
     text-decoration: none;
     color: rgb(44, 60, 208);
   }
-  
-.notifications-btn,
-.inbox-btn {
-    display: flex;
-    align-items: center;
-    color: #151414;
-    font-size: 25px;
-    padding: 5px;
-    position: relative;
-    margin-right: 10px; /* Changed margin to 10px for the desired gap */
-}
-
-/* Notification count */
-.notif-count {
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 0 6px;
-    font-size: 14px;
-    position: absolute;
-    top: -5px;
-    right: -10px;
-}
 
 /* Optional: If you want to place these side-by-side within a container */
 .notifications-container {
@@ -474,7 +451,6 @@ html, body {
     vertical-align: middle;   
     gap: 10px; /* 10px gap between notification and inbox */
 }
-
 /* Notification & Inbox Buttons */
 .notifications-btn,
 .inbox-btn {
@@ -482,25 +458,29 @@ html, body {
     align-items: center;
     justify-content: center;
     color: #151414;
-    font-size: 24px;
+    font-size: 25px;
     padding: 5px;
     position: relative;
     cursor: pointer;
     height: 100%;
 }
 
-/* Notification Count Badge */
-.notif-count {
+/* Shared Badge Style (Perfectly aligned) */
+.notif-count,
+.message-count {
     background-color: red;
     color: white;
     border-radius: 50%;
-    padding: 0 6px;
-    font-size: 13px;
+    padding: 1px 5px;
+    font-size: 11px;
     position: absolute;
-    top: -3px;
-    right: -8px;
-    transform: translateY(-50%);
+    top: 1px; /* Moved down slightly */
+    right: 0px;
+    transform: translate(0%, 0%); /* Removed the upward shift */
 }
+
+
+
 .logo-text a {
     text-decoration: none;
     color: inherit; /* Keeps it the same color as parent h2 */

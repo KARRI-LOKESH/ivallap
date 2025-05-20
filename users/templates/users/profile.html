@@ -195,7 +195,7 @@
 
     <!-- Share Form -->
     <div id="share-form-{{ post.id }}" class="share-form" style="display: none;">
-        <form method="POST" class="share-form-ajax" data-post-id="{{ post.id }}">
+        <form method="POST" class="share-form-ajax" data-post-id="{{ post.id }}" data-url="{% url 'share-post' post.id %}">
             {% csrf_token %}
             <input type="text" name="shared_with" placeholder="Search username..." required>
             <label>
@@ -207,10 +207,10 @@
     
         <!-- Social Share Links -->
         <div class="social-share">
-            {% with post_url=request.build_absolute_uri|add:post.get_absolute_url %}
-            <a href="https://api.whatsapp.com/send?text={{ post_url|urlencode }}" target="_blank">
-                <i class="fab fa-whatsapp"></i> 
-            </a> |
+            {% with post_url=request.build_absolute_uri(post.get_absolute_url) %}
+    <a href="https://api.whatsapp.com/send?text={{ post_url|urlencode }}" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
             <a href="https://www.facebook.com/sharer/sharer.php?u={{ post_url|urlencode }}" target="_blank">
                 <i class="fab fa-facebook"></i> 
             </a> |

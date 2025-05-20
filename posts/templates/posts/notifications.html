@@ -12,35 +12,40 @@
     {% if notifications %}
         <ul class="notifications-list">
             {% for notification in notifications %}
-    <li class="notification-item {% if not notification.is_read %}unread{% endif %}">
-        <div class="user-infoo">
-            <div class="profile-pic-smalli">
-                {% if notification.sender and notification.sender.profile_pic %}
-                    <img src="{{ notification.sender.profile_pic.url }}" alt=" ">
-                {% else %}
-                    <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile">
-                {% endif %}
-            </div>
-        </div>
+                <li class="notification-item {% if not notification.is_read %}unread{% endif %}">
+                    <div class="user-infoo">
+                        <div class="profile-pic-smalli">
+                            {% if notification.sender and notification.sender.profile_pic %}
+                                <img src="{{ notification.sender.profile_pic.url }}" alt=" ">
+                            {% else %}
+                                <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile">
+                            {% endif %}
+                        </div>
+                    </div>
 
-        <div class="notification-body">
-            {% if notification.link %}
-                <p><a href="{{ notification.link }}">{{ notification.message|safe }}</a></p>
-            {% else %}
-                <p>{{ notification.message|safe }}</p>
-            {% endif %}
+                    <div class="notification-body">
+                        <p>{{ notification.message|safe }}</p>
+                        <small>{{ notification.timestamp|naturaltime }}</small>
 
-            <small>{{ notification.timestamp|naturaltime }}</small>
+                        {% if notification.post %}
+                            <p><a href="{% url 'post-detail' notification.post.id %}">View Post</a></p>
+                        {% endif %}
 
-            {% if notification.post %}
-                <p><a href="{% url 'post-detail' notification.post.id %}">View Post</a></p>
-            {% endif %}
+                        {% if notification.story %}
+                            <p><a href="{% url 'story-detail' notification.story.id %}">View Story</a></p>
+                        {% endif %}
 
-            {% if notification.story %}
-                <p><a href="{% url 'story-detail' notification.story.id %}">View Story</a></p>
-            {% endif %}
-        </div>
-    </li>
+                        {# 👉 Follow Back Button Logic #}
+                        {% if notification.notification_type == 'follow' and notification.sender != request.user %}
+                            {% if notification.sender not in request.user.following.all %}
+                                <form action="{% url 'follow-user' notification.sender.id %}" method="POST" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="follow-back-btn">↩️ Follow Back</button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </li>
             {% endfor %}
         </ul>
     {% else %}

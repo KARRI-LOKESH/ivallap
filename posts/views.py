@@ -105,7 +105,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
         messages.success(self.request, "Post created successfully.")
         return redirect(self.success_url)
-
 class PostDetailView(DetailView):
     model = Post
     template_name = 'posts/post_detail.html'
@@ -114,24 +113,16 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         post = self.object
 
-        # Get comments related to this post
         post_type = ContentType.objects.get_for_model(Post)
         comments = Comment.objects.filter(
             content_type=post_type,
             object_id=post.id
         )
 
-        # Build full post URL
-        post_url = self.request.build_absolute_uri(post.get_absolute_url())
-
-        # Pass post URL to template context
         context['post'] = post
         context['comments'] = comments
-        print("Post URL: ", post_url)
-        context['post_url'] = post_url
 
         return context
-
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
@@ -356,11 +347,14 @@ def send_message(request, receiver_id):
         'form': form,
         'receiver': receiver
     })
-
 @login_required
 def inbox(request):
     received_messages = Message.objects.filter(receiver=request.user).order_by('-timestamp')
-    return render(request, 'posts/inbox.html', {'messages': received_messages})
+    # ✅ Mark messages as read
+    Message.objects.filter(receiver=request.user, is_read=False).update(is_read=True)
+    return render(request, 'posts/inbox.html', {
+        'messages': received_messages
+    })
 
 @login_required
 def chat_view(request, username):

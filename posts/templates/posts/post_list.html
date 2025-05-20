@@ -22,8 +22,11 @@
       </a>
       {% if request.user.is_authenticated and request.user.id %}
         <a href="{% url 'inbox' %}" class="inbox-btn">
-          <i class="fab fa-facebook-messenger"></i>
-        </a>
+    <i class="fab fa-facebook-messenger"></i>
+    {% if unread_message_count > 0 %}
+        <span class="message-count">{{ unread_message_count }}</span>
+    {% endif %}
+</a>
       {% endif %}
     </div>
   </div>
@@ -150,39 +153,42 @@
     </div>
 
     <!-- Share Form -->
-    <div id="share-form-{{ post.id }}" class="share-form" style="display: none;">
-        <form method="POST" class="share-form-ajax" data-post-id="{{ post.id }}">
-            {% csrf_token %}
-            <input type="text" name="shared_with" placeholder="Search username..." required>
-            <label>
-                <input type="checkbox" name="share_with_self"> Share to my profile
-            </label>
-            <button type="submit"><i class="fa fa-paper-plane"></i></button>
-            <p class="share-status" style="color: green;"></p>
-        </form>
-    
-        <!-- Social Share Links -->
-<div class="social-share">
-    <a href="https://api.whatsapp.com/send?text={{ post_url|urlencode }}" target="_blank">
-    <i class="fab fa-whatsapp"></i>
-</a>|
-    <a href="https://www.facebook.com/sharer/sharer.php?u={{ post_url|urlencode }}" target="_blank">
-        <i class="fab fa-facebook"></i> 
-    </a> |
-    <a href="https://twitter.com/intent/tweet?url={{ post_url|urlencode }}" target="_blank">
-        <i class="fab fa-twitter"></i> 
-    </a> |
-    <a href="https://www.instagram.com" target="_blank">
-        <i class="fab fa-instagram"></i> 
-    </a> |
-    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ post_url|urlencode }}" target="_blank">
-        <i class="fab fa-linkedin"></i> 
-    </a> |
-    <a href="https://pinterest.com/pin/create/button/?url={{ post_url|urlencode }}" target="_blank">
-        <i class="fab fa-pinterest"></i> 
-    </a>
-</div>        
-    </div>
+   {% with full_url=request.build_absolute_uri|slice:":-1"|add:post.get_absolute_url %}
+<!-- Share Form -->
+<div id="share-form-{{ post.id }}" class="share-form" style="display: none;">
+    <form method="POST" class="share-form-ajax" data-post-id="{{ post.id }}" data-url="{% url 'share-post' post.id %}">
+        {% csrf_token %}
+        <input type="text" name="shared_with" placeholder="Search username..." required>
+        <label>
+            <input type="checkbox" name="share_with_self"> Share to my profile
+        </label>
+        <button type="submit"><i class="fa fa-paper-plane"></i></button>
+        <p class="share-status" style="color: green;"></p>
+    </form>
+
+    <!-- Social Share Links -->
+    <div class="social-share">
+        <a href="https://wa.me/?text={{ full_url|urlencode }}" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a> |
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ full_url|urlencode }}" target="_blank">
+            <i class="fab fa-facebook"></i> 
+        </a> |
+        <a href="https://twitter.com/intent/tweet?url={{ full_url|urlencode }}" target="_blank">
+            <i class="fab fa-twitter"></i> 
+        </a> |
+        <a href="https://www.instagram.com" target="_blank">
+            <i class="fab fa-instagram"></i> 
+        </a> |
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ full_url|urlencode }}" target="_blank">
+            <i class="fab fa-linkedin"></i> 
+        </a> |
+        <a href="https://pinterest.com/pin/create/button/?url={{ full_url|urlencode }}" target="_blank">
+            <i class="fab fa-pinterest"></i> 
+        </a>
+    </div>        
+</div>
+{% endwith %}
 
 <!-- Comment Form -->
 <form action="{% url 'add-comment' post.id %}" method="POST" style="position: relative;" class="comment-form">

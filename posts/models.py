@@ -65,6 +65,7 @@ class Post(models.Model):
         return f"Post {self.id} by {self.user.name} - {self.created_at.strftime('%Y-%m-%d %H:%M')}"
 
 class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments', null=True, blank=True) 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True)  # Allow null initially
     object_id = models.PositiveIntegerField(null=True)
@@ -90,7 +91,7 @@ class Message(models.Model):
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
-
+    is_read = models.BooleanField(default=False)
     def __str__(self):
         return f"From {self.sender} to {self.receiver}"
 class SharedPost(models.Model):

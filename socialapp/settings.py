@@ -98,7 +98,9 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'posts.context_processors.notification_count',
                 'django.contrib.messages.context_processors.messages',
+                'posts.context_processors.unread_messages_count',
                 'posts.context_processors.get_recent_stories',  # Custom context processor
             ],
         },

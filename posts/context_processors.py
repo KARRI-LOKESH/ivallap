@@ -14,3 +14,18 @@ def get_recent_stories(request):
 
         return {'stories': unique_stories.values()}
     return {'stories': []}
+from .models import Notification
+
+def notification_count(request):
+    if request.user.is_authenticated:
+        count = Notification.objects.filter(user=request.user, is_read=False).count()
+    else:
+        count = 0
+    return {'notification_count': count}
+from .models import Message
+
+def unread_messages_count(request):
+    if request.user.is_authenticated:
+        count = Message.objects.filter(receiver=request.user, is_read=False).count()
+        return {'unread_message_count': count}
+    return {}
