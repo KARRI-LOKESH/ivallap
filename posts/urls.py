@@ -19,7 +19,6 @@ urlpatterns = [
     path('inbox/', inbox, name='inbox'),
     path('share/<int:post_id>/', views.share_post, name='share-post'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
-    path('posts/post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('notifications/', notifications_view, name='notifications'),
     path('posts/story_upload/', views.upload_story, name='story-upload'),
     path('stories/<int:story_id>/', views.story_detail_view, name='story-detail'),
@@ -46,6 +45,4 @@ urlpatterns = [
     path('saved/', views.saved_content, name='saved'),  
     path('saved-posts/', views.saved_posts_view, name='saved-posts'),
     path('saved-reels/', views.saved_reels_view, name='saved-reels'),
-
-
 ]

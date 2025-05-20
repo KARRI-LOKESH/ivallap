@@ -153,7 +153,7 @@
     </div>
 
     <!-- Share Form -->
-   {% with full_url=request.build_absolute_uri|slice:":-1"|add:post.get_absolute_url %}
+   {% with full_url=request.scheme|add:'://'|add:request.get_host|add:post.get_absolute_url %}
 <!-- Share Form -->
 <div id="share-form-{{ post.id }}" class="share-form" style="display: none;">
     <form method="POST" class="share-form-ajax" data-post-id="{{ post.id }}" data-url="{% url 'share-post' post.id %}">
@@ -266,29 +266,57 @@
     });
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const shareButtons = document.querySelectorAll('.share-btn');
+    document.addEventListener("DOMContentLoaded", function () {
+    // Share buttons
+    document.querySelectorAll('.share-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const title = this.dataset.title;
+            const text = this.dataset.text;
+            const url = this.dataset.url;
 
-        shareButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const title = this.dataset.title;
-                const text = this.dataset.text;
-                const url = this.dataset.url;
+            if (navigator.share) {
+                navigator.share({ title, text, url })
+                    .catch(error => console.log('Error sharing:', error));
+            } else {
+                alert('Sharing not supported on this browser. Please copy the link manually: ' + url);
+            }
+        });
+    });
 
-                if (navigator.share) {
-                    navigator.share({
-                        title: title,
-                        text: text,
-                        url: url
-                    }).catch(error => console.log('Error sharing:', error));
+    // AJAX share form submit handlers
+    document.querySelectorAll('.share-form-ajax').forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const postId = form.getAttribute('data-post-id');
+            const formData = new FormData(form);
+
+            fetch(`/posts/share/${postId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const statusPara = form.querySelector('.share-status');
+                if (data.success) {
+                    statusPara.style.color = "green";
+                    statusPara.textContent = data.message;
                 } else {
-                    alert('Sharing not supported on this browser. Please copy the link manually: ' + url);
+                    statusPara.style.color = "red";
+                    statusPara.textContent = data.message;
                 }
+            })
+            .catch(error => {
+                console.error("Error:", error);
             });
         });
     });
-</script>
-<script>
+});
+    </script>
+    <script>
     // Function to toggle the share form
     function toggleShareForm(postId) {
         const form = document.getElementById('share-form-' + postId);
@@ -300,39 +328,6 @@
         }
     }
 </script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll('.share-form-ajax').forEach(form => {
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-    
-                const postId = form.getAttribute('data-post-id');
-                const formData = new FormData(form);
-    
-                fetch(`/posts/share/${postId}/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
-                    },
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const statusPara = form.querySelector('.share-status');
-                    if (data.success) {
-                        statusPara.textContent = data.message;
-                    } else {
-                        statusPara.style.color = "red";
-                        statusPara.textContent = data.message;
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                });
-            });
-        });
-    });
-    </script>
     <script>
         function toggleComments(postId) {
             const limited = document.getElementById(`limited-comments-${postId}`);

@@ -124,6 +124,7 @@ class PostDetailView(DetailView):
 
         return context
 
+
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     fields = ['content', 'video', 'filter', 'location']
