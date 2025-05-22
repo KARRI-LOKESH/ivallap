@@ -118,8 +118,7 @@ class Notification(models.Model):
     is_read = models.BooleanField(default=False)
     post = models.ForeignKey('Post', on_delete=models.CASCADE, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-
-
+    related_request = models.ForeignKey('users.FollowRequest', on_delete=models.CASCADE, null=True, blank=True)
     def __str__(self):
         return f"{self.sender.username} {self.get_notification_type_display()} to {self.user.username}"
 class Story(models.Model):

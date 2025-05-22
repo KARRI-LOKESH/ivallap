@@ -23,29 +23,35 @@
             </div>
         </div>
 
-        <div class="notification-body">
-            {% if notification.link %}
-                <p><a href="{{ notification.link }}">{{ notification.message|safe }}</a></p>
-            {% else %}
-                <p>{{ notification.message|safe }}</p>
-            {% endif %}
+       <div class="notification-body">
+    {% if notification.link %}
+        <p><a href="{{ notification.link }}">{{ notification.message|safe }}</a></p>
+    {% else %}
+        <p>{{ notification.message|safe }}</p>
+    {% endif %}
 
-            <small>{{ notification.timestamp|naturaltime }}</small>
+    <small>{{ notification.timestamp|naturaltime }}</small>
 
-            {% if notification.post %}
-                <p><a href="{% url 'post-detail' notification.post.id %}">View Post</a></p>
-            {% endif %}
+    {% if notification.notification_type == 'follow_request' %}
+        <form method="post" action="{% url 'accept_follow_request' notification.id %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Accept</button>
+        </form>
+        <form method="post" action="{% url 'reject_follow_request' notification.id %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Reject</button>
+        </form>
+    {% endif %}
 
-            {% if notification.story %}
-                <p><a href="{% url 'story-detail' notification.story.id %}">View Story</a></p>
-            {% endif %}
-        </div>
+    {% if notification.post %}
+        <p><a href="{% url 'post-detail' notification.post.id %}">View Post</a></p>
+    {% endif %}
+
+    {% if notification.story %}
+        <p><a href="{% url 'story-detail' notification.story.id %}">View Story</a></p>
+    {% endif %}
+</div>
     </li>
-
-
-
-
-
             {% endfor %}
         </ul>
     {% else %}

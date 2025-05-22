@@ -13,13 +13,13 @@
             <li>
                 <div class="following-item">
                     <!-- Display profile picture -->
-                    <div class="profile-pic">
-                        {% if following.profile_pic %}
-                            <img src="{{ following.profile_pic.url }}" alt="{{ following.name }}'s Profile Picture" width="40" height="40">
-                        {% else %}
-                            <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile" width="40" height="40">
-                        {% endif %}
-                    </div>
+                   <div class="profile-pic">
+                    {% if following.profile_pic %}
+                        <img src="{{ following.profile_pic.url }}" alt="{{ following.name }}'s Profile Picture" width="40" height="40">
+                    {% else %}
+                        <img src="https://res.cloudinary.com/djrkiohhm/image/upload/v1747912189/default-profile_cymv7l.png" alt="Default Profile" width="40" height="40">
+                    {% endif %}
+                </div>
                     <!-- Display name and follow/unfollow button -->
                     <div class="following-info">
                         <a href="{% url 'user-profile' following.username %}">{{ following.name }}</a>

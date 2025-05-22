@@ -8,7 +8,7 @@
         {% if user.profile and user.profile.profile_pic %}
             <img src="{{ user.profile.profile_pic.url }}?{{ user.profile.updated_at|date:'U' }}" alt="{{ user.username }}" class="profile-pic">
         {% else %}
-            <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile" class="profile-pic">
+            <img src="https://res.cloudinary.com/djrkiohhm/image/upload/v1747912189/default-profile_cymv7l.png" class="profile-pic">
         {% endif %}
 
         <!-- User Details -->

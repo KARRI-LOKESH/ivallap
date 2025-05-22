@@ -21,7 +21,7 @@
                         {% if comment.user.profile_pic %}
                             <img src="{{ comment.user.profile_pic.url }}" alt="{{ comment.user.username }}">
                         {% else %}
-                            <img src="{% static 'users/images/default-profile.png' %}" alt="Default Profile">
+                            <img src="https://res.cloudinary.com/djrkiohhm/image/upload/v1747912189/default-profile_cymv7l.png" alt="Default">
                         {% endif %}
                     </div>
                     <strong class="username-link">{{ comment.user.username }}</strong>

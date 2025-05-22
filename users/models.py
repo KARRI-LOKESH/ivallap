@@ -34,9 +34,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=20)
     email = models.EmailField(unique=True)
     age = models.IntegerField()
+    is_private = models.BooleanField(default=False) 
     phone = models.CharField(max_length=15, unique=True, null=True, blank=True)
     otp = models.CharField(max_length=6, null=True, blank=True)
-    profile_pic = CloudinaryField('image',null=True, blank=True, default="profile_pics/default-profile.png")
+    profile_pic = CloudinaryField('image',null=True, blank=True, default='default-profile_cymv7l')
     username = models.CharField(max_length=30, unique=True, null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
     first_name = models.CharField(max_length=30, null=True, blank=True)
@@ -63,3 +64,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+class FollowRequest(models.Model):
+    from_user = models.ForeignKey(CustomUser, related_name='sent_follow_requests', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(CustomUser, related_name='received_follow_requests', on_delete=models.CASCADE)
+    is_accepted = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.from_user} -> {self.to_user} ({'Accepted' if self.is_accepted else 'Pending'})"

@@ -24,4 +24,8 @@ urlpatterns = [
     path('follow/<int:user_id>/', follow_unfollow, name='follow-user'),
     path('toggle-follow/', views.toggle_follow, name='toggle-follow'),
     path('comment/delete/<int:comment_id>/', delete_comment, name='delete-comment'),
+    path('follow-request/accept/<int:request_id>/', views.accept_follow_request, name='accept_follow_request'),
+    path('follow-request/reject/<int:request_id>/', views.reject_follow_request, name='reject_follow_request'),
+    path('send-follow-request/<int:user_id>/', views.send_follow_request, name='send_follow_request'),
+
 ]

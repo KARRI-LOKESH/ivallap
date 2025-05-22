@@ -4,13 +4,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
-from .models import CustomUser
+from .models import CustomUser,FollowRequest
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.contrib import messages as django_messages
 from django.shortcuts import redirect
 from posts.models import Post,Notification
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseBadRequest
 from django.template.loader import render_to_string
 from django.views.generic import TemplateView
 from posts.forms import CustomUserCreationForm,UserProfileUpdateForm,MessageForm
@@ -237,24 +237,41 @@ def search_users(request):
 @login_required
 def follow_unfollow(request, user_id):
     if request.method == "POST":
-        user_to_follow = get_object_or_404(User, id=user_id)
+        user_to_follow = get_object_or_404(CustomUser, id=user_id)
 
         if request.user != user_to_follow:
-            if request.user.following.filter(id=user_id).exists():  # If already following
-                request.user.following.remove(user_to_follow)  # Unfollow
-            else:  # If not following
-                request.user.following.add(user_to_follow)  # Follow
-                Notification.objects.create(
-                    user=user_to_follow,
-                    sender=request.user,
-                    notification_type='follow',
-                    message=f"{request.user.username} started following you!",
-                    link=f"/user-profile/{request.user.username}/"
-                )
+            if request.user.following.filter(id=user_id).exists():
+                # Unfollow
+                request.user.following.remove(user_to_follow)
+                user_to_follow.followers.remove(request.user)
+            else:
+                if user_to_follow.is_private:
+                    # Send follow request instead
+                    if not FollowRequest.objects.filter(from_user=request.user, to_user=user_to_follow).exists():
+                        FollowRequest.objects.create(from_user=request.user, to_user=user_to_follow)
+                        Notification.objects.create(
+                            user=user_to_follow,
+                            sender=request.user,
+                            notification_type='follow_request',
+                            message=f"{request.user.username} sent you a follow request.",
+                            link=f"/user-profile/{request.user.username}/"
+                        )
+                else:
+                    # Public account: follow directly
+                    request.user.following.add(user_to_follow)
+                    user_to_follow.followers.add(request.user)
 
-            return HttpResponse(status=204)  # No content, but the request is successful
+                    Notification.objects.create(
+                        user=user_to_follow,
+                        sender=request.user,
+                        notification_type='follow',
+                        message=f"{request.user.username} started following you!",
+                        link=f"/user-profile/{request.user.username}/"
+                    )
 
-    return HttpResponse(status=400)  # Return error if not a valid request
+            return HttpResponse(status=204)
+
+    return HttpResponse(status=400)
 @login_required
 def followers_list(request, user_id):
     user = get_object_or_404(User, id=user_id)
@@ -366,3 +383,60 @@ def toggle_follow(request):
 
     # Handle invalid requests (not a POST or incorrect header)
     return JsonResponse({'error': 'Invalid request'}, status=400)
+@login_required
+def accept_follow_request(request, request_id):
+    follow_request = get_object_or_404(FollowRequest, id=request_id, to_user=request.user)
+    follow_request.is_accepted = True
+    request.user.followers.add(follow_request.from_user)
+    follow_request.from_user.following.add(request.user)
+    follow_request.delete()  # Optional: remove after accepting
+    return redirect('notifications')
+
+@login_required
+def reject_follow_request(request, request_id):
+    follow_request = get_object_or_404(FollowRequest, id=request_id, to_user=request.user)
+    follow_request.delete()
+    return redirect('notifications')
+
+
+User = get_user_model()
+
+@login_required
+def send_follow_request(request, user_id):
+    user_to_follow = get_object_or_404(User, id=user_id)
+
+    if user_to_follow == request.user:
+        return HttpResponseBadRequest("You can't follow yourself.")
+
+    # Check if already following
+    if request.user.following.filter(id=user_to_follow.id).exists():
+        # Already following, do nothing or redirect
+        return redirect('user-profile', username=user_to_follow.username)
+
+    if user_to_follow.profile_type == 'private':
+        # Create a follow request if it doesn't exist
+        fr, created = FollowRequest.objects.get_or_create(
+            from_user=request.user,
+            to_user=user_to_follow
+        )
+        if created:
+            Notification.objects.create(
+                user=user_to_follow,
+                sender=request.user,
+                notification_type='follow_request',
+                message=f"{request.user.username} sent you a follow request.",
+                link=f"/user-profile/{request.user.username}/",
+                related_request=fr
+            )
+    else:
+        # Public profile - follow directly
+        request.user.following.add(user_to_follow)
+        Notification.objects.create(
+            user=user_to_follow,
+            sender=request.user,
+            notification_type='follow',
+            message=f"{request.user.username} started following you!",
+            link=f"/user-profile/{request.user.username}/"
+        )
+
+    return redirect('user-profile', username=user_to_follow.username)
