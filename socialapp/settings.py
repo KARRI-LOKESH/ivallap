@@ -122,12 +122,19 @@ CHANNEL_LAYERS = {
 
 # Database (Uses SQLite for local development, PostgreSQL for production)
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://postgres:Lokeshkarri123%40@db.jfqrxmwevjubljcfczbr.supabase.co:5432/postgres',
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'Lokeshkarri123@',
+        'HOST': 'db.jfqrxmwevjubljcfczbr.supabase.co',
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
+    }
 }
+
 
 # Use PostgreSQL on Render (Ensure your DATABASE_URL is set correctly)
 if not DEBUG:
