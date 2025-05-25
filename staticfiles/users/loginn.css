@@ -12,11 +12,14 @@ body {
 }
 
 /* Page Title */
+/* Page Title */
 h2 {
+    font-family: 'Poppins', sans-serif; /* New font */
     font-size: 2rem;
-    color: #333;
+    color: #222ed8;
     margin-bottom: 20px;
 }
+
 
 /* Messages */
 ul {
@@ -73,6 +76,24 @@ form button[type="submit"] {
 
 form button[type="submit"]:hover {
     background-color: #0056b3;
+}
+/* Sign Up Link */
+.signup-link {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.signup-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.signup-link a:hover {
+    color: #0056b3;
+    text-decoration: underline;
 }
 
 /* Responsive Tweaks */

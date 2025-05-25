@@ -1,8 +1,8 @@
 /* General Styling */
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #6a11cb, #2575fc);
-    color: white;
+    background: linear-gradient(to right, #fbf9fc, #f6f7f9);
+    color: rgb(11, 10, 10);
     text-align: center;
     margin: 0;
     padding: 0;
@@ -15,7 +15,7 @@ body {
 
 /* Signup Box */
 form {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(248, 241, 241, 0.1);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
@@ -45,13 +45,14 @@ form input {
     border: none;
     border-radius: 5px;
     width: 100%;
+    background-color: rgb(231, 227, 227);
     font-size: 16px;
     box-sizing: border-box; /* Prevents input fields from overflowing */
 }
 
 /* Signup Button */
 button {
-    background: #ff6f61;
+    background: #266fe5;
     color: white;
     border: none;
     padding: 14px;
@@ -63,7 +64,7 @@ button {
 }
 
 button:hover {
-    background: #ff3b2f;
+    background: #0d71b8;
 }
 
 /* Messages */
@@ -88,7 +89,7 @@ p {
 }
 
 p a {
-    color: #ffeb3b;
+    color: rgb(20, 108, 202);
     font-weight: bold;
     text-decoration: none;
 }
@@ -96,7 +97,12 @@ p a {
 p a:hover {
     text-decoration: underline;
 }
-
+h2 {
+    font-family: 'Poppins', sans-serif; /* New font */
+    font-size: 2rem;
+    color: #222ed8;
+    margin-bottom: 20px;
+}
 /* Animations */
 @keyframes fadeIn {
     from {
