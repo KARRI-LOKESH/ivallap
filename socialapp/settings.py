@@ -123,8 +123,9 @@ CHANNEL_LAYERS = {
 # Database (Uses SQLite for local development, PostgreSQL for production)
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://loki:GmV7z0zmg8NvAMLPj8bTM5GHLVlXENw9@dpg-d05kbbqli9vc738svja0-a.oregon-postgres.render.com/loki_236q',
-        conn_max_age=600
+        default='postgresql://postgres:Lokeshkarri123%40@db.jfqrxmwevjubljcfczbr.supabase.co:5432/postgres',
+        conn_max_age=600,
+        ssl_require=True
     )
 }
 
