@@ -121,13 +121,20 @@ CHANNEL_LAYERS = {
 }
 
 # Database (Uses SQLite for local development, PostgreSQL for production)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
+DATABASES = {
+    'default': dj_database_url.parse(
+        'postgresql://ivallapp_user:CJaXhgbdMuvtOIISznwkDuGbapmipl0w@dpg-d0pft3je5dus73dp9psg-a.oregon-postgres.render.com/ivallapp',
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='postgresql://loki:GmV7z0zmg8NvAMLPj8bTM5GHLVlXENw9@dpg-d05kbbqli9vc738svja0-a.oregon-postgres.render.com/loki_236q',
+#         conn_max_age=600
+#     )
+# }
 # Use PostgreSQL on Render (Ensure your DATABASE_URL is set correctly)
 if not DEBUG:
     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=False)
