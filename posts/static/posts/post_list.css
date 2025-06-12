@@ -479,28 +479,6 @@ html, body {
     transform: translate(0%, 0%); /* Removed the upward shift */
 }
 
-.notifications-btn,
-.inbox-btn {
-    display: flex;
-    align-items: center;
-    color: #151414;
-    font-size: 25px;
-    padding: 5px;
-    position: relative;
-    margin-right: 10px; /* Changed margin to 10px for the desired gap */
-}
-
-/* Notification count */
-.notif-count {
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 0 6px;
-    font-size: 14px;
-    position: absolute;
-    top: -5px;
-    right: -10px;
-}
 
 .logo-text a {
     text-decoration: none;
