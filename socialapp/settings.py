@@ -124,11 +124,12 @@ CHANNEL_LAYERS = {
 
 DATABASES = {
     'default': dj_database_url.parse(
-        'postgresql://ivallapp_user:CJaXhgbdMuvtOIISznwkDuGbapmipl0w@dpg-d0pft3je5dus73dp9psg-a.oregon-postgres.render.com/ivallapp',
+        'postgresql://ivallapp_ezs1_user:gpG6HK6j0qwNZtGZR04L7ei7XeiriwgZ@dpg-d23qj3vdiees739ujm4g-a.oregon-postgres.render.com:5432/ivallapp_ezs1',
         conn_max_age=600,
         ssl_require=True
     )
 }
+
 # DATABASES = {
 #     'default': dj_database_url.config(
 #         default='postgresql://loki:GmV7z0zmg8NvAMLPj8bTM5GHLVlXENw9@dpg-d05kbbqli9vc738svja0-a.oregon-postgres.render.com/loki_236q',
