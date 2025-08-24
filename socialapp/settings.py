@@ -66,7 +66,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "karrilokesh108@gmail.com")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "ionu rkyl ckqd dtyr")  # ⚠️ Use environment variable
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "tvsu frlo cifq zvfn")  # ⚠️ Use environment variable
 
 # Middleware
 MIDDLEWARE = [
