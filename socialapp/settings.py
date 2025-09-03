@@ -124,11 +124,12 @@ CHANNEL_LAYERS = {
 
 DATABASES = {
     'default': dj_database_url.parse(
-        'postgresql://ivallapp_ezs1_user:gpG6HK6j0qwNZtGZR04L7ei7XeiriwgZ@dpg-d23qj3vdiees739ujm4g-a.oregon-postgres.render.com:5432/ivallapp_ezs1',
+        'postgresql://ivallap_user:BInineyk4e2ekm8jaWH9rooAblnXp6J3@dpg-d2s80v8gjchc73dva1f0-a.oregon-postgres.render.com:5432/ivallap',
         conn_max_age=600,
         ssl_require=True
     )
 }
+
 
 # DATABASES = {
 #     'default': dj_database_url.config(
