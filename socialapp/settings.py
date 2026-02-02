@@ -122,14 +122,14 @@ CHANNEL_LAYERS = {
 
 # Database (Uses SQLite for local development, PostgreSQL for production)
 
+
 DATABASES = {
     'default': dj_database_url.parse(
-        'postgresql://ivallap_user:BInineyk4e2ekm8jaWH9rooAblnXp6J3@dpg-d2s80v8gjchc73dva1f0-a.oregon-postgres.render.com:5432/ivallap',
+        'postgresql://ivallappp_user:BCDeOJZAhjHX74M9w9xDslotqSLhw5bp@dpg-d608tf2qcgvc73a9k1eg-a:5432/ivallappp',
         conn_max_age=600,
         ssl_require=True
     )
 }
-
 
 # DATABASES = {
 #     'default': dj_database_url.config(
