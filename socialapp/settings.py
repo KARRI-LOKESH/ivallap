@@ -122,24 +122,13 @@ CHANNEL_LAYERS = {
 
 # Database (Uses SQLite for local development, PostgreSQL for production)
 
-import dj_database_url
-import os
-
-if os.getenv("RENDER"):  # Running on Render
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv("DATABASE_URL"),
-            conn_max_age=600,
-            ssl_require=True
-        )
-    }
-else:  # Local development
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+DATABASES = {
+    'default': dj_database_url.parse(
+        'postgresql://ivallappp_user:BCDeOJZAhjHX74M9w9xDslotqSLhw5bp@dpg-d608tf2qcgvc73a9k1eg-a.oregon-postgres.render.com:5432/ivallappp',
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
 
 
 # DATABASES = {
